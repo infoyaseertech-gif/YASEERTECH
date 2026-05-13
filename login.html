@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Login | YaseerTech</title>
+    <link rel="stylesheet" href="css/erp.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+
+    <div class="login-wrapper">
+
+        <!-- LEFT PANEL -->
+        <div class="login-left">
+            <div class="login-left-content">
+                <div class="erp-logo">
+                    <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
+                </div>
+                <h1>Business Management System</h1>
+                <p>Manage your staff, track sales, monitor expenses, and grow your business — all in one place.</p>
+
+                <div class="login-features">
+                    <div class="lf-item">
+                        <span class="lf-icon">👥</span>
+                        <span>Staff Management</span>
+                    </div>
+                    <div class="lf-item">
+                        <span class="lf-icon">💰</span>
+                        <span>Sales Tracking</span>
+                    </div>
+                    <div class="lf-item">
+                        <span class="lf-icon">📊</span>
+                        <span>Expense Recording</span>
+                    </div>
+                    <div class="lf-item">
+                        <span class="lf-icon">📈</span>
+                        <span>Business Reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL - LOGIN FORM -->
+        <div class="login-right">
+            <div class="login-box">
+
+                <div class="login-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to your ERP dashboard</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="login-form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="admin@yaseertech.com">
+                    </div>
+
+                    <div class="login-form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-input-wrap">
+                            <input type="password" id="loginPassword" placeholder="Enter your password">
+                            <span class="toggle-password" onclick="togglePassword()">👁</span>
+                        </div>
+                    </div>
+
+                    <div class="login-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe"> Remember me
+                        </label>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign In</button>
+
+                    <div id="loginError" class="login-error" style="display:none;">
+                        ⚠️ Invalid email or password. Please try again.
+                    </div>
+
+                </form>
+
+                <div class="login-hint">
+                    <p>Demo credentials:</p>
+                    <p><strong>Email:</strong> admin@yaseertech.com</p>
+                    <p><strong>Password:</strong> yaseer2026</p>
+                </div>
+
+                <a href="index.html" class="back-to-site">← Back to Website</a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/erp.js"></script>
+</body>
+</html>

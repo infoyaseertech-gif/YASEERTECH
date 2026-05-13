@@ -1,0 +1,120 @@
+/* ============================================
+   IMAGE & LOGO ADDITIONS
+   PASTE AT THE VERY BOTTOM OF css/style.css
+============================================ */
+
+/* ========================
+   NAVBAR LOGO IMAGE
+======================== */
+.nav-logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.footer-logo-img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 16px;
+    display: block;
+    filter: brightness(0) invert(1);
+}
+
+/* ========================
+   HERO BACKGROUND IMAGE
+======================== */
+.hero {
+    position: relative;
+}
+
+.hero-image-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        rgba(10, 37, 64, 0.92) 0%,
+        rgba(10, 37, 64, 0.85) 50%,
+        rgba(26, 74, 138, 0.80) 100%);
+}
+
+.hero-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Remove old shape backgrounds since we now use real image */
+.hero-bg-shapes { display: none; }
+
+/* ========================
+   HERO LOGO CARD
+======================== */
+.hero-logo-card {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+/* ========================
+   TESTIMONIAL AUTHOR PHOTOS
+======================== */
+.author-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    flex-shrink: 0;
+    border: 2px solid var(--border);
+}
+
+.testimonial-card.featured .author-photo {
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* Remove old avatar div style when photo is used */
+.author-avatar { display: none; }
+
+/* ========================
+   ABOUT PAGE TEAM PHOTO
+======================== */
+.about-team-photo {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.about-team-photo-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.about-team-photo-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(10,37,64,0.5), transparent);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}

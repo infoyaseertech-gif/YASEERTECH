@@ -1,0 +1,152 @@
+/* ============================================
+   TESTIMONIAL FIX — Paste at BOTTOM of style.css
+   ============================================ */
+
+/* Fix testimonial card layout */
+.testimonial-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+}
+
+/* Stars */
+.testimonial-stars {
+    color: #f5a623;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+/* Quote text */
+.testimonial-text {
+    font-style: italic;
+    color: #444;
+    line-height: 1.7;
+    font-size: 0.97rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+/* Author row — avatar + name side by side */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+}
+
+/* Circular avatar — FIXED */
+.testimonial-author img {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    object-position: top center !important;
+    border: 3px solid #1a3a6b !important;
+    flex-shrink: 0;
+}
+
+/* Author name & role text */
+.testimonial-author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-author-info strong,
+.testimonial-author strong {
+    font-size: 0.95rem;
+    color: #1a3a6b;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.testimonial-author-info span,
+.testimonial-author span {
+    font-size: 0.82rem;
+    color: #888;
+    white-space: nowrap;
+}
+
+/* Grid — 3 equal columns */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   HERO IMAGE — Full-width professional banner
+   ============================================ */
+.hero {
+    background-image: linear-gradient(135deg, rgba(10, 30, 70, 0.88) 0%, rgba(26, 58, 107, 0.82) 100%),
+                      url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    min-height: 90vh;
+}
+
+/* ============================================
+   ABOUT PAGE — Team photo (mid-section)
+   ============================================ */
+.about-image-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+    max-height: 480px;
+}
+
+.about-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* ============================================
+   LOGO — Navbar logo fix
+   ============================================ */
+.navbar-logo img,
+.logo img,
+nav .logo img {
+    height: 48px !important;
+    width: auto !important;
+    max-width: 180px !important;
+    object-fit: contain !important;
+}
+
+/* If logo is text+image combo */
+.brand-logo img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ============================================
+   SERVICES PAGE — Background section image
+   ============================================ */
+.services-hero,
+.page-hero {
+    background-image: linear-gradient(135deg, rgba(10, 30, 70, 0.90) 0%, rgba(26, 58, 107, 0.85) 100%),
+                      url('../images/services-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
