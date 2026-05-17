@@ -1,0 +1,29 @@
+<!-- ============================================
+     ADD THESE LINES TO THE <head> OF EVERY HTML FILE
+     (index.html, about.html, services.html, contact.html, login.html, dashboard.html)
+     Paste them right before the closing </head> tag
+============================================ -->
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- iOS Support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="YaseerTech">
+<link rel="apple-touch-icon" href="images/logo.png">
+
+<!-- Android / Theme -->
+<meta name="theme-color" content="#0A2540">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- PWA Service Worker Registration -->
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js")
+            .then(() => console.log("YaseerTech PWA ready"))
+            .catch(err => console.log("SW error:", err));
+    });
+}
+</script>
