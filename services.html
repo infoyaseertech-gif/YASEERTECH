@@ -4,385 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services | YaseerTech</title>
-    <meta name="description" content="YaseerTech offers ICT Training, Social Media Ads, Website Design, Branding, Digital Marketing and Business Centre services in Abuja, Nigeria.">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo-link"><img src="images/logo.png" alt="YaseerTech" class="nav-logo-img"></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="nav-erp-btn">ERP Login</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+</nav>
 
-    <!-- ========================
-         NAVIGATION
-    ======================== -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html" class="active">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html" class="nav-erp-btn">ERP Login</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+<section class="page-hero">
+    <img src="images/services-bg.jpg" alt="YaseerTech Services" class="page-hero-bg-img">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">What We Offer</span>
+            <h1>Our Services</h1>
+            <p>Complete digital solutions designed to grow your business — from training to marketing to web development, all under one roof in Abuja.</p>
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Services</span></div>
+        </div>
+    </div>
+</section>
+
+<section style="padding:80px 0 0;background:var(--white);">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Everything You Need</span>
+            <h2>Digital Solutions That Actually Work</h2>
+            <p>Every service we offer is built around one goal — helping your business attract more customers, increase sales, and grow consistently.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICE 1 -->
+<section class="service-detail" id="ict-training">
+    <div class="container">
+        <div class="sd-grid">
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">🎓</span><div class="sd-icon-bg"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Social Media Marketing</span><span class="sd-tag">Website Design</span><span class="sd-tag">Graphic Design</span><span class="sd-tag">Digital Marketing</span><span class="sd-tag">Freelancing</span></div>
+            </div>
+            <div class="sd-content">
+                <span class="svc-num">01</span>
+                <h2>ICT Training & Digital Skills Development</h2>
+                <p>Practical, hands-on training programs designed to equip students, professionals, and entrepreneurs with in-demand digital skills that generate real income.</p>
+                <p>Whether you are a student looking to earn online, a business owner wanting to manage your own ads, or a professional upgrading your career — our training programs are built for you.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Social Media Marketing & Meta Ads Training</div>
+                    <div class="sd-list-item">Website Design — Beginner to Advanced</div>
+                    <div class="sd-list-item">Graphic Design & Branding</div>
+                    <div class="sd-list-item">Digital Marketing Strategies</div>
+                    <div class="sd-list-item">Freelancing & Online Income Skills</div>
+                </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20am%20interested%20in%20ICT%20Training" target="_blank" class="btn-orange">Enroll Now</a>
             </div>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <!-- ========================
-         PAGE HERO
-    ======================== -->
-    <section class="page-hero">
-        <div class="page-hero-bg">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-        </div>
-        <div class="container">
-            <div class="page-hero-content">
-                <span class="section-tag">What We Offer</span>
-                <h1>Our Services</h1>
-                <p>Complete digital solutions designed to grow your business — from training to marketing to web development, all under one roof.</p>
-                <div class="breadcrumb">
-                    <a href="index.html">Home</a>
-                    <span>›</span>
-                    <span>Services</span>
+<!-- SERVICE 2 -->
+<section class="service-detail alt-bg" id="social-media">
+    <div class="container">
+        <div class="sd-grid reverse">
+            <div class="sd-content">
+                <span class="svc-num">02</span>
+                <h2>Social Media Marketing & Meta Ads Management</h2>
+                <p>We help businesses attract customers, increase engagement, and boost sales using targeted Facebook and Instagram advertising and strategic content management.</p>
+                <p>Our ads team builds campaigns that find your exact target audience, converts them into leads, and optimizes every naira spent for maximum return.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Facebook & Instagram Ads Setup and Management</div>
+                    <div class="sd-list-item">Audience Targeting & Retargeting</div>
+                    <div class="sd-list-item">Campaign Optimization</div>
+                    <div class="sd-list-item">Lead Generation Campaigns</div>
+                    <div class="sd-list-item">Sales Funnel Setup</div>
                 </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Social%20Media%20Marketing" target="_blank" class="btn-orange">Get Started</a>
             </div>
-        </div>
-    </section>
-
-    <!-- ========================
-         SERVICES INTRO
-    ======================== -->
-    <section class="services-intro">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Everything You Need</span>
-                <h2>Digital Solutions That Actually Work</h2>
-                <p>Every service we offer is built around one goal — helping your business attract more customers, increase sales, and grow consistently.</p>
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">📣</span><div class="sd-icon-bg o"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Facebook Ads</span><span class="sd-tag">Instagram Ads</span><span class="sd-tag">Lead Generation</span><span class="sd-tag">Retargeting</span><span class="sd-tag">Sales Funnels</span></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 1: ICT TRAINING
-    ======================== -->
-    <section class="service-detail" id="ict-training">
-        <div class="container">
-            <div class="service-detail-grid">
-                <div class="service-detail-visual left-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">🎓</span>
-                        <div class="sd-icon-bg"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Social Media Marketing</div>
-                        <div class="sd-tag">Website Design</div>
-                        <div class="sd-tag">Graphic Design</div>
-                        <div class="sd-tag">Digital Marketing</div>
-                        <div class="sd-tag">Freelancing Skills</div>
-                    </div>
+<!-- SERVICE 3 -->
+<section class="service-detail" id="website-design">
+    <div class="container">
+        <div class="sd-grid">
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">🌐</span><div class="sd-icon-bg"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Business Websites</span><span class="sd-tag">E-commerce</span><span class="sd-tag">Landing Pages</span><span class="sd-tag">SEO</span><span class="sd-tag">Maintenance</span></div>
+            </div>
+            <div class="sd-content">
+                <span class="svc-num">03</span>
+                <h2>Website Design & Management</h2>
+                <p>We design professional, responsive, and high-performing websites tailored to your business needs — sites that look great and convert visitors into customers.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Business Websites</div>
+                    <div class="sd-list-item">E-commerce Websites</div>
+                    <div class="sd-list-item">Landing Pages for Ads</div>
+                    <div class="sd-list-item">Website Maintenance & Updates</div>
+                    <div class="sd-list-item">SEO Optimization</div>
                 </div>
-                <div class="service-detail-content">
-                    <span class="service-number">01</span>
-                    <h2>ICT Training & Digital Skills Development</h2>
-                    <p>We provide practical, hands-on training programs designed to equip students, professionals, and entrepreneurs with in-demand digital skills that generate real income.</p>
-                    <p>Whether you are a student looking to earn online, a business owner wanting to manage your own ads, or a professional upgrading your career — our training programs are built for you.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Social Media Marketing & Meta Ads Training</div>
-                        <div class="sdl-item">✓ Website Design — Beginner to Advanced</div>
-                        <div class="sdl-item">✓ Graphic Design & Branding</div>
-                        <div class="sdl-item">✓ Digital Marketing Strategies</div>
-                        <div class="sdl-item">✓ Freelancing & Online Income Skills</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20am%20interested%20in%20ICT%20Training" target="_blank" class="btn-primary">Enroll Now</a>
-                </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20a%20Website" target="_blank" class="btn-orange">Get a Quote</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 2: SOCIAL MEDIA
-    ======================== -->
-    <section class="service-detail alt-bg" id="social-media">
-        <div class="container">
-            <div class="service-detail-grid reverse">
-                <div class="service-detail-content">
-                    <span class="service-number">02</span>
-                    <h2>Social Media Marketing & Meta Ads Management</h2>
-                    <p>We help businesses attract customers, increase engagement, and boost sales using targeted Facebook and Instagram advertising and strategic content management.</p>
-                    <p>Our ads team builds campaigns that find your exact target audience, converts them into leads, and optimizes every naira spent for maximum return.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Facebook & Instagram Ads Setup and Management</div>
-                        <div class="sdl-item">✓ Audience Targeting & Retargeting</div>
-                        <div class="sdl-item">✓ Campaign Optimization</div>
-                        <div class="sdl-item">✓ Lead Generation Campaigns</div>
-                        <div class="sdl-item">✓ Sales Funnel Setup</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Social%20Media%20Marketing%20services" target="_blank" class="btn-primary">Get Started</a>
+<!-- SERVICE 4 -->
+<section class="service-detail alt-bg" id="branding">
+    <div class="container">
+        <div class="sd-grid reverse">
+            <div class="sd-content">
+                <span class="svc-num">04</span>
+                <h2>Graphic Design & Branding</h2>
+                <p>We create visually appealing brand identities that attract and retain customers. Your brand is the first impression — we make it count.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Logo Design</div>
+                    <div class="sd-list-item">Business Branding Kits</div>
+                    <div class="sd-list-item">Social Media Designs</div>
+                    <div class="sd-list-item">Flyers, Posters & Banners</div>
+                    <div class="sd-list-item">Corporate Identity Design</div>
                 </div>
-                <div class="service-detail-visual right-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">📣</span>
-                        <div class="sd-icon-bg orange"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Facebook Ads</div>
-                        <div class="sd-tag">Instagram Ads</div>
-                        <div class="sd-tag">Lead Generation</div>
-                        <div class="sd-tag">Retargeting</div>
-                        <div class="sd-tag">Sales Funnels</div>
-                    </div>
-                </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Branding" target="_blank" class="btn-orange">Get Started</a>
+            </div>
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">🎨</span><div class="sd-icon-bg o"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Logo Design</span><span class="sd-tag">Brand Identity</span><span class="sd-tag">Social Media</span><span class="sd-tag">Flyers</span><span class="sd-tag">Corporate Kits</span></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 3: WEBSITE DESIGN
-    ======================== -->
-    <section class="service-detail" id="website-design">
-        <div class="container">
-            <div class="service-detail-grid">
-                <div class="service-detail-visual left-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">🌐</span>
-                        <div class="sd-icon-bg"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Business Websites</div>
-                        <div class="sd-tag">E-commerce</div>
-                        <div class="sd-tag">Landing Pages</div>
-                        <div class="sd-tag">SEO Optimization</div>
-                        <div class="sd-tag">Maintenance</div>
-                    </div>
+<!-- SERVICE 5 -->
+<section class="service-detail" id="digital-marketing">
+    <div class="container">
+        <div class="sd-grid">
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">📊</span><div class="sd-icon-bg"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Paid Advertising</span><span class="sd-tag">Content Marketing</span><span class="sd-tag">Brand Awareness</span><span class="sd-tag">Conversion</span><span class="sd-tag">ROI Focused</span></div>
+            </div>
+            <div class="sd-content">
+                <span class="svc-num">05</span>
+                <h2>Digital Marketing & Advertising</h2>
+                <p>We use data-driven strategies to promote your business online and maximize your return on investment. Every campaign is tracked, measured, and optimized.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Paid Advertising (Meta Ads, etc.)</div>
+                    <div class="sd-list-item">Content Marketing</div>
+                    <div class="sd-list-item">Brand Awareness Campaigns</div>
+                    <div class="sd-list-item">Conversion Optimization</div>
+                    <div class="sd-list-item">Performance Tracking & Reports</div>
                 </div>
-                <div class="service-detail-content">
-                    <span class="service-number">03</span>
-                    <h2>Website Design & Management</h2>
-                    <p>We design professional, responsive, and high-performing websites tailored to your business needs — sites that look great and convert visitors into customers.</p>
-                    <p>From simple business websites to full e-commerce stores and landing pages for ads, we build sites that work hard for your business 24/7.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Business Websites</div>
-                        <div class="sdl-item">✓ E-commerce Websites</div>
-                        <div class="sdl-item">✓ Landing Pages for Ads</div>
-                        <div class="sdl-item">✓ Website Maintenance & Updates</div>
-                        <div class="sdl-item">✓ SEO Optimization</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20a%20Website%20Design" target="_blank" class="btn-primary">Get a Quote</a>
-                </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Digital%20Marketing" target="_blank" class="btn-orange">Get Started</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 4: BRANDING
-    ======================== -->
-    <section class="service-detail alt-bg" id="branding">
-        <div class="container">
-            <div class="service-detail-grid reverse">
-                <div class="service-detail-content">
-                    <span class="service-number">04</span>
-                    <h2>Graphic Design & Branding</h2>
-                    <p>We create visually appealing brand identities that attract and retain customers. Your brand is the first impression — we make it count.</p>
-                    <p>From logos to full corporate identity kits, we build brands that communicate professionalism, trust, and value at first glance.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Logo Design</div>
-                        <div class="sdl-item">✓ Business Branding Kits</div>
-                        <div class="sdl-item">✓ Social Media Designs</div>
-                        <div class="sdl-item">✓ Flyers, Posters & Banners</div>
-                        <div class="sdl-item">✓ Corporate Identity Design</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Branding%20services" target="_blank" class="btn-primary">Get Started</a>
+<!-- SERVICE 6 -->
+<section class="service-detail alt-bg" id="business-centre">
+    <div class="container">
+        <div class="sd-grid reverse">
+            <div class="sd-content">
+                <span class="svc-num">06</span>
+                <h2>Business Centre & Support Services</h2>
+                <p>Located at Suite TF05, Aminasia Trade Centre in Wuse 2, Abuja — we provide essential business support services for your day-to-day needs.</p>
+                <div class="sd-list">
+                    <div class="sd-list-item">Printing & Photocopying</div>
+                    <div class="sd-list-item">Typing & Documentation</div>
+                    <div class="sd-list-item">Scanning Services</div>
+                    <div class="sd-list-item">Business & Online Registrations</div>
+                    <div class="sd-list-item">Online Forms & Applications</div>
+                    <div class="sd-list-item">Digital Documentation Assistance</div>
                 </div>
-                <div class="service-detail-visual right-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">🎨</span>
-                        <div class="sd-icon-bg orange"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Logo Design</div>
-                        <div class="sd-tag">Brand Identity</div>
-                        <div class="sd-tag">Social Media</div>
-                        <div class="sd-tag">Flyers & Banners</div>
-                        <div class="sd-tag">Corporate Kits</div>
-                    </div>
-                </div>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Business%20Centre%20services" target="_blank" class="btn-orange">Visit Us</a>
+            </div>
+            <div class="sd-visual">
+                <div class="sd-icon-wrap"><span class="sd-icon-big">🖨️</span><div class="sd-icon-bg o"></div></div>
+                <div class="sd-tags"><span class="sd-tag">Printing</span><span class="sd-tag">Scanning</span><span class="sd-tag">Documentation</span><span class="sd-tag">Registrations</span><span class="sd-tag">IT Consulting</span></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 5: DIGITAL MARKETING
-    ======================== -->
-    <section class="service-detail" id="digital-marketing">
-        <div class="container">
-            <div class="service-detail-grid">
-                <div class="service-detail-visual left-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">📊</span>
-                        <div class="sd-icon-bg"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Paid Advertising</div>
-                        <div class="sd-tag">Content Marketing</div>
-                        <div class="sd-tag">Brand Awareness</div>
-                        <div class="sd-tag">Conversion Optimization</div>
-                        <div class="sd-tag">ROI Focused</div>
-                    </div>
-                </div>
-                <div class="service-detail-content">
-                    <span class="service-number">05</span>
-                    <h2>Digital Marketing & Advertising</h2>
-                    <p>We use data-driven strategies to promote your business online and maximize your return on investment. Every campaign is tracked, measured, and optimized.</p>
-                    <p>Whether you need brand awareness, lead generation, or direct sales — our digital marketing strategies are built to deliver consistent and measurable results.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Paid Advertising (Meta Ads, etc.)</div>
-                        <div class="sdl-item">✓ Content Marketing</div>
-                        <div class="sdl-item">✓ Brand Awareness Campaigns</div>
-                        <div class="sdl-item">✓ Conversion Optimization</div>
-                        <div class="sdl-item">✓ Performance Tracking & Reports</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Digital%20Marketing%20services" target="_blank" class="btn-primary">Get Started</a>
-                </div>
+<!-- CONTACT CTA -->
+<section class="pricing-cta">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Ready to Start?</span>
+            <h2>Get a Custom Quote for Your Business</h2>
+            <p>Every business is different. Contact us today and we'll build a solution tailored to your needs and budget.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="price-icon">💬</div>
+                <h3>Chat on WhatsApp</h3>
+                <p>Get an instant response. Tell us what you need and we'll give you a custom quote within minutes.</p>
+                <a href="https://wa.me/2347031052232" target="_blank" class="btn-orange">WhatsApp Us Now</a>
+            </div>
+            <div class="price-card p-featured">
+                <div class="price-badge">Most Popular</div>
+                <div class="price-icon">📞</div>
+                <h3>Call Us Directly</h3>
+                <p>Speak to our team directly and discuss your project in detail. We're available during business hours.</p>
+                <a href="tel:+2347031052232" class="btn-white-dark">Call +234 703 105 2232</a>
+            </div>
+            <div class="price-card">
+                <div class="price-icon">✉️</div>
+                <h3>Send a Message</h3>
+                <p>Fill out our contact form with your project details and we'll get back to you with a full proposal.</p>
+                <a href="contact.html" class="btn-orange">Contact Form</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         SERVICE 6: BUSINESS CENTRE
-    ======================== -->
-    <section class="service-detail alt-bg" id="business-centre">
-        <div class="container">
-            <div class="service-detail-grid reverse">
-                <div class="service-detail-content">
-                    <span class="service-number">06</span>
-                    <h2>Business Centre & Support Services</h2>
-                    <p>Located at Suite TF05, Aminasia Trade Centre in Wuse 2, Abuja — we provide essential business support services to help individuals and businesses with their day-to-day documentation and registration needs.</p>
-                    <div class="service-detail-list">
-                        <div class="sdl-item">✓ Printing & Photocopying</div>
-                        <div class="sdl-item">✓ Typing & Documentation</div>
-                        <div class="sdl-item">✓ Scanning Services</div>
-                        <div class="sdl-item">✓ Business & Online Registrations</div>
-                        <div class="sdl-item">✓ Online Forms & Applications</div>
-                        <div class="sdl-item">✓ Digital Documentation Assistance</div>
-                    </div>
-                    <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech,%20I%20need%20Business%20Centre%20services" target="_blank" class="btn-primary">Visit Us</a>
-                </div>
-                <div class="service-detail-visual right-visual">
-                    <div class="sd-icon-box">
-                        <span class="sd-big-icon">🖨️</span>
-                        <div class="sd-icon-bg orange"></div>
-                    </div>
-                    <div class="sd-tag-cards">
-                        <div class="sd-tag">Printing</div>
-                        <div class="sd-tag">Scanning</div>
-                        <div class="sd-tag">Documentation</div>
-                        <div class="sd-tag">Registrations</div>
-                        <div class="sd-tag">IT Consulting</div>
-                    </div>
-                </div>
-            </div>
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box">
+            <div class="cta-badge">🏆 Trusted by 100+ Businesses</div>
+            <h2>Ready to Grow Your Business?</h2>
+            <p>Let's build your digital presence today. Talk to us on WhatsApp or visit our office in Wuse 2, Abuja.</p>
+            <div class="cta-btns"><a href="contact.html" class="btn-white">Contact Us</a><a href="https://wa.me/2347031052232" target="_blank" class="btn-whatsapp">💬 WhatsApp Now</a></div>
+            <p class="cta-addr">📍 Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         PRICING CTA
-    ======================== -->
-    <section class="services-pricing-cta">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Ready to Start?</span>
-                <h2>Get a Custom Quote for Your Business</h2>
-                <p>Every business is different. Contact us today and we'll build a solution tailored specifically to your needs and budget.</p>
-            </div>
-            <div class="pricing-cta-cards">
-                <div class="pricing-card">
-                    <div class="pricing-icon">💬</div>
-                    <h3>Chat on WhatsApp</h3>
-                    <p>Get an instant response. Tell us what you need and we'll give you a custom quote within minutes.</p>
-                    <a href="https://wa.me/2347031052232" target="_blank" class="btn-primary">WhatsApp Us Now</a>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Most Popular</div>
-                    <div class="pricing-icon">📞</div>
-                    <h3>Call Us Directly</h3>
-                    <p>Speak to our team directly and discuss your project in detail. We're available during business hours.</p>
-                    <a href="tel:+2347031052232" class="btn-white-dark">Call +234 703 105 2232</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-icon">✉️</div>
-                    <h3>Send a Message</h3>
-                    <p>Fill out our contact form with your project details and we'll get back to you with a full proposal.</p>
-                    <a href="contact.html" class="btn-primary">Contact Form</a>
-                </div>
-            </div>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand"><img src="images/logo.png" alt="YaseerTech" class="footer-logo"><p>Driving Business Growth Through Digital Excellence.</p><p class="footer-addr">📍 Suite TF05, Aminasia Trade Centre,<br>Aminu Kano Crescent, Wuse 2, Abuja</p><a href="tel:+2347031052232" class="footer-phone">📞 +234 703 105 2232</a></div>
+            <div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="about.html">About Us</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+            <div class="footer-col"><h4>Services</h4><a href="#ict-training">ICT Training</a><a href="#social-media">Social Media Ads</a><a href="#website-design">Website Design</a><a href="#branding">Branding</a><a href="#digital-marketing">Digital Marketing</a></div>
+            <div class="footer-col"><h4>Get In Touch</h4><a href="https://wa.me/2347031052232" target="_blank" class="footer-wa-btn">💬 Chat on WhatsApp</a><a href="contact.html" class="footer-msg-btn">✉️ Send a Message</a><p class="footer-hours">Mon – Sat: 8AM – 6PM</p></div>
         </div>
-    </section>
-
-    <!-- ========================
-         CTA SECTION
-    ======================== -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-box">
-                <h2>Ready to Grow Your Business?</h2>
-                <p>Let's build your digital presence today. Talk to us on WhatsApp or visit our office in Wuse 2, Abuja.</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="btn-white">Contact Us</a>
-                    <a href="https://wa.me/2347031052232" target="_blank" class="btn-whatsapp-outline">💬 WhatsApp Now</a>
-                </div>
-                <p class="cta-address">📍 Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================
-         FOOTER
-    ======================== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="nav-logo">
-                        <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-                    </a>
-                    <p>Driving Business Growth Through Digital Excellence.</p>
-                    <p class="footer-address">📍 Suite TF05, Aminasia Trade Centre,<br>Aminu Kano Crescent, Wuse 2, Abuja</p>
-                    <p>📞 <a href="tel:+2347031052232">+234 703 105 2232</a></p>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About Us</a>
-                    <a href="services.html">Services</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <a href="services.html">ICT Training</a>
-                    <a href="services.html">Social Media Ads</a>
-                    <a href="services.html">Website Design</a>
-                    <a href="services.html">Branding</a>
-                    <a href="services.html">Digital Marketing</a>
-                </div>
-                <div class="footer-contact">
-                    <h4>Get In Touch</h4>
-                    <a href="https://wa.me/2347031052232" target="_blank" class="footer-wa-btn">💬 Chat on WhatsApp</a>
-                    <a href="contact.html" class="footer-contact-btn">✉️ Send a Message</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 YaseerTech. All Rights Reserved.</p>
-                <p>Driving Business Growth Through Digital Excellence</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+        <div class="footer-bottom"><p>© 2026 YaseerTech. All Rights Reserved.</p><p>Driving Business Growth Through Digital Excellence</p></div>
+    </div>
+</footer>
+<script src="js/main.js"></script>
 </body>
 </html>

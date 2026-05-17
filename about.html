@@ -9,352 +9,136 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo-link"><img src="images/logo.png" alt="YaseerTech" class="nav-logo-img"></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html" class="nav-erp-btn">ERP Login</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+</nav>
 
-    <!-- ========================
-         NAVIGATION
-    ======================== -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-            </a>
+<section class="page-hero">
+    <img src="images/about-team.jpg" alt="YaseerTech Team" class="page-hero-bg-img">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <span class="section-tag">Who We Are</span>
+            <h1>About YaseerTech</h1>
+            <p>A modern digital solutions company committed to helping businesses grow, scale, and succeed in today's competitive digital economy.</p>
+            <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>About</span></div>
+        </div>
+    </div>
+</section>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html" class="nav-erp-btn">ERP Login</a></li>
-            </ul>
-
-            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+<section class="about-story">
+    <div class="container">
+        <div class="story-grid">
+            <div class="story-img-stack">
+                <img src="images/about-team.jpg" alt="YaseerTech Office" class="story-img-main">
+                <div class="story-img-badge">
+                    <strong>500+</strong>
+                    <span>Businesses Helped</span>
+                </div>
+            </div>
+            <div class="story-content">
+                <span class="section-tag">Our Story</span>
+                <h2>Building the Bridge Between Businesses and Digital Growth</h2>
+                <p>YaseerTech was founded with a single clear purpose — to make digital tools accessible, practical, and effective for businesses in Nigeria and beyond.</p>
+                <p>We saw too many businesses struggling with visibility, customer reach, and digital adoption. We stepped in to bridge that gap with hands-on services, practical training, and tailored strategies that actually deliver results.</p>
+                <p>From our office at Suite TF05, Aminasia Trade Centre in Wuse 2, Abuja, we have helped hundreds of businesses transform their digital presence — from startups just getting started to established enterprises scaling up.</p>
+                <a href="contact.html" class="btn-orange" style="margin-top:12px;display:inline-block;">Work With Us</a>
             </div>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <!-- ========================
-         PAGE HERO
-    ======================== -->
-    <section class="page-hero">
-        <div class="page-hero-bg">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
+<section class="mission-vision">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">What Drives Us</span>
+            <h2>Mission, Vision & Approach</h2>
         </div>
-        <div class="container">
-            <div class="page-hero-content">
-                <span class="section-tag">Who We Are</span>
-                <h1>About YaseerTech</h1>
-                <p>A modern digital solutions company committed to helping businesses grow, scale, and succeed in today's competitive digital economy.</p>
-                <div class="breadcrumb">
-                    <a href="index.html">Home</a>
-                    <span>›</span>
-                    <span>About</span>
-                </div>
-            </div>
+        <div class="mv-grid">
+            <div class="mv-card"><div class="mv-icon">🎯</div><h3>Our Mission</h3><p>To empower businesses and individuals with the digital tools, skills, and strategies needed to achieve sustainable growth and long-term success.</p></div>
+            <div class="mv-card mv-featured"><div class="mv-icon">🚀</div><h3>Our Vision</h3><p>To become a leading digital solutions provider in Nigeria and beyond, known for excellence, innovation, and measurable impact.</p></div>
+            <div class="mv-card"><div class="mv-icon">💡</div><h3>Our Approach</h3><p>We combine technology, creativity, and strategy to deliver solutions that are not just beautiful — but built to generate real business results.</p></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         COMPANY STORY
-    ======================== -->
-    <section class="about-story">
-        <div class="container">
-            <div class="story-grid">
-                <div class="story-visual">
-                    <div class="story-card-main">
-                        <div class="story-logo-big">
-                            <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-                        </div>
-                        <p>Wuse 2, Abuja — Nigeria</p>
-                        <div class="story-badges">
-                            <span class="story-badge">📍 Abuja Based</span>
-                            <span class="story-badge">🌍 Nigeria Wide</span>
-                            <span class="story-badge">💻 Digital First</span>
-                        </div>
-                    </div>
-                    <div class="story-stat-card">
-                        <strong>500+</strong>
-                        <span>Businesses Helped</span>
-                    </div>
-                    <div class="story-stat-card orange">
-                        <strong>5+</strong>
-                        <span>Years of Excellence</span>
-                    </div>
-                </div>
-
-                <div class="story-content">
-                    <span class="section-tag">Our Story</span>
-                    <h2>Building the Bridge Between Businesses and Digital Growth</h2>
-                    <p>YaseerTech was founded with a single clear purpose — to make digital tools accessible, practical, and effective for businesses in Nigeria and beyond.</p>
-                    <p>We saw too many businesses struggling with visibility, customer reach, and digital adoption. We stepped in to bridge that gap with hands-on services, practical training, and tailored strategies that actually deliver results.</p>
-                    <p>From our office at Suite TF05, Aminasia Trade Centre in Wuse 2, Abuja, we have helped hundreds of businesses transform their digital presence — from startups just getting started to established enterprises scaling up.</p>
-                    <a href="contact.html" class="btn-primary">Work With Us</a>
-                </div>
-            </div>
+<section class="core-values">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">What We Stand For</span>
+            <h2>Our Core Values</h2>
+            <p>These values guide every project, every client relationship, and every solution we deliver.</p>
         </div>
-    </section>
-
-    <!-- ========================
-         MISSION & VISION
-    ======================== -->
-    <section class="mission-vision">
-        <div class="container">
-            <div class="mv-grid">
-
-                <div class="mv-card">
-                    <div class="mv-icon">🎯</div>
-                    <h3>Our Mission</h3>
-                    <p>To empower businesses and individuals with the digital tools, skills, and strategies needed to achieve sustainable growth and long-term success.</p>
-                </div>
-
-                <div class="mv-card featured">
-                    <div class="mv-icon">🚀</div>
-                    <h3>Our Vision</h3>
-                    <p>To become a leading digital solutions provider in Nigeria and beyond, known for excellence, innovation, and measurable impact.</p>
-                </div>
-
-                <div class="mv-card">
-                    <div class="mv-icon">💡</div>
-                    <h3>Our Approach</h3>
-                    <p>We combine technology, creativity, and strategy to deliver solutions that are not just beautiful — but built to generate real business results.</p>
-                </div>
-
-            </div>
+        <div class="values-grid">
+            <div class="val-card"><div class="val-num">01</div><h3>Results First</h3><p>Every strategy we build is focused on one thing — growing your business with measurable outcomes.</p></div>
+            <div class="val-card"><div class="val-num">02</div><h3>Integrity</h3><p>We are honest, transparent, and reliable in everything we do — no empty promises, only real commitment.</p></div>
+            <div class="val-card"><div class="val-num">03</div><h3>Innovation</h3><p>We stay ahead of digital trends to bring our clients the most effective and modern solutions available.</p></div>
+            <div class="val-card"><div class="val-num">04</div><h3>Client Partnership</h3><p>We treat every client as a long-term partner — your success is our success, always.</p></div>
+            <div class="val-card"><div class="val-num">05</div><h3>Affordability</h3><p>World-class digital solutions should not be out of reach. We make premium services accessible to every business.</p></div>
+            <div class="val-card"><div class="val-num">06</div><h3>Empowerment</h3><p>Through training and education, we equip individuals with skills that create lasting income and opportunities.</p></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         CORE VALUES
-    ======================== -->
-    <section class="core-values">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">What We Stand For</span>
-                <h2>Our Core Values</h2>
-                <p>These values guide every project, every client relationship, and every solution we deliver.</p>
-            </div>
-
-            <div class="values-grid">
-
-                <div class="value-card">
-                    <div class="value-number">01</div>
-                    <h3>Results First</h3>
-                    <p>Every strategy we build is focused on one thing — growing your business with measurable outcomes.</p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-number">02</div>
-                    <h3>Integrity</h3>
-                    <p>We are honest, transparent, and reliable in everything we do — no empty promises, only real commitment.</p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-number">03</div>
-                    <h3>Innovation</h3>
-                    <p>We stay ahead of digital trends to bring our clients the most effective and modern solutions available.</p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-number">04</div>
-                    <h3>Client Partnership</h3>
-                    <p>We treat every client as a long-term partner — your success is our success, always.</p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-number">05</div>
-                    <h3>Affordability</h3>
-                    <p>World-class digital solutions should not be out of reach. We make premium services accessible to every business.</p>
-                </div>
-
-                <div class="value-card">
-                    <div class="value-number">06</div>
-                    <h3>Empowerment</h3>
-                    <p>Through training and education, we equip individuals with skills that create lasting income and opportunities.</p>
-                </div>
-
-            </div>
+<section class="clients-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Who We Serve</span>
+            <h2>Our Target Clients</h2>
+            <p>We work with a wide range of clients across Nigeria — from individuals to large organizations.</p>
         </div>
-    </section>
-
-    <!-- ========================
-         WHY CHOOSE US
-    ======================== -->
-    <section class="about-why">
-        <div class="container">
-            <div class="about-why-grid">
-                <div class="about-why-content">
-                    <span class="section-tag">Why Choose YaseerTech</span>
-                    <h2>We Don't Just Work For You — We Work With You</h2>
-                    <p>Our team brings together expertise in digital marketing, web development, branding, and business strategy — all under one roof in Abuja.</p>
-
-                    <div class="about-why-list">
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Result-driven approach focused on business growth</span>
-                        </div>
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Professional and reliable service delivery</span>
-                        </div>
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Affordable and scalable solutions for every budget</span>
-                        </div>
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Tailored strategies built specifically for your business</span>
-                        </div>
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Practical training with real-world applications</span>
-                        </div>
-                        <div class="about-why-item">
-                            <span class="aw-icon">✓</span>
-                            <span>Deep understanding of the Nigerian business environment</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="about-why-stats">
-                    <div class="aw-stat">
-                        <h2 class="stat-number" data-target="500">0</h2>
-                        <p>Clients Served</p>
-                    </div>
-                    <div class="aw-stat orange">
-                        <h2 class="stat-number" data-target="5">0</h2>
-                        <p>Years Experience</p>
-                    </div>
-                    <div class="aw-stat">
-                        <h2 class="stat-number" data-target="98">0</h2>
-                        <p>% Satisfaction Rate</p>
-                    </div>
-                    <div class="aw-stat orange">
-                        <h2 class="stat-number" data-target="50">0</h2>
-                        <p>Projects Completed</p>
-                    </div>
-                </div>
-            </div>
+        <div class="clients-grid">
+            <div class="client-card"><div class="client-icon">🏢</div><h3>SMEs</h3><p>Small and Medium Enterprises looking to grow their digital presence and reach more customers.</p></div>
+            <div class="client-card"><div class="client-icon">🚀</div><h3>Startups</h3><p>New businesses that need a strong digital foundation — branding, website, and marketing from day one.</p></div>
+            <div class="client-card"><div class="client-icon">🏛️</div><h3>Corporate Organizations</h3><p>Established companies that need professional digital marketing and technology solutions.</p></div>
+            <div class="client-card"><div class="client-icon">🎓</div><h3>Students & Job Seekers</h3><p>Individuals who want to learn digital skills and build income streams through freelancing.</p></div>
+            <div class="client-card"><div class="client-icon">💼</div><h3>Professionals</h3><p>Working professionals and freelancers who want to upgrade their skills and expand their services.</p></div>
+            <div class="client-card"><div class="client-icon">🛒</div><h3>E-commerce Businesses</h3><p>Online sellers who need professional stores, ads, and marketing to drive consistent sales.</p></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         TARGET CLIENTS
-    ======================== -->
-    <section class="target-clients">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Who We Serve</span>
-                <h2>Our Target Clients</h2>
-                <p>We work with a wide range of clients across Nigeria — from individuals to large organizations.</p>
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-box">
+            <div class="cta-badge">🏆 Trusted by 100+ Businesses</div>
+            <h2>Ready to Grow Your Business?</h2>
+            <p>Let's build your digital presence today. Talk to us on WhatsApp or visit our office in Wuse 2, Abuja.</p>
+            <div class="cta-btns">
+                <a href="contact.html" class="btn-white">Contact Us</a>
+                <a href="https://wa.me/2347031052232" target="_blank" class="btn-whatsapp">💬 WhatsApp Now</a>
             </div>
-
-            <div class="clients-grid">
-                <div class="client-card">
-                    <div class="client-icon">🏢</div>
-                    <h3>SMEs</h3>
-                    <p>Small and Medium Enterprises looking to grow their digital presence and reach more customers.</p>
-                </div>
-                <div class="client-card">
-                    <div class="client-icon">🚀</div>
-                    <h3>Startups</h3>
-                    <p>New businesses that need a strong digital foundation — branding, website, and marketing from day one.</p>
-                </div>
-                <div class="client-card">
-                    <div class="client-icon">🏛️</div>
-                    <h3>Corporate Organizations</h3>
-                    <p>Established companies that need professional digital marketing and technology solutions.</p>
-                </div>
-                <div class="client-card">
-                    <div class="client-icon">🎓</div>
-                    <h3>Students & Job Seekers</h3>
-                    <p>Individuals who want to learn digital skills and build income streams through freelancing.</p>
-                </div>
-                <div class="client-card">
-                    <div class="client-icon">💼</div>
-                    <h3>Professionals</h3>
-                    <p>Working professionals and freelancers who want to upgrade their skills and expand their services.</p>
-                </div>
-                <div class="client-card">
-                    <div class="client-icon">🛒</div>
-                    <h3>E-commerce Businesses</h3>
-                    <p>Online sellers who need professional stores, ads, and marketing to drive consistent sales.</p>
-                </div>
-            </div>
+            <p class="cta-addr">📍 Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========================
-         CTA
-    ======================== -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-box">
-                <h2>Ready to Grow Your Business?</h2>
-                <p>Let's build your digital presence today. Talk to us on WhatsApp or visit our office in Wuse 2, Abuja.</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="btn-white">Contact Us</a>
-                    <a href="https://wa.me/2347031052232" target="_blank" class="btn-whatsapp-outline">
-                        💬 WhatsApp Now
-                    </a>
-                </div>
-                <p class="cta-address">📍 Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="YaseerTech" class="footer-logo">
+                <p>Driving Business Growth Through Digital Excellence.</p>
+                <p class="footer-addr">📍 Suite TF05, Aminasia Trade Centre,<br>Aminu Kano Crescent, Wuse 2, Abuja</p>
+                <a href="tel:+2347031052232" class="footer-phone">📞 +234 703 105 2232</a>
             </div>
+            <div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="about.html">About Us</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+            <div class="footer-col"><h4>Services</h4><a href="services.html">ICT Training</a><a href="services.html">Social Media Ads</a><a href="services.html">Website Design</a><a href="services.html">Branding</a><a href="services.html">Digital Marketing</a></div>
+            <div class="footer-col"><h4>Get In Touch</h4><a href="https://wa.me/2347031052232" target="_blank" class="footer-wa-btn">💬 Chat on WhatsApp</a><a href="contact.html" class="footer-msg-btn">✉️ Send a Message</a><p class="footer-hours">Mon – Sat: 8AM – 6PM</p></div>
         </div>
-    </section>
-
-    <!-- ========================
-         FOOTER
-    ======================== -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="nav-logo">
-                        <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-                    </a>
-                    <p>Driving Business Growth Through Digital Excellence.</p>
-                    <p class="footer-address">📍 Suite TF05, Aminasia Trade Centre,<br>Aminu Kano Crescent, Wuse 2, Abuja</p>
-                    <p>📞 <a href="tel:+2347031052232">+234 703 105 2232</a></p>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About Us</a>
-                    <a href="services.html">Services</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <a href="services.html">ICT Training</a>
-                    <a href="services.html">Social Media Ads</a>
-                    <a href="services.html">Website Design</a>
-                    <a href="services.html">Branding</a>
-                    <a href="services.html">Digital Marketing</a>
-                </div>
-
-                <div class="footer-contact">
-                    <h4>Get In Touch</h4>
-                    <a href="https://wa.me/2347031052232" target="_blank" class="footer-wa-btn">
-                        💬 Chat on WhatsApp
-                    </a>
-                    <a href="contact.html" class="footer-contact-btn">
-                        ✉️ Send a Message
-                    </a>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2026 YaseerTech. All Rights Reserved.</p>
-                <p>Driving Business Growth Through Digital Excellence</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+        <div class="footer-bottom"><p>© 2026 YaseerTech. All Rights Reserved.</p><p>Driving Business Growth Through Digital Excellence</p></div>
+    </div>
+</footer>
+<script src="js/main.js"></script>
 </body>
 </html>

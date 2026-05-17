@@ -9,440 +9,247 @@
 </head>
 <body class="erp-body">
 
-    <!-- ========================
-         HEADER
-    ======================== -->
-    <header class="erp-header">
-        <div class="erp-header-left">
-            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
-            <div class="erp-logo">
-                <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-                <span class="erp-label">ERP</span>
+<!-- HEADER -->
+<header class="erp-header">
+    <div class="erp-header-left">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="erp-logo-wrap">
+            <img src="images/logo.png" alt="YaseerTech" class="erp-header-logo">
+            <span class="erp-label">ERP</span>
+        </div>
+    </div>
+    <div class="erp-header-right">
+        <div class="erp-date" id="erpDate"></div>
+        <div class="erp-user" style="cursor:pointer" onclick="showSection('myprofile',null)">
+            <div class="erp-user-avatar" id="erpAvatar">A</div>
+            <div class="erp-user-info">
+                <strong id="erpUserName">Admin</strong>
+                <span id="erpUserRole">Administrator</span>
             </div>
         </div>
-        <div class="erp-header-right">
-            <div class="erp-date" id="erpDate"></div>
-            <div class="erp-user">
-                <div class="erp-user-avatar">A</div>
-                <div class="erp-user-info">
-                    <strong>Admin</strong>
-                    <span>YaseerTech</span>
-                </div>
-            </div>
-            <button class="erp-logout-btn" onclick="erpLogout()">Logout</button>
+        <button class="erp-logout-btn" onclick="erpLogout()">Logout</button>
+    </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="erp-sidebar" id="erpSidebar">
+    <nav class="erp-nav">
+        <a href="#" class="erp-nav-item active" onclick="showSection('overview',this)"><span class="nav-icon">📊</span> Overview</a>
+        <a href="#" class="erp-nav-item admin-only" onclick="showSection('staff',this)"><span class="nav-icon">👥</span> Staff</a>
+        <a href="#" class="erp-nav-item" onclick="showSection('sales',this)"><span class="nav-icon">💰</span> Sales</a>
+        <a href="#" class="erp-nav-item" onclick="showSection('expenses',this)"><span class="nav-icon">📋</span> Expenses</a>
+        <a href="#" class="erp-nav-item" onclick="showSection('reports',this)"><span class="nav-icon">📈</span> Reports</a>
+        <a href="#" class="erp-nav-item admin-only" onclick="showSection('users',this)"><span class="nav-icon">🔐</span> Users</a>
+        <a href="#" class="erp-nav-item admin-only" onclick="showSection('services',this)"><span class="nav-icon">⚙️</span> Services</a>
+        <a href="#" class="erp-nav-item" onclick="showSection('myprofile',this)"><span class="nav-icon">👤</span> My Profile</a>
+        <a href="index.html" class="erp-nav-item"><span class="nav-icon">🌐</span> Website</a>
+    </nav>
+</aside>
+
+<!-- MAIN -->
+<main class="erp-main" id="erpMain">
+
+    <!-- OVERVIEW -->
+    <section class="erp-section active" id="section-overview">
+        <div class="erp-section-header">
+            <div><h2>Dashboard Overview</h2><p>Welcome back. Here's your business summary.</p></div>
         </div>
-    </header>
-
-    <!-- ========================
-         SIDEBAR
-    ======================== -->
-    <aside class="erp-sidebar" id="erpSidebar">
-        <nav class="erp-nav">
-            <a href="#" class="erp-nav-item active" onclick="showSection('overview', this)">
-                <span class="nav-icon">📊</span> Overview
-            </a>
-            <a href="#" class="erp-nav-item" onclick="showSection('staff', this)">
-                <span class="nav-icon">👥</span> Staff
-            </a>
-            <a href="#" class="erp-nav-item" onclick="showSection('sales', this)">
-                <span class="nav-icon">💰</span> Sales
-            </a>
-            <a href="#" class="erp-nav-item" onclick="showSection('expenses', this)">
-                <span class="nav-icon">📋</span> Expenses
-            </a>
-            <a href="#" class="erp-nav-item" onclick="showSection('reports', this)">
-                <span class="nav-icon">📈</span> Reports
-            </a>
-            <a href="index.html" class="erp-nav-item">
-                <span class="nav-icon">🌐</span> Website
-            </a>
-        </nav>
-    </aside>
-
-    <!-- ========================
-         MAIN CONTENT
-    ======================== -->
-    <main class="erp-main" id="erpMain">
-
-        <!-- ======= OVERVIEW SECTION ======= -->
-        <section class="erp-section active" id="section-overview">
-
-            <div class="erp-section-header">
-                <h2>Dashboard Overview</h2>
-                <p>Welcome back, Admin. Here's your business summary.</p>
-            </div>
-
-            <!-- SUMMARY CARDS -->
-            <div class="erp-cards">
-                <div class="erp-card blue">
-                    <div class="erp-card-icon">👥</div>
-                    <div class="erp-card-info">
-                        <span>Total Staff</span>
-                        <h2 id="totalStaff">0</h2>
-                    </div>
-                </div>
-                <div class="erp-card green">
-                    <div class="erp-card-icon">💰</div>
-                    <div class="erp-card-info">
-                        <span>Total Sales</span>
-                        <h2 id="totalSales">₦0</h2>
-                    </div>
-                </div>
-                <div class="erp-card orange">
-                    <div class="erp-card-icon">📋</div>
-                    <div class="erp-card-info">
-                        <span>Total Expenses</span>
-                        <h2 id="totalExpenses">₦0</h2>
-                    </div>
-                </div>
-                <div class="erp-card purple">
-                    <div class="erp-card-icon">📈</div>
-                    <div class="erp-card-info">
-                        <span>Net Profit</span>
-                        <h2 id="netProfit">₦0</h2>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RECENT ACTIVITY -->
-            <div class="erp-grid-2">
-
-                <div class="erp-box">
-                    <div class="erp-box-header">
-                        <h3>Recent Sales</h3>
-                        <button onclick="showSection('sales', null)" class="erp-link-btn">View All</button>
-                    </div>
-                    <table class="erp-table">
-                        <thead>
-                            <tr>
-                                <th>Customer</th>
-                                <th>Service</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recentSalesTable">
-                            <tr><td colspan="3" class="empty-row">No sales recorded yet</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="erp-box">
-                    <div class="erp-box-header">
-                        <h3>Recent Expenses</h3>
-                        <button onclick="showSection('expenses', null)" class="erp-link-btn">View All</button>
-                    </div>
-                    <table class="erp-table">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recentExpensesTable">
-                            <tr><td colspan="3" class="empty-row">No expenses recorded yet</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ======= STAFF SECTION ======= -->
-        <section class="erp-section" id="section-staff">
-
-            <div class="erp-section-header">
-                <h2>Staff Management</h2>
-                <button class="erp-add-btn" onclick="openModal('staffModal')">+ Add Staff</button>
-            </div>
-
+        <div class="erp-cards">
+            <div class="erp-card blue"><div class="erp-card-icon">👥</div><div class="erp-card-info"><span>Total Staff</span><h2 id="totalStaff">0</h2></div></div>
+            <div class="erp-card green"><div class="erp-card-icon">💰</div><div class="erp-card-info"><span>Total Sales</span><h2 id="totalSales">₦0</h2></div></div>
+            <div class="erp-card orange"><div class="erp-card-icon">📋</div><div class="erp-card-info"><span>Total Expenses</span><h2 id="totalExpenses">₦0</h2></div></div>
+            <div class="erp-card purple"><div class="erp-card-icon">📈</div><div class="erp-card-info"><span>Net Profit</span><h2 id="netProfit">₦0</h2></div></div>
+        </div>
+        <div class="erp-grid-2">
             <div class="erp-box">
-                <table class="erp-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Phone</th>
-                            <th>Date Added</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="staffTableBody">
-                        <tr><td colspan="7" class="empty-row">No staff added yet. Click "Add Staff" to begin.</td></tr>
-                    </tbody>
-                </table>
+                <div class="erp-box-header"><h3>Recent Sales</h3><button onclick="showSection('sales',null)" class="erp-link-btn">View All</button></div>
+                <table class="erp-table"><thead><tr><th>Customer</th><th>Service</th><th>Amount</th><th>By</th></tr></thead><tbody id="recentSalesTable"></tbody></table>
             </div>
-
-            <!-- ADD STAFF MODAL -->
-            <div class="erp-modal" id="staffModal">
-                <div class="erp-modal-box">
-                    <div class="erp-modal-header">
-                        <h3>Add New Staff</h3>
-                        <button onclick="closeModal('staffModal')" class="modal-close">✕</button>
-                    </div>
-                    <div class="erp-modal-body">
-                        <div class="erp-form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="staffName" placeholder="Enter full name">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Position / Role</label>
-                            <input type="text" id="staffPosition" placeholder="e.g. Sales Officer">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" id="staffPhone" placeholder="e.g. 08012345678">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Status</label>
-                            <select id="staffStatus">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="erp-modal-footer">
-                        <button onclick="closeModal('staffModal')" class="erp-cancel-btn">Cancel</button>
-                        <button onclick="addStaff()" class="erp-save-btn">Save Staff</button>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ======= SALES SECTION ======= -->
-        <section class="erp-section" id="section-sales">
-
-            <div class="erp-section-header">
-                <h2>Sales Records</h2>
-                <button class="erp-add-btn" onclick="openModal('salesModal')">+ Add Sale</button>
-            </div>
-
-            <div class="erp-summary-row">
-                <div class="erp-summary-card">
-                    <span>Total Sales</span>
-                    <strong id="salesTotal">₦0</strong>
-                </div>
-                <div class="erp-summary-card">
-                    <span>This Month</span>
-                    <strong id="salesMonth">₦0</strong>
-                </div>
-                <div class="erp-summary-card">
-                    <span>Number of Sales</span>
-                    <strong id="salesCount">0</strong>
-                </div>
-            </div>
-
             <div class="erp-box">
-                <table class="erp-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Service</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="salesTableBody">
-                        <tr><td colspan="6" class="empty-row">No sales recorded yet. Click "Add Sale" to begin.</td></tr>
-                    </tbody>
-                </table>
+                <div class="erp-box-header"><h3>Recent Expenses</h3><button onclick="showSection('expenses',null)" class="erp-link-btn">View All</button></div>
+                <table class="erp-table"><thead><tr><th>Description</th><th>Category</th><th>Amount</th><th>By</th></tr></thead><tbody id="recentExpensesTable"></tbody></table>
             </div>
+        </div>
+    </section>
 
-            <!-- ADD SALE MODAL -->
-            <div class="erp-modal" id="salesModal">
-                <div class="erp-modal-box">
-                    <div class="erp-modal-header">
-                        <h3>Add New Sale</h3>
-                        <button onclick="closeModal('salesModal')" class="modal-close">✕</button>
-                    </div>
-                    <div class="erp-modal-body">
-                        <div class="erp-form-group">
-                            <label>Customer Name</label>
-                            <input type="text" id="saleCustomer" placeholder="Enter customer name">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Service Sold</label>
-                            <select id="saleService">
-                                <option value="">-- Select Service --</option>
-                                <option value="ICT Training">ICT Training</option>
-                                <option value="Social Media Ads">Social Media Ads</option>
-                                <option value="Website Design">Website Design</option>
-                                <option value="Branding">Branding</option>
-                                <option value="Digital Marketing">Digital Marketing</option>
-                                <option value="Business Centre">Business Centre</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Amount (₦)</label>
-                            <input type="number" id="saleAmount" placeholder="e.g. 50000">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Date</label>
-                            <input type="date" id="saleDate">
-                        </div>
-                    </div>
-                    <div class="erp-modal-footer">
-                        <button onclick="closeModal('salesModal')" class="erp-cancel-btn">Cancel</button>
-                        <button onclick="addSale()" class="erp-save-btn">Save Sale</button>
-                    </div>
+    <!-- STAFF -->
+    <section class="erp-section admin-only" id="section-staff">
+        <div class="erp-section-header"><div><h2>Staff Management</h2></div><button class="erp-add-btn" onclick="openModal('staffModal')">+ Add Staff</button></div>
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>#</th><th>Name</th><th>Position</th><th>Phone</th><th>Date Added</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody id="staffTableBody"></tbody>
+            </table>
+        </div>
+        <div class="erp-modal" id="staffModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3>Add New Staff</h3><button onclick="closeModal('staffModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <div class="erp-form-group"><label>Full Name</label><input type="text" id="staffName" placeholder="Enter full name"></div>
+                    <div class="erp-form-group"><label>Position / Role</label><input type="text" id="staffPosition" placeholder="e.g. Sales Officer"></div>
+                    <div class="erp-form-group"><label>Phone Number</label><input type="tel" id="staffPhone" placeholder="e.g. 08012345678"></div>
+                    <div class="erp-form-group"><label>Status</label><select id="staffStatus"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
                 </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('staffModal')" class="erp-cancel-btn">Cancel</button><button onclick="addStaff()" class="erp-save-btn">Save Staff</button></div>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-        <!-- ======= EXPENSES SECTION ======= -->
-        <section class="erp-section" id="section-expenses">
-
-            <div class="erp-section-header">
-                <h2>Expense Records</h2>
-                <button class="erp-add-btn" onclick="openModal('expensesModal')">+ Add Expense</button>
+    <!-- SALES -->
+    <section class="erp-section" id="section-sales">
+        <div class="erp-section-header"><div><h2>Sales Records</h2></div><button class="erp-add-btn" onclick="openModal('salesModal')">+ Add Sale</button></div>
+        <div class="erp-summary-row">
+            <div class="erp-summary-card"><span>Total Sales</span><strong id="salesTotal">₦0</strong></div>
+            <div class="erp-summary-card"><span>This Month</span><strong id="salesMonth">₦0</strong></div>
+            <div class="erp-summary-card"><span>Number of Sales</span><strong id="salesCount">0</strong></div>
+        </div>
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Service</th><th>Amount</th><th>Added By</th><th>Action</th></tr></thead>
+                <tbody id="salesTableBody"></tbody>
+            </table>
+        </div>
+        <div class="erp-modal" id="salesModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3>Add New Sale</h3><button onclick="closeModal('salesModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <div class="erp-form-group"><label>Customer Name</label><input type="text" id="saleCustomer" placeholder="Enter customer name"></div>
+                    <div class="erp-form-group"><label>Service Sold</label><select id="saleService"><option value="">-- Select Service --</option><option>ICT Training</option><option>Social Media Ads</option><option>Website Design</option><option>Branding</option><option>Digital Marketing</option><option>Business Centre</option><option>Other</option></select></div>
+                    <div class="erp-form-group"><label>Amount (₦)</label><input type="number" id="saleAmount" placeholder="e.g. 50000"></div>
+                    <div class="erp-form-group"><label>Date</label><input type="date" id="saleDate"></div>
+                </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('salesModal')" class="erp-cancel-btn">Cancel</button><button onclick="addSale()" class="erp-save-btn">Save Sale</button></div>
             </div>
+        </div>
+    </section>
 
-            <div class="erp-summary-row">
-                <div class="erp-summary-card">
-                    <span>Total Expenses</span>
-                    <strong id="expensesTotal">₦0</strong>
+    <!-- EXPENSES -->
+    <section class="erp-section" id="section-expenses">
+        <div class="erp-section-header"><div><h2>Expense Records</h2></div><button class="erp-add-btn" onclick="openModal('expensesModal')">+ Add Expense</button></div>
+        <div class="erp-summary-row">
+            <div class="erp-summary-card"><span>Total Expenses</span><strong id="expensesTotal">₦0</strong></div>
+            <div class="erp-summary-card"><span>This Month</span><strong id="expensesMonth">₦0</strong></div>
+            <div class="erp-summary-card"><span>Number of Records</span><strong id="expensesCount">0</strong></div>
+        </div>
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>#</th><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th>Added By</th><th>Action</th></tr></thead>
+                <tbody id="expensesTableBody"></tbody>
+            </table>
+        </div>
+        <div class="erp-modal" id="expensesModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3>Add New Expense</h3><button onclick="closeModal('expensesModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <div class="erp-form-group"><label>Description</label><input type="text" id="expenseDesc" placeholder="e.g. Office Supplies"></div>
+                    <div class="erp-form-group"><label>Category</label><select id="expenseCategory"><option value="">-- Select Category --</option><option>Rent</option><option>Utilities</option><option>Salaries</option><option>Equipment</option><option>Marketing</option><option>Office Supplies</option><option>Transport</option><option>Other</option></select></div>
+                    <div class="erp-form-group"><label>Amount (₦)</label><input type="number" id="expenseAmount" placeholder="e.g. 15000"></div>
+                    <div class="erp-form-group"><label>Date</label><input type="date" id="expenseDate"></div>
                 </div>
-                <div class="erp-summary-card">
-                    <span>This Month</span>
-                    <strong id="expensesMonth">₦0</strong>
-                </div>
-                <div class="erp-summary-card">
-                    <span>Number of Records</span>
-                    <strong id="expensesCount">0</strong>
-                </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('expensesModal')" class="erp-cancel-btn">Cancel</button><button onclick="addExpense()" class="erp-save-btn">Save Expense</button></div>
             </div>
+        </div>
+    </section>
 
-            <div class="erp-box">
-                <table class="erp-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="expensesTableBody">
-                        <tr><td colspan="6" class="empty-row">No expenses recorded yet. Click "Add Expense" to begin.</td></tr>
-                    </tbody>
-                </table>
+    <!-- REPORTS -->
+    <section class="erp-section" id="section-reports">
+        <div class="erp-section-header"><div><h2>Business Reports</h2></div></div>
+        <div class="erp-cards">
+            <div class="erp-card blue"><div class="erp-card-icon">👥</div><div class="erp-card-info"><span>Total Staff</span><h2 id="reportStaff">0</h2></div></div>
+            <div class="erp-card green"><div class="erp-card-icon">💰</div><div class="erp-card-info"><span>Total Revenue</span><h2 id="reportSales">₦0</h2></div></div>
+            <div class="erp-card orange"><div class="erp-card-icon">📋</div><div class="erp-card-info"><span>Total Expenses</span><h2 id="reportExpenses">₦0</h2></div></div>
+            <div class="erp-card purple"><div class="erp-card-icon">📈</div><div class="erp-card-info"><span>Net Profit</span><h2 id="reportProfit">₦0</h2></div></div>
+        </div>
+        <div class="erp-grid-2">
+            <div class="erp-box"><div class="erp-box-header"><h3>Sales by Service</h3></div><div id="salesByService" class="report-list"></div></div>
+            <div class="erp-box"><div class="erp-box-header"><h3>Sales by Staff Member</h3></div><div id="salesByStaff" class="report-list"></div></div>
+            <div class="erp-box"><div class="erp-box-header"><h3>Expenses by Category</h3></div><div id="expensesByCategory" class="report-list"></div></div>
+        </div>
+    </section>
+
+    <!-- USERS (Admin only) -->
+    <section class="erp-section admin-only" id="section-users">
+        <div class="erp-section-header"><div><h2>User Management</h2><p>Create and manage login accounts for your staff.</p></div><button class="erp-add-btn" onclick="clearUserForm();openModal('userModal')">+ Add User</button></div>
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="usersTableBody"></tbody>
+            </table>
+        </div>
+        <!-- ADD/EDIT USER MODAL -->
+        <div class="erp-modal" id="userModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3 id="userModalTitle">Add New User</h3><button onclick="closeModal('userModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <input type="hidden" id="editUserId">
+                    <div class="erp-form-group"><label>Full Name</label><input type="text" id="userName" placeholder="e.g. Ahmed Musa"></div>
+                    <div class="erp-form-group"><label>Email Address (used to login)</label><input type="email" id="userEmail" placeholder="e.g. ahmed@gmail.com"></div>
+                    <div class="erp-form-group"><label>Password <small style="color:var(--gray-text)">(leave blank when editing to keep current)</small></label><input type="password" id="userPassword" placeholder="Enter password"></div>
+                    <div class="erp-form-group"><label>Confirm Password</label><input type="password" id="userPasswordConfirm" placeholder="Confirm password"></div>
+                    <div class="erp-form-group"><label>Role</label><select id="userRole"><option value="staff">Staff</option><option value="admin">Admin</option></select></div>
+                    <div class="erp-form-group"><label>Status</label><select id="userStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+                </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('userModal')" class="erp-cancel-btn">Cancel</button><button onclick="saveUser()" class="erp-save-btn">Save User</button></div>
             </div>
-
-            <!-- ADD EXPENSE MODAL -->
-            <div class="erp-modal" id="expensesModal">
-                <div class="erp-modal-box">
-                    <div class="erp-modal-header">
-                        <h3>Add New Expense</h3>
-                        <button onclick="closeModal('expensesModal')" class="modal-close">✕</button>
-                    </div>
-                    <div class="erp-modal-body">
-                        <div class="erp-form-group">
-                            <label>Description</label>
-                            <input type="text" id="expenseDesc" placeholder="e.g. Office Supplies">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Category</label>
-                            <select id="expenseCategory">
-                                <option value="">-- Select Category --</option>
-                                <option value="Rent">Rent</option>
-                                <option value="Utilities">Utilities</option>
-                                <option value="Salaries">Salaries</option>
-                                <option value="Equipment">Equipment</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Office Supplies">Office Supplies</option>
-                                <option value="Transport">Transport</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Amount (₦)</label>
-                            <input type="number" id="expenseAmount" placeholder="e.g. 15000">
-                        </div>
-                        <div class="erp-form-group">
-                            <label>Date</label>
-                            <input type="date" id="expenseDate">
-                        </div>
-                    </div>
-                    <div class="erp-modal-footer">
-                        <button onclick="closeModal('expensesModal')" class="erp-cancel-btn">Cancel</button>
-                        <button onclick="addExpense()" class="erp-save-btn">Save Expense</button>
-                    </div>
+        </div>
+        <!-- CHANGE PASSWORD MODAL -->
+        <div class="erp-modal" id="pwModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3>Change Password</h3><button onclick="closeModal('pwModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <input type="hidden" id="pwUserId">
+                    <p style="color:var(--gray-text);font-size:13px;margin-bottom:16px;" id="pwUserLabel"></p>
+                    <div class="erp-form-group"><label>New Password</label><input type="password" id="newPassword" placeholder="Enter new password"></div>
+                    <div class="erp-form-group"><label>Confirm New Password</label><input type="password" id="newPasswordConfirm" placeholder="Confirm new password"></div>
                 </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('pwModal')" class="erp-cancel-btn">Cancel</button><button onclick="changePassword()" class="erp-save-btn">Update Password</button></div>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-        <!-- ======= REPORTS SECTION ======= -->
-        <section class="erp-section" id="section-reports">
-
-            <div class="erp-section-header">
-                <h2>Business Reports</h2>
+    <!-- SERVICES MANAGER (Admin only) -->
+    <section class="erp-section admin-only" id="section-services">
+        <div class="erp-section-header"><div><h2>Website Services Manager</h2><p>Add, edit, or remove services shown on your website.</p></div><button class="erp-add-btn" onclick="clearServiceForm();openModal('serviceModal')">+ Add Service</button></div>
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>#</th><th>Icon</th><th>Service Name</th><th>Description</th><th>Badge</th><th>Actions</th></tr></thead>
+                <tbody id="servicesTableBody"></tbody>
+            </table>
+        </div>
+        <div class="erp-modal" id="serviceModal">
+            <div class="erp-modal-box">
+                <div class="erp-modal-header"><h3 id="serviceModalTitle">Add New Service</h3><button onclick="closeModal('serviceModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body">
+                    <input type="hidden" id="editServiceId">
+                    <div class="erp-form-group"><label>Icon (Emoji)</label><input type="text" id="serviceIcon" placeholder="e.g. 🎓" maxlength="4"></div>
+                    <div class="erp-form-group"><label>Service Name</label><input type="text" id="serviceTitle" placeholder="e.g. ICT Training"></div>
+                    <div class="erp-form-group"><label>Short Description</label><input type="text" id="serviceDesc" placeholder="Brief description" maxlength="120"></div>
+                    <div class="erp-form-group"><label>Badge (optional)</label><input type="text" id="serviceBadge" placeholder="e.g. Most Popular (leave blank for none)"></div>
+                </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('serviceModal')" class="erp-cancel-btn">Cancel</button><button onclick="saveService()" class="erp-save-btn">Save Service</button></div>
             </div>
+        </div>
+    </section>
 
-            <div class="erp-cards">
-                <div class="erp-card blue">
-                    <div class="erp-card-icon">👥</div>
-                    <div class="erp-card-info">
-                        <span>Total Staff</span>
-                        <h2 id="reportStaff">0</h2>
-                    </div>
-                </div>
-                <div class="erp-card green">
-                    <div class="erp-card-icon">💰</div>
-                    <div class="erp-card-info">
-                        <span>Total Revenue</span>
-                        <h2 id="reportSales">₦0</h2>
-                    </div>
-                </div>
-                <div class="erp-card orange">
-                    <div class="erp-card-icon">📋</div>
-                    <div class="erp-card-info">
-                        <span>Total Expenses</span>
-                        <h2 id="reportExpenses">₦0</h2>
-                    </div>
-                </div>
-                <div class="erp-card purple">
-                    <div class="erp-card-icon">📈</div>
-                    <div class="erp-card-info">
-                        <span>Net Profit</span>
-                        <h2 id="reportProfit">₦0</h2>
-                    </div>
-                </div>
-            </div>
+    <!-- MY PROFILE -->
+    <section class="erp-section" id="section-myprofile">
+        <div class="erp-section-header"><div><h2>My Profile</h2><p>View your account details and change your password.</p></div></div>
+        <div class="profile-box">
+            <h3>Account Information</h3>
+            <div id="profileInfo"></div>
+        </div>
+        <div class="profile-box">
+            <h3>Change My Password</h3>
+            <div class="erp-form-group"><label>Current Password</label><input type="password" id="myOldPw" placeholder="Enter your current password"></div>
+            <div class="erp-form-group"><label>New Password</label><input type="password" id="myNewPw" placeholder="Enter new password (min 6 chars)"></div>
+            <div class="erp-form-group"><label>Confirm New Password</label><input type="password" id="myConfirmPw" placeholder="Confirm new password"></div>
+            <button onclick="changeMyPassword()" class="erp-save-btn" style="width:100%;padding:13px;">Update My Password</button>
+            <div id="myPwMsg" style="display:none;margin-top:12px;"></div>
+        </div>
+    </section>
 
-            <div class="erp-grid-2">
-                <div class="erp-box">
-                    <div class="erp-box-header">
-                        <h3>Sales by Service</h3>
-                    </div>
-                    <div id="salesByService" class="report-list">
-                        <p class="empty-row">No data yet</p>
-                    </div>
-                </div>
+</main>
 
-                <div class="erp-box">
-                    <div class="erp-box-header">
-                        <h3>Expenses by Category</h3>
-                    </div>
-                    <div id="expensesByCategory" class="report-list">
-                        <p class="empty-row">No data yet</p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
-    <script src="js/erp.js"></script>
+<script src="js/erp.js"></script>
 </body>
 </html>

@@ -9,89 +9,106 @@
 </head>
 <body class="login-page">
 
-    <div class="login-wrapper">
+<div class="login-wrapper">
 
-        <!-- LEFT PANEL -->
-        <div class="login-left">
-            <div class="login-left-content">
-                <div class="erp-logo">
-                    <span class="logo-yaseer">Yaseer</span><span class="logo-tech">Tech</span>
-                </div>
-                <h1>Business Management System</h1>
-                <p>Manage your staff, track sales, monitor expenses, and grow your business — all in one place.</p>
-
-                <div class="login-features">
-                    <div class="lf-item">
-                        <span class="lf-icon">👥</span>
-                        <span>Staff Management</span>
-                    </div>
-                    <div class="lf-item">
-                        <span class="lf-icon">💰</span>
-                        <span>Sales Tracking</span>
-                    </div>
-                    <div class="lf-item">
-                        <span class="lf-icon">📊</span>
-                        <span>Expense Recording</span>
-                    </div>
-                    <div class="lf-item">
-                        <span class="lf-icon">📈</span>
-                        <span>Business Reports</span>
-                    </div>
-                </div>
+    <!-- LEFT PANEL -->
+    <div class="login-left">
+        <div class="login-left-content">
+            <img src="images/logo.png" alt="YaseerTech" style="height:56px;width:auto;object-fit:contain;margin-bottom:28px;filter:brightness(0) invert(1);">
+            <h1>Business Management System</h1>
+            <p>Manage your staff, track sales, monitor expenses, and grow your business — all in one place.</p>
+            <div class="login-features">
+                <div class="lf-item"><span class="lf-icon">👥</span><span>Staff Management</span></div>
+                <div class="lf-item"><span class="lf-icon">💰</span><span>Sales Tracking</span></div>
+                <div class="lf-item"><span class="lf-icon">📊</span><span>Expense Recording</span></div>
+                <div class="lf-item"><span class="lf-icon">📈</span><span>Business Reports</span></div>
+                <div class="lf-item"><span class="lf-icon">🔐</span><span>User Management</span></div>
+                <div class="lf-item"><span class="lf-icon">⚙️</span><span>Services Manager</span></div>
             </div>
         </div>
+    </div>
 
-        <!-- RIGHT PANEL - LOGIN FORM -->
-        <div class="login-right">
-            <div class="login-box">
+    <!-- RIGHT PANEL -->
+    <div class="login-right">
+        <div class="login-box">
 
+            <!-- LOGIN VIEW -->
+            <div id="loginView">
                 <div class="login-header">
                     <h2>Welcome Back</h2>
-                    <p>Sign in to your ERP dashboard</p>
+                    <p>Sign in to your YaseerTech ERP</p>
                 </div>
-
-                <form id="loginForm">
-
+                <form id="loginForm" onsubmit="doLogin(event)">
                     <div class="login-form-group">
-                        <label for="loginEmail">Email Address</label>
-                        <input type="email" id="loginEmail" placeholder="admin@yaseertech.com">
+                        <label>Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" autocomplete="email" required>
                     </div>
-
                     <div class="login-form-group">
-                        <label for="loginPassword">Password</label>
+                        <label>Password</label>
                         <div class="password-input-wrap">
-                            <input type="password" id="loginPassword" placeholder="Enter your password">
-                            <span class="toggle-password" onclick="togglePassword()">👁</span>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            <span class="toggle-password" onclick="togglePw('loginPassword')">👁</span>
                         </div>
                     </div>
-
                     <div class="login-options">
                         <label class="remember-me">
                             <input type="checkbox" id="rememberMe"> Remember me
                         </label>
+                        <a href="#" class="forgot-link" onclick="showView('forgotView')">Forgot password?</a>
                     </div>
-
-                    <button type="submit" class="login-btn">Sign In</button>
-
+                    <button type="submit" class="login-btn">Sign In to Dashboard</button>
                     <div id="loginError" class="login-error" style="display:none;">
-                        ⚠️ Invalid email or password. Please try again.
+                        ⚠️ Incorrect email or password. Please try again.
                     </div>
-
                 </form>
+                <p class="login-note">Contact your administrator if you need access.</p>
+            </div>
 
-                <div class="login-hint">
-                    <p>Demo credentials:</p>
-                    <p><strong>Email:</strong> admin@yaseertech.com</p>
-                    <p><strong>Password:</strong> yaseer2026</p>
+            <!-- FORGOT PASSWORD VIEW -->
+            <div id="forgotView" style="display:none;">
+                <a href="#" class="forgot-back" onclick="showView('loginView')">← Back to Login</a>
+                <div class="login-header" style="margin-top:16px;">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email to receive a reset code.</p>
                 </div>
 
-                <a href="index.html" class="back-to-site">← Back to Website</a>
+                <!-- Step 1: Enter email -->
+                <div id="forgotStep1">
+                    <div class="login-form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="forgotEmail" placeholder="Enter your registered email">
+                    </div>
+                    <button onclick="sendResetCode()" class="login-btn">Send Reset Code</button>
+                    <div id="forgotMsg" class="reset-msg" style="display:none;"></div>
+                </div>
 
+                <!-- Step 2: Enter code + new password -->
+                <div id="forgotStep2" style="display:none;">
+                    <p class="reset-hint">A 6-digit code was sent. Enter it below.</p>
+                    <div class="login-form-group">
+                        <label>Reset Code</label>
+                        <input type="text" id="resetCode" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:6px;text-align:center;font-size:22px;font-weight:700;font-family:'Poppins',sans-serif;">
+                    </div>
+                    <div class="login-form-group">
+                        <label>New Password</label>
+                        <div class="password-input-wrap">
+                            <input type="password" id="resetNewPw" placeholder="Enter new password">
+                            <span class="toggle-password" onclick="togglePw('resetNewPw')">👁</span>
+                        </div>
+                    </div>
+                    <div class="login-form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="resetConfirmPw" placeholder="Confirm new password">
+                    </div>
+                    <button onclick="confirmReset()" class="login-btn">Update Password</button>
+                    <div id="resetMsg" class="reset-msg" style="display:none;"></div>
+                </div>
             </div>
+
         </div>
-
     </div>
+</div>
 
-    <script src="js/erp.js"></script>
+<script src="js/erp.js"></script>
 </body>
 </html>
