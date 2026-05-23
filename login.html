@@ -6,19 +6,10 @@
     <title>ERP Login | YaseerTech</title>
     <link rel="stylesheet" href="css/erp.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- PWA -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#0A2540">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="YaseerTech">
-    <link rel="apple-touch-icon" href="images/logo.png">
 </head>
 <body class="login-page">
 
 <div class="login-wrapper">
-
-    <!-- LEFT PANEL -->
     <div class="login-left">
         <div class="login-left-content">
             <img src="images/logo.png" alt="YaseerTech" style="height:56px;width:auto;object-fit:contain;margin-bottom:28px;filter:brightness(0) invert(1);">
@@ -35,7 +26,6 @@
         </div>
     </div>
 
-    <!-- RIGHT PANEL -->
     <div class="login-right">
         <div class="login-box">
 
@@ -45,10 +35,10 @@
                     <h2>Welcome Back</h2>
                     <p>Sign in to your YaseerTech ERP</p>
                 </div>
-                <form id="loginForm" onsubmit="doLogin(event)">
+                <form id="loginForm">
                     <div class="login-form-group">
                         <label>Email Address</label>
-                        <input type="email" id="loginEmail" placeholder="Enter your email" autocomplete="email" required>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
                     </div>
                     <div class="login-form-group">
                         <label>Password</label>
@@ -58,12 +48,10 @@
                         </div>
                     </div>
                     <div class="login-options">
-                        <label class="remember-me">
-                            <input type="checkbox" id="rememberMe"> Remember me
-                        </label>
-                        <a href="#" class="forgot-link" onclick="showView('forgotView')">Forgot password?</a>
+                        <label class="remember-me"><input type="checkbox" id="rememberMe"> Remember me</label>
+                        <a href="#" class="forgot-link" onclick="showForgot()">Forgot password?</a>
                     </div>
-                    <button type="submit" class="login-btn">Sign In to Dashboard</button>
+                    <button type="submit" id="loginBtn" class="login-btn">Sign In to Dashboard</button>
                     <div id="loginError" class="login-error" style="display:none;">
                         ⚠️ Incorrect email or password. Please try again.
                     </div>
@@ -73,42 +61,38 @@
 
             <!-- FORGOT PASSWORD VIEW -->
             <div id="forgotView" style="display:none;">
-                <a href="#" class="forgot-back" onclick="showView('loginView')">← Back to Login</a>
+                <a href="#" class="forgot-back" onclick="showLogin()">← Back to Login</a>
                 <div class="login-header" style="margin-top:16px;">
                     <h2>Reset Password</h2>
                     <p>Enter your email to receive a reset code.</p>
                 </div>
-
-                <!-- Step 1: Enter email -->
                 <div id="forgotStep1">
                     <div class="login-form-group">
                         <label>Email Address</label>
                         <input type="email" id="forgotEmail" placeholder="Enter your registered email">
                     </div>
                     <button onclick="sendResetCode()" class="login-btn">Send Reset Code</button>
-                    <div id="forgotMsg" class="reset-msg" style="display:none;"></div>
+                    <div id="forgotMsg" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;"></div>
                 </div>
-
-                <!-- Step 2: Enter code + new password -->
                 <div id="forgotStep2" style="display:none;">
-                    <p class="reset-hint">A 6-digit code was sent. Enter it below.</p>
+                    <p style="font-size:13px;color:#6B7280;margin-bottom:16px;">Enter the code shown and your new password.</p>
                     <div class="login-form-group">
                         <label>Reset Code</label>
-                        <input type="text" id="resetCode" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:6px;text-align:center;font-size:22px;font-weight:700;font-family:'Poppins',sans-serif;">
+                        <input type="text" id="resetCode" placeholder="6-digit code" maxlength="6" style="letter-spacing:6px;text-align:center;font-size:22px;font-weight:700;">
                     </div>
                     <div class="login-form-group">
                         <label>New Password</label>
                         <div class="password-input-wrap">
-                            <input type="password" id="resetNewPw" placeholder="Enter new password">
+                            <input type="password" id="resetNewPw" placeholder="New password">
                             <span class="toggle-password" onclick="togglePw('resetNewPw')">👁</span>
                         </div>
                     </div>
                     <div class="login-form-group">
-                        <label>Confirm New Password</label>
-                        <input type="password" id="resetConfirmPw" placeholder="Confirm new password">
+                        <label>Confirm Password</label>
+                        <input type="password" id="resetConfirmPw" placeholder="Confirm password">
                     </div>
                     <button onclick="confirmReset()" class="login-btn">Update Password</button>
-                    <div id="resetMsg" class="reset-msg" style="display:none;"></div>
+                    <div id="resetMsg" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;"></div>
                 </div>
             </div>
 
@@ -116,7 +100,187 @@
     </div>
 </div>
 
-<script src="js/erp.js"></script>
+<script>
+// ============================================
+// SUPABASE CONFIG — embedded directly in login
+// ============================================
+const SB_URL  = "https://winlgtflhwiaraniwpts.supabase.co";
+const SB_KEY  = "sb_publishable_YFngUdJcVv7uXby3US4Nbg_7OQCs3ok";
+const SB_REST = SB_URL + "/rest/v1";
+
+async function sbGet(endpoint) {
+    const res = await fetch(SB_REST + endpoint, {
+        headers: {
+            "apikey": SB_KEY,
+            "Authorization": "Bearer " + SB_KEY,
+            "Content-Type": "application/json"
+        }
+    });
+    const text = await res.text();
+    return text ? JSON.parse(text) : [];
+}
+
+async function sbPatch(endpoint, data) {
+    const res = await fetch(SB_REST + endpoint, {
+        method: "PATCH",
+        headers: {
+            "apikey": SB_KEY,
+            "Authorization": "Bearer " + SB_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+        },
+        body: JSON.stringify(data)
+    });
+    const text = await res.text();
+    return text ? JSON.parse(text) : [];
+}
+
+// Reset codes stored in memory
+const resetCodes = {};
+
+// Toggle password visibility
+function togglePw(id) {
+    const el = document.getElementById(id);
+    if (el) el.type = el.type === "password" ? "text" : "password";
+}
+
+// Show/hide views
+function showForgot() {
+    document.getElementById("loginView").style.display  = "none";
+    document.getElementById("forgotView").style.display = "block";
+}
+function showLogin() {
+    document.getElementById("forgotView").style.display = "none";
+    document.getElementById("loginView").style.display  = "block";
+}
+
+// Show message helper
+function showMsg(elId, html, type) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.innerHTML = html;
+    el.style.display    = "block";
+    el.style.background = type === "success" ? "#d1fae5" : "#fee2e2";
+    el.style.border     = "1px solid " + (type === "success" ? "#6ee7b7" : "#fca5a5");
+    el.style.color      = type === "success" ? "#065f46" : "#991b1b";
+    el.style.borderRadius = "8px";
+    el.style.padding    = "12px 16px";
+    el.style.lineHeight = "1.6";
+}
+
+// LOGIN
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email  = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const pw     = document.getElementById("loginPassword").value.trim();
+    const errBox = document.getElementById("loginError");
+    const btn    = document.getElementById("loginBtn");
+
+    errBox.style.display = "none";
+    btn.textContent      = "Signing in...";
+    btn.disabled         = true;
+
+    try {
+        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
+        const user  = users[0];
+
+        if (user && user.password === pw && user.status === "active") {
+            localStorage.setItem("yt_logged_in", "true");
+            localStorage.setItem("yt_current_user", JSON.stringify({
+                id: user.id, name: user.name, email: user.email, role: user.role
+            }));
+            window.location.href = "dashboard.html";
+        } else if (user && user.status !== "active") {
+            errBox.textContent   = "⚠️ Your account is inactive. Contact your administrator.";
+            errBox.style.display = "block";
+        } else {
+            errBox.style.display = "block";
+        }
+    } catch(err) {
+        errBox.textContent   = "⚠️ Connection error. Check your internet and try again.";
+        errBox.style.display = "block";
+        console.error("Login error:", err);
+    } finally {
+        btn.textContent = "Sign In to Dashboard";
+        btn.disabled    = false;
+    }
+});
+
+// FORGOT PASSWORD - Step 1
+async function sendResetCode() {
+    const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+    if (!email) { showMsg("forgotMsg", "⚠️ Please enter your email.", "error"); return; }
+
+    try {
+        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
+        if (!users[0]) {
+            showMsg("forgotMsg", "⚠️ No account found with that email.", "error"); return;
+        }
+
+        const code    = Math.floor(100000 + Math.random() * 900000).toString();
+        const expires = Date.now() + 15 * 60 * 1000;
+        resetCodes[email] = { code, expires };
+
+        showMsg("forgotMsg",
+            "✅ Your reset code is:<br><div style='text-align:center;margin:12px 0;'><span style='font-size:32px;font-weight:800;letter-spacing:8px;color:#0A2540;font-family:Poppins,sans-serif;'>" + code + "</span></div><small>Write this down. Valid for 15 minutes.</small>",
+            "success"
+        );
+
+        document.getElementById("forgotStep2").setAttribute("data-email", email);
+        setTimeout(function() {
+            document.getElementById("forgotStep1").style.display = "none";
+            document.getElementById("forgotStep2").style.display = "block";
+        }, 1500);
+
+    } catch(err) {
+        showMsg("forgotMsg", "⚠️ Connection error. Please try again.", "error");
+    }
+}
+
+// FORGOT PASSWORD - Step 2
+async function confirmReset() {
+    const email   = document.getElementById("forgotStep2").getAttribute("data-email");
+    const entered = document.getElementById("resetCode").value.trim();
+    const newPw   = document.getElementById("resetNewPw").value.trim();
+    const confPw  = document.getElementById("resetConfirmPw").value.trim();
+
+    const stored = resetCodes[email];
+    if (!stored || Date.now() > stored.expires) {
+        showMsg("resetMsg", "⚠️ Code expired. Please start again.", "error"); return;
+    }
+    if (entered !== stored.code) {
+        showMsg("resetMsg", "⚠️ Incorrect code. Try again.", "error"); return;
+    }
+    if (!newPw || newPw.length < 6) {
+        showMsg("resetMsg", "⚠️ Password must be at least 6 characters.", "error"); return;
+    }
+    if (newPw !== confPw) {
+        showMsg("resetMsg", "⚠️ Passwords do not match.", "error"); return;
+    }
+
+    try {
+        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
+        if (users[0]) {
+            await sbPatch("/users?id=eq." + users[0].id, { password: newPw });
+        }
+        delete resetCodes[email];
+        showMsg("resetMsg", "✅ Password updated! Taking you to login...", "success");
+        setTimeout(function() {
+            document.getElementById("forgotStep1").style.display = "block";
+            document.getElementById("forgotStep2").style.display = "none";
+            document.getElementById("forgotEmail").value  = "";
+            document.getElementById("resetCode").value    = "";
+            document.getElementById("resetNewPw").value   = "";
+            document.getElementById("resetConfirmPw").value = "";
+            showLogin();
+        }, 2000);
+    } catch(err) {
+        showMsg("resetMsg", "⚠️ Error updating password. Try again.", "error");
+    }
+}
+</script>
+
 <script src="js/pwa.js"></script>
 </body>
 </html>
