@@ -1166,3 +1166,262 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 16px;
     line-height: 1.6;
 }
+
+/* ========================
+   INVOICE STYLES
+======================== */
+.badge-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.invoice-item-row {
+    margin-bottom: 10px;
+}
+
+.inv-item-fields {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.inv-item-fields input {
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.inv-item-fields input:focus {
+    border-color: var(--orange);
+}
+
+.inv-remove-btn {
+    background: #fee2e2;
+    border: none;
+    color: #dc2626;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.inv-remove-btn:hover { background: #fca5a5; }
+
+.inv-add-item-btn {
+    background: transparent;
+    border: 1.5px dashed var(--border);
+    color: var(--gray-text);
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+
+.inv-add-item-btn:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+.inv-totals-box {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-top: 16px;
+    text-align: right;
+    border: 1px solid var(--border);
+}
+
+.inv-total-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--gray-text);
+    border-bottom: 1px solid var(--border);
+}
+
+.inv-total-row:last-child {
+    border-bottom: none;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--blue);
+    font-family: 'Poppins', sans-serif;
+    padding-top: 12px;
+}
+
+/* Invoice Preview */
+.invoice-preview-wrap {
+    padding: 32px;
+    background: var(--white);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+}
+
+.inv-logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--blue);
+}
+
+.inv-logo-text span { color: var(--orange); }
+
+.inv-company {
+    font-size: 12px;
+    color: var(--gray-text);
+    margin-top: 8px;
+    line-height: 1.7;
+}
+
+.inv-title { text-align: right; }
+
+.inv-title h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--blue);
+    font-family: 'Poppins', sans-serif;
+}
+
+.inv-title p {
+    font-size: 14px;
+    color: var(--gray-text);
+    margin-top: 4px;
+}
+
+.inv-badge {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 8px;
+}
+
+.inv-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.inv-to h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.inv-to p {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.7;
+}
+
+.inv-to strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.inv-meta p {
+    font-size: 13px;
+    color: var(--gray-text);
+    margin-bottom: 4px;
+    text-align: right;
+}
+
+.inv-meta strong { color: var(--dark); }
+
+.inv-totals { text-align: right; margin-top: 8px; }
+
+.inv-totals table {
+    width: 280px;
+    margin-left: auto;
+    border-collapse: collapse;
+}
+
+.inv-totals td {
+    padding: 7px 12px;
+    font-size: 14px;
+    border: none;
+}
+
+.inv-totals .grand td {
+    font-size: 16px;
+    font-weight: 800;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.inv-notes {
+    margin-top: 28px;
+    padding: 14px 16px;
+    background: var(--gray-light);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--gray-text);
+    border: 1px solid var(--border);
+}
+
+.inv-footer {
+    margin-top: 36px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--gray-text);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+/* Large modal for invoice */
+.erp-modal-box.modal-large {
+    max-width: 760px;
+}
+
+.erp-modal-box.modal-xl {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .inv-item-fields {
+        flex-wrap: wrap;
+    }
+    .inv-item-fields input {
+        min-width: 0;
+    }
+    .inv-header, .inv-details {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .inv-title, .inv-meta p {
+        text-align: left;
+    }
+}

@@ -42,6 +42,7 @@
         <a href="#" class="erp-nav-item admin-only" onclick="showSection('users',this)"><span class="nav-icon">🔐</span> Users</a>
         <a href="#" class="erp-nav-item admin-only" onclick="showSection('services',this)"><span class="nav-icon">⚙️</span> Services</a>
         <a href="#" class="erp-nav-item" onclick="showSection('myprofile',this)"><span class="nav-icon">👤</span> My Profile</a>
+        <a href="#" class="erp-nav-item" onclick="showSection('invoices',this)"><span class="nav-icon">🧾</span> Invoices</a>
         <a href="index.html" class="erp-nav-item"><span class="nav-icon">🌐</span> Website</a>
     </nav>
 </aside>
@@ -248,8 +249,83 @@
         </div>
     </section>
 
+    <!-- INVOICES SECTION -->
+    <section class="erp-section" id="section-invoices">
+        <div class="erp-section-header">
+            <div><h2>Invoice Manager</h2><p>Create, view and print professional invoices for your clients.</p></div>
+            <button class="erp-add-btn" onclick="initInvoiceSection();openModal('invoiceCreateModal')">+ New Invoice</button>
+        </div>
+
+        <!-- INVOICE STATS -->
+        <div id="invoiceStats" class="erp-summary-row" style="margin-bottom:24px;">
+            <div class="erp-summary-card"><span>Total Invoices</span><strong id="invStatTotal">0</strong></div>
+            <div class="erp-summary-card"><span>Total Billed</span><strong id="invStatBilled">₦0</strong></div>
+            <div class="erp-summary-card"><span>Paid</span><strong id="invStatPaid" style="color:var(--green)">₦0</strong></div>
+            <div class="erp-summary-card"><span>Pending</span><strong id="invStatPending" style="color:var(--orange)">₦0</strong></div>
+        </div>
+
+        <!-- INVOICE TABLE -->
+        <div class="erp-box">
+            <table class="erp-table">
+                <thead><tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="invoicesTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- CREATE INVOICE MODAL -->
+        <div class="erp-modal" id="invoiceCreateModal">
+            <div class="erp-modal-box modal-large">
+                <div class="erp-modal-header"><h3>Create New Invoice</h3><button onclick="closeModal('invoiceCreateModal')" class="modal-close">✕</button></div>
+                <div class="erp-modal-body" style="max-height:70vh;overflow-y:auto;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                        <div class="erp-form-group"><label>Client Name *</label><input type="text" id="invClientName" placeholder="e.g. ABC Company"></div>
+                        <div class="erp-form-group"><label>Client Email</label><input type="email" id="invClientEmail" placeholder="client@email.com"></div>
+                        <div class="erp-form-group"><label>Client Phone</label><input type="tel" id="invClientPhone" placeholder="e.g. 08012345678"></div>
+                        <div class="erp-form-group"><label>Tax Rate (%)</label><input type="number" id="invTax" value="0" min="0" max="100" oninput="calcGrandTotal()"></div>
+                        <div class="erp-form-group"><label>Invoice Date *</label><input type="date" id="invDate"></div>
+                        <div class="erp-form-group"><label>Due Date</label><input type="date" id="invDueDate"></div>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <label style="font-family:Poppins,sans-serif;font-size:13px;font-weight:600;color:var(--blue);display:block;margin-bottom:12px;">Services / Items</label>
+                        <div style="display:flex;gap:10px;font-size:12px;font-weight:600;color:var(--gray-text);padding:0 0 8px;font-family:Poppins,sans-serif;">
+                            <span style="flex:2">Description</span><span style="flex:0.5">Qty</span><span style="flex:1">Unit Price</span><span style="flex:1">Total</span>
+                        </div>
+                        <div id="invoiceItems">
+                            <div class="invoice-item-row" id="item-row-1">
+                                <div class="inv-item-fields">
+                                    <input type="text" class="inv-desc" placeholder="Description of service" style="flex:2;">
+                                    <input type="number" class="inv-qty" placeholder="Qty" value="1" min="1" style="flex:0.5;" oninput="calcItemTotal(this)">
+                                    <input type="number" class="inv-price" placeholder="Unit Price" min="0" style="flex:1;" oninput="calcItemTotal(this)">
+                                    <input type="number" class="inv-total" placeholder="Total" readonly style="flex:1;background:#f5f7fa;">
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="addInvoiceItem()" class="inv-add-item-btn">+ Add Another Item</button>
+                    </div>
+                    <div class="inv-totals-box">
+                        <div class="inv-total-row"><span>Subtotal</span><span id="invSubtotal">₦0.00</span></div>
+                        <div class="inv-total-row"><span>Tax</span><span id="invTaxAmt">₦0.00</span></div>
+                        <div class="inv-total-row"><span>TOTAL</span><span id="invGrandTotal">₦0.00</span></div>
+                    </div>
+                    <div class="erp-form-group" style="margin-top:16px;"><label>Notes (optional)</label><textarea id="invNotes" rows="2" placeholder="Payment instructions, thank you message, etc." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:Open Sans,sans-serif;font-size:14px;resize:vertical;outline:none;"></textarea></div>
+                </div>
+                <div class="erp-modal-footer"><button onclick="closeModal('invoiceCreateModal')" class="erp-cancel-btn">Cancel</button><button onclick="saveInvoice()" class="erp-save-btn">Create Invoice</button></div>
+            </div>
+        </div>
+
+        <!-- VIEW INVOICE MODAL -->
+        <div class="erp-modal" id="invoiceViewModal">
+            <div class="erp-modal-box modal-xl">
+                <div class="erp-modal-header"><h3>Invoice Preview</h3><button onclick="closeModal('invoiceViewModal')" class="modal-close">✕</button></div>
+                <div class="invoice-preview-wrap" id="invoicePreview"></div>
+                <div class="erp-modal-footer"><button onclick="closeModal('invoiceViewModal')" class="erp-cancel-btn">Close</button></div>
+            </div>
+        </div>
+    </section>
+
 </main>
 
 <script src="js/erp.js"></script>
+<script src="js/invoice.js"></script>
 </body>
 </html>

@@ -340,7 +340,7 @@ function showSection(name, link) {
         overview: renderOverview, staff: renderStaff,
         sales: renderSales, expenses: renderExpenses,
         reports: renderReports, users: renderUsers,
-        services: renderServicesManager, myprofile: renderMyProfile
+        services: renderServicesManager, myprofile: renderMyProfile, invoices: renderInvoiceSection
     };
     if (renderers[name]) renderers[name]();
     if (window.innerWidth <= 768) {
@@ -801,4 +801,24 @@ if (document.getElementById("section-overview")) {
     const ed=document.getElementById("expenseDate");
     if (sd)sd.value=today;
     if (ed)ed.value=today;
+}
+
+// ========================
+// INVOICE SECTION INIT (called from showSection)
+// ========================
+function renderInvoiceSection() {
+    if (typeof initInvoiceSection === "function") {
+        initInvoiceSection();
+    }
+    // Update invoice stats
+    const invoices = JSON.parse(localStorage.getItem("yt_invoices") || "[]");
+    const totalBilled  = invoices.reduce((s,i) => s + Number(i.total), 0);
+    const totalPaid    = invoices.filter(i => i.status === "Paid").reduce((s,i) => s + Number(i.total), 0);
+    const totalPending = invoices.filter(i => i.status !== "Paid").reduce((s,i) => s + Number(i.total), 0);
+
+    const g = id => document.getElementById(id);
+    if (g("invStatTotal"))   g("invStatTotal").textContent   = invoices.length;
+    if (g("invStatBilled"))  g("invStatBilled").textContent  = "₦" + totalBilled.toLocaleString("en-NG");
+    if (g("invStatPaid"))    g("invStatPaid").textContent    = "₦" + totalPaid.toLocaleString("en-NG");
+    if (g("invStatPending")) g("invStatPending").textContent = "₦" + totalPending.toLocaleString("en-NG");
 }
