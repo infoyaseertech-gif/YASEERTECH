@@ -43,6 +43,7 @@
         <a href="#" class="erp-nav-item admin-only" onclick="showSection('services',this)"><span class="nav-icon">⚙️</span> Services</a>
         <a href="#" class="erp-nav-item" onclick="showSection('myprofile',this)"><span class="nav-icon">👤</span> My Profile</a>
         <a href="#" class="erp-nav-item" onclick="showSection('invoices',this)"><span class="nav-icon">🧾</span> Invoices</a>
+        <a href="#" class="erp-nav-item admin-only" onclick="showSection('notifications',this)"><span class="nav-icon">🔔</span> Notifications <span id="notifBadge" style="display:none;background:#ef4444;color:white;border-radius:50%;padding:2px 7px;font-size:11px;font-weight:700;margin-left:4px;"></span></a>
         <a href="index.html" class="erp-nav-item"><span class="nav-icon">🌐</span> Website</a>
     </nav>
 </aside>
@@ -324,6 +325,11 @@
     </section>
 
 </main>
+
+    <!-- NOTIFICATIONS (Admin only) -->
+    <section class="erp-section admin-only" id="section-notifications">
+        <!-- Rendered by JS -->
+    </section>
 
 <script src="js/erp.js"></script>
 <script src="js/invoice.js"></script>

@@ -1,69 +1,50 @@
 // ============================================
 //   YASEERTECH ERP - FULL SUPABASE VERSION
-//   All data syncs across every device
+//   Real-time sync + Admin notifications
 // ============================================
 
 const SB_URL  = "https://winlgtflhwiaraniwpts.supabase.co";
 const SB_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpbmxndGZsaHdpYXJhbml3cHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxODUzMjUsImV4cCI6MjA5NDc2MTMyNX0.Co0PPWjMtNeIIa8GSqkulgytzhwbm33p718HsPMECKU";
 const SB_REST = SB_URL + "/rest/v1";
+const SB_WS   = "wss://winlgtflhwiaraniwpts.supabase.co/realtime/v1/websocket?apikey=" + SB_KEY + "&vsn=1.0.0";
 
 // ========================
 // SUPABASE HELPERS
 // ========================
 async function sbGet(endpoint) {
     const res = await fetch(SB_REST + endpoint, {
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY,
-            "Content-Type": "application/json"
-        }
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" }
     });
     const text = await res.text();
     return text ? JSON.parse(text) : [];
 }
-
 async function sbPost(endpoint, data) {
     const res = await fetch(SB_REST + endpoint, {
         method: "POST",
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
-        },
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json", "Prefer": "return=representation" },
         body: JSON.stringify(data)
     });
     const text = await res.text();
     return text ? JSON.parse(text) : [];
 }
-
 async function sbPatch(endpoint, data) {
     const res = await fetch(SB_REST + endpoint, {
         method: "PATCH",
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
-        },
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json", "Prefer": "return=representation" },
         body: JSON.stringify(data)
     });
     const text = await res.text();
     return text ? JSON.parse(text) : [];
 }
-
 async function sbDelete(endpoint) {
     await fetch(SB_REST + endpoint, {
         method: "DELETE",
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY
-        }
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY }
     });
 }
 
 // ========================
-// SERVICES (still localStorage)
+// SERVICES (localStorage)
 // ========================
 const DEFAULT_SERVICES = [
     { id:1, icon:"🎓", title:"ICT Training",            desc:"Hands-on digital skills — social media marketing, web design, graphic design, and freelancing.", badge:"" },
@@ -148,15 +129,10 @@ function showSection(name, link) {
     document.querySelectorAll(".erp-nav-item").forEach(i => i.classList.remove("active"));
     if (link) link.classList.add("active");
     const renderers = {
-        overview:  renderOverview,
-        staff:     renderStaff,
-        sales:     renderSales,
-        expenses:  renderExpenses,
-        reports:   renderReports,
-        users:     renderUsers,
-        services:  renderServicesManager,
-        myprofile: renderMyProfile,
-        invoices:  renderInvoiceSection
+        overview: renderOverview, staff: renderStaff, sales: renderSales,
+        expenses: renderExpenses, reports: renderReports, users: renderUsers,
+        services: renderServicesManager, myprofile: renderMyProfile,
+        invoices: renderInvoiceSection, notifications: renderNotifications
     };
     if (renderers[name]) renderers[name]();
     if (window.innerWidth <= 768) {
@@ -182,16 +158,240 @@ function fmtD(d) {
     if (!d) return "—";
     return new Date(d).toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" });
 }
-function showToast(msg, type="success") {
-    const t = document.createElement("div");
-    t.textContent = msg;
-    t.style.cssText = `position:fixed;top:90px;right:20px;z-index:99999;background:${type==="success"?"#10b981":"#ef4444"};color:white;padding:12px 20px;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.2);`;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3000);
-}
 function showLoading(tbodyId, cols) {
     const el = document.getElementById(tbodyId);
     if (el) el.innerHTML = `<tr><td colspan="${cols}" class="empty-row">Loading...</td></tr>`;
+}
+
+// ========================
+// TOAST NOTIFICATION
+// ========================
+function showToast(msg, type="success") {
+    const t = document.createElement("div");
+    t.textContent = msg;
+    t.style.cssText = `position:fixed;top:90px;right:20px;z-index:99999;background:${type==="success"?"#10b981":type==="info"?"#3b82f6":"#ef4444"};color:white;padding:12px 20px;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.2);max-width:320px;`;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+}
+
+// ========================
+// ADMIN POPUP NOTIFICATION
+// ========================
+function showAdminPopup(title, message, icon) {
+    const user = getCurrentUser();
+    if (!user || user.role !== "admin") return;
+
+    // Remove existing popup if any
+    const existing = document.getElementById("adminPopup");
+    if (existing) existing.remove();
+
+    const popup = document.createElement("div");
+    popup.id = "adminPopup";
+    popup.style.cssText = `
+        position:fixed;bottom:24px;right:24px;z-index:99999;
+        background:white;border-radius:16px;
+        box-shadow:0 8px 32px rgba(0,0,0,0.18);
+        padding:18px 22px;min-width:300px;max-width:360px;
+        border-left:5px solid #10b981;
+        font-family:'Poppins',sans-serif;
+        animation:slideInRight 0.4s ease;
+    `;
+    popup.innerHTML = `
+        <style>
+            @keyframes slideInRight {
+                from { transform: translateX(120%); opacity:0; }
+                to   { transform: translateX(0);    opacity:1; }
+            }
+        </style>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+            <span style="font-size:28px;line-height:1;">${icon}</span>
+            <div style="flex:1;">
+                <div style="font-weight:700;font-size:14px;color:#0A2540;margin-bottom:4px;">${title}</div>
+                <div style="font-size:13px;color:#6B7280;line-height:1.5;">${message}</div>
+                <div style="font-size:11px;color:#9CA3AF;margin-top:6px;">${new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}</div>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#9CA3AF;font-size:18px;padding:0;line-height:1;">✕</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+    setTimeout(() => { if (popup.parentElement) popup.remove(); }, 6000);
+}
+
+// ========================
+// NOTIFICATIONS STORE (Supabase)
+// ========================
+async function saveNotification(type, title, message, icon, actorName) {
+    try {
+        await sbPost("/notifications", { type, title, message, icon, actor_name: actorName, is_read: false });
+    } catch(e) { console.warn("Notification save failed:", e); }
+}
+
+async function renderNotifications() {
+    const sec = document.getElementById("section-notifications");
+    if (!sec) return;
+    try {
+        const notes = await sbGet("/notifications?order=id.desc&limit=50");
+        const unread = notes.filter(n => !n.is_read).length;
+        updateNotifBadge(unread);
+
+        sec.innerHTML = `
+            <div class="section-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 style="font-size:20px;font-weight:700;color:#0A2540;">🔔 Notifications</h2>
+                ${unread > 0 ? `<button onclick="markAllRead()" style="background:#0A2540;color:white;border:none;padding:8px 16px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;cursor:pointer;">Mark All Read</button>` : ""}
+            </div>
+            <div id="notifList">
+                ${notes.length === 0
+                    ? `<div style="text-align:center;padding:40px;color:#9CA3AF;">No notifications yet</div>`
+                    : notes.map(n => `
+                        <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;background:${n.is_read?"white":"#f0fdf4"};border-radius:12px;margin-bottom:10px;border:1px solid ${n.is_read?"#f3f4f6":"#bbf7d0"};">
+                            <span style="font-size:26px;">${n.icon||"🔔"}</span>
+                            <div style="flex:1;">
+                                <div style="font-weight:700;font-size:14px;color:#0A2540;">${n.title}</div>
+                                <div style="font-size:13px;color:#6B7280;margin-top:3px;">${n.message}</div>
+                                <div style="font-size:11px;color:#9CA3AF;margin-top:5px;">${new Date(n.created_at).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})}</div>
+                            </div>
+                            ${!n.is_read ? `<span style="width:10px;height:10px;background:#10b981;border-radius:50%;display:inline-block;margin-top:4px;flex-shrink:0;"></span>` : ""}
+                        </div>`).join("")}
+            </div>`;
+
+        // Mark all as read when viewed
+        if (unread > 0) {
+            await sbPatch("/notifications?is_read=eq.false", { is_read: true });
+            updateNotifBadge(0);
+        }
+    } catch(err) {
+        const sec = document.getElementById("section-notifications");
+        if (sec) sec.innerHTML = `<p style="color:#ef4444;padding:20px;">Error loading notifications.</p>`;
+    }
+}
+
+async function markAllRead() {
+    try {
+        await sbPatch("/notifications?is_read=eq.false", { is_read: true });
+        updateNotifBadge(0);
+        renderNotifications();
+    } catch(e) {}
+}
+
+function updateNotifBadge(count) {
+    const badge = document.getElementById("notifBadge");
+    if (!badge) return;
+    badge.textContent = count;
+    badge.style.display = count > 0 ? "inline-flex" : "none";
+}
+
+async function loadUnreadCount() {
+    const user = getCurrentUser();
+    if (!user || user.role !== "admin") return;
+    try {
+        const notes = await sbGet("/notifications?is_read=eq.false");
+        updateNotifBadge(notes.length);
+    } catch(e) {}
+}
+
+// ========================
+// REAL-TIME SYNC (Supabase Realtime)
+// ========================
+let realtimeSocket = null;
+let realtimeRef    = 1;
+
+function startRealtime() {
+    if (realtimeSocket) return;
+
+    try {
+        realtimeSocket = new WebSocket(SB_WS);
+
+        realtimeSocket.onopen = () => {
+            // Subscribe to all 4 tables
+            ["sales","expenses","staff","invoices"].forEach(table => {
+                realtimeSocket.send(JSON.stringify({
+                    topic:   "realtime:public:" + table,
+                    event:   "phx_join",
+                    payload: { config: { broadcast: { self: false }, presence: {}, postgres_changes: [{ event: "*", schema: "public", table }] }},
+                    ref:     String(realtimeRef++)
+                }));
+            });
+        };
+
+        realtimeSocket.onmessage = (event) => {
+            try {
+                const msg     = JSON.parse(event.data);
+                const payload = msg.payload;
+                if (!payload || !payload.data) return;
+
+                const { table, eventType, new: newRow } = payload.data;
+                const currentUser = getCurrentUser();
+                const actorName   = newRow ? (newRow.added_by || newRow.actor_name || "Someone") : "Someone";
+
+                // Don't notify for own actions
+                const isSelf = currentUser && actorName === currentUser.name;
+
+                // Refresh visible section
+                const activeSection = document.querySelector(".erp-section.active");
+                if (activeSection) {
+                    const id = activeSection.id;
+                    if (id === "section-sales")    renderSales();
+                    if (id === "section-expenses") renderExpenses();
+                    if (id === "section-staff")    renderStaff();
+                    if (id === "section-invoices") renderInvoiceSection();
+                    if (id === "section-overview") renderOverview();
+                    if (id === "section-reports")  renderReports();
+                }
+
+                // Always refresh overview stats silently
+                renderOverview();
+
+                // Admin popup notification (only for admin, only for others' actions)
+                if (currentUser && currentUser.role === "admin" && !isSelf) {
+                    let icon, title, message;
+                    if (table === "sales" && eventType === "INSERT") {
+                        icon    = "💰";
+                        title   = "New Sale Recorded!";
+                        message = `${actorName} added a sale${newRow.customer ? " for " + newRow.customer : ""}${newRow.amount ? " — " + fmtN(newRow.amount) : ""}`;
+                    } else if (table === "expenses" && eventType === "INSERT") {
+                        icon    = "💸";
+                        title   = "New Expense Added!";
+                        message = `${actorName} recorded${newRow.description ? ": " + newRow.description : " an expense"}${newRow.amount ? " — " + fmtN(newRow.amount) : ""}`;
+                    } else if (table === "staff" && eventType === "INSERT") {
+                        icon    = "👤";
+                        title   = "New Staff Added!";
+                        message = `${newRow.name || "A new staff member"} was added${newRow.position ? " as " + newRow.position : ""}`;
+                    } else if (table === "invoices" && eventType === "INSERT") {
+                        icon    = "🧾";
+                        title   = "New Invoice Created!";
+                        message = `Invoice ${newRow.number || ""} created for ${newRow.client_name || "a client"}${newRow.total ? " — " + fmtN(newRow.total) : ""}`;
+                    } else if (eventType === "DELETE") {
+                        icon    = "🗑️";
+                        title   = table.charAt(0).toUpperCase() + table.slice(1) + " Deleted";
+                        message = `A ${table.slice(0,-1)} record was deleted`;
+                    }
+                    if (icon) {
+                        showAdminPopup(title, message, icon);
+                        loadUnreadCount();
+                    }
+                }
+
+                // For non-admin: just show a subtle toast that data was updated
+                if (currentUser && currentUser.role !== "admin" && !isSelf) {
+                    showToast("🔄 Data updated", "info");
+                }
+
+            } catch(e) { /* ignore parse errors */ }
+        };
+
+        realtimeSocket.onclose = () => {
+            realtimeSocket = null;
+            // Reconnect after 5 seconds
+            setTimeout(startRealtime, 5000);
+        };
+
+        realtimeSocket.onerror = () => {
+            realtimeSocket = null;
+        };
+
+    } catch(e) {
+        console.warn("Realtime setup failed:", e);
+    }
 }
 
 // ========================
@@ -213,11 +413,8 @@ if (loginForm) {
             const user  = users[0] || null;
             if (user && user.password === pw && user.status === "active") {
                 const rem = document.getElementById("rememberMe");
-                if (rem && rem.checked) {
-                    localStorage.setItem("yt_rem_email", email);
-                } else {
-                    localStorage.removeItem("yt_rem_email");
-                }
+                if (rem && rem.checked) localStorage.setItem("yt_rem_email", email);
+                else localStorage.removeItem("yt_rem_email");
                 setCurrentUser(user);
                 window.location.href = "dashboard.html";
             } else if (user && user.status !== "active") {
@@ -235,8 +432,7 @@ if (loginForm) {
             btn.disabled    = false;
         }
     });
-
-    const remEmail = localStorage.getItem("yt_rem_email");
+    const remEmail   = localStorage.getItem("yt_rem_email");
     const emailInput = document.getElementById("loginEmail");
     if (remEmail && emailInput) {
         emailInput.value = remEmail;
@@ -257,94 +453,58 @@ function togglePw(id) {
 // FORGOT PASSWORD
 // ========================
 const resetStore = {};
-
+function showView(id) {
+    ["loginView","forgotView"].forEach(v => { const el = document.getElementById(v); if (el) el.style.display = "none"; });
+    const t = document.getElementById(id); if (t) t.style.display = "block";
+}
 function sendResetCode() {
     const email  = document.getElementById("forgotEmail").value.trim().toLowerCase();
     const msgBox = document.getElementById("forgotMsg");
-    showResetMsg(msgBox, "", "");
-    if (!email) { showResetMsg(msgBox, "⚠️ Please enter your email address.", "error"); return; }
+    showResetMsg(msgBox,"","");
+    if (!email) { showResetMsg(msgBox,"⚠️ Please enter your email address.","error"); return; }
     sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1").then(users => {
-        const user = users[0] || null;
-        if (!user) {
-            showResetMsg(msgBox, "⚠️ No account found with that email. Contact your administrator.", "error");
-            return;
-        }
-        const code    = Math.floor(100000 + Math.random() * 900000).toString();
-        const expires = Date.now() + 15 * 60 * 1000;
-        resetStore[email] = { code, expires };
-        showResetMsg(msgBox,
-            `✅ Your reset code is:<br>
-             <div style="margin:12px 0;text-align:center;">
-                 <span style="font-size:32px;font-weight:800;letter-spacing:8px;color:#0A2540;font-family:'Poppins',sans-serif;">${code}</span>
-             </div>
-             <small style="color:#6B7280;">Write this down. Valid for 15 minutes.</small>`,
-            "success"
-        );
+        if (!users[0]) { showResetMsg(msgBox,"⚠️ No account found with that email.","error"); return; }
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        resetStore[email] = { code, expires: Date.now() + 15*60*1000 };
+        showResetMsg(msgBox,`✅ Your reset code is:<br><div style="margin:12px 0;text-align:center;"><span style="font-size:32px;font-weight:800;letter-spacing:8px;color:#0A2540;">${code}</span></div><small style="color:#6B7280;">Valid for 15 minutes.</small>`,"success");
         document.getElementById("forgotStep2").setAttribute("data-email", email);
-        setTimeout(() => {
-            document.getElementById("forgotStep1").style.display = "none";
-            document.getElementById("forgotStep2").style.display = "block";
-        }, 1500);
-    }).catch(() => {
-        showResetMsg(msgBox, "⚠️ Connection error. Please try again.", "error");
-    });
+        setTimeout(() => { document.getElementById("forgotStep1").style.display="none"; document.getElementById("forgotStep2").style.display="block"; }, 1500);
+    }).catch(() => showResetMsg(msgBox,"⚠️ Connection error. Try again.","error"));
 }
-
 function confirmReset() {
-    const step2   = document.getElementById("forgotStep2");
-    const email   = step2.getAttribute("data-email");
-    const entered = document.getElementById("resetCode").value.trim();
-    const newPw   = document.getElementById("resetNewPw").value.trim();
-    const confPw  = document.getElementById("resetConfirmPw").value.trim();
-    const msgBox  = document.getElementById("resetMsg");
-    showResetMsg(msgBox, "", "");
+    const step2  = document.getElementById("forgotStep2");
+    const email  = step2.getAttribute("data-email");
+    const entered= document.getElementById("resetCode").value.trim();
+    const newPw  = document.getElementById("resetNewPw").value.trim();
+    const confPw = document.getElementById("resetConfirmPw").value.trim();
+    const msgBox = document.getElementById("resetMsg");
+    showResetMsg(msgBox,"","");
     const stored = resetStore[email];
-    if (!stored)                     { showResetMsg(msgBox, "⚠️ Session expired. Start again.", "error"); return; }
-    if (Date.now() > stored.expires) { showResetMsg(msgBox, "⚠️ Code expired. Request a new one.", "error"); delete resetStore[email]; return; }
-    if (entered !== stored.code)     { showResetMsg(msgBox, "⚠️ Incorrect code. Try again.", "error"); return; }
-    if (!newPw || newPw.length < 6)  { showResetMsg(msgBox, "⚠️ Password must be at least 6 characters.", "error"); return; }
-    if (newPw !== confPw)            { showResetMsg(msgBox, "⚠️ Passwords do not match.", "error"); return; }
-    sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1").then(users => {
-        const user = users[0];
-        if (user) return sbPatch("/users?id=eq." + user.id, { password: newPw });
-    }).then(() => {
-        delete resetStore[email];
-        showResetMsg(msgBox, "✅ Password updated! Taking you to login...", "success");
-        setTimeout(() => {
-            document.getElementById("forgotStep1").style.display = "block";
-            document.getElementById("forgotStep2").style.display = "none";
-            document.getElementById("forgotEmail").value   = "";
-            document.getElementById("resetCode").value     = "";
-            document.getElementById("resetNewPw").value    = "";
-            document.getElementById("resetConfirmPw").value = "";
-            showView("loginView");
-        }, 2000);
-    }).catch(() => {
-        showResetMsg(msgBox, "⚠️ Connection error. Please try again.", "error");
-    });
+    if (!stored)                    { showResetMsg(msgBox,"⚠️ Session expired.","error"); return; }
+    if (Date.now() > stored.expires){ showResetMsg(msgBox,"⚠️ Code expired.","error"); delete resetStore[email]; return; }
+    if (entered !== stored.code)    { showResetMsg(msgBox,"⚠️ Incorrect code.","error"); return; }
+    if (!newPw||newPw.length<6)     { showResetMsg(msgBox,"⚠️ Password must be at least 6 characters.","error"); return; }
+    if (newPw !== confPw)           { showResetMsg(msgBox,"⚠️ Passwords do not match.","error"); return; }
+    sbGet("/users?email=eq."+encodeURIComponent(email)+"&limit=1")
+        .then(users => { if(users[0]) return sbPatch("/users?id=eq."+users[0].id,{password:newPw}); })
+        .then(() => {
+            delete resetStore[email];
+            showResetMsg(msgBox,"✅ Password updated! Taking you to login...","success");
+            setTimeout(() => {
+                ["forgotStep1","forgotStep2"].forEach((id,i) => { document.getElementById(id).style.display = i===0?"block":"none"; });
+                ["forgotEmail","resetCode","resetNewPw","resetConfirmPw"].forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+                showView("loginView");
+            }, 2000);
+        }).catch(() => showResetMsg(msgBox,"⚠️ Connection error.","error"));
 }
-
 function showResetMsg(el, html, type) {
     if (!el) return;
-    if (!html) { el.style.display = "none"; return; }
-    el.innerHTML          = html;
-    el.style.display      = "block";
-    el.style.background   = type === "success" ? "#d1fae5" : "#fee2e2";
-    el.style.border       = "1px solid " + (type === "success" ? "#6ee7b7" : "#fca5a5");
-    el.style.color        = type === "success" ? "#065f46" : "#991b1b";
-    el.style.borderRadius = "8px";
-    el.style.padding      = "12px 16px";
-    el.style.fontSize     = "14px";
-    el.style.lineHeight   = "1.6";
-}
-
-function showView(id) {
-    ["loginView","forgotView"].forEach(v => {
-        const el = document.getElementById(v);
-        if (el) el.style.display = "none";
-    });
-    const t = document.getElementById(id);
-    if (t) t.style.display = "block";
+    if (!html) { el.style.display="none"; return; }
+    el.innerHTML=html; el.style.display="block";
+    el.style.background   = type==="success"?"#d1fae5":"#fee2e2";
+    el.style.border       = "1px solid "+(type==="success"?"#6ee7b7":"#fca5a5");
+    el.style.color        = type==="success"?"#065f46":"#991b1b";
+    el.style.borderRadius = "8px"; el.style.padding="12px 16px"; el.style.fontSize="14px"; el.style.lineHeight="1.6";
 }
 
 // ========================
@@ -353,82 +513,67 @@ function showView(id) {
 async function renderOverview() {
     try {
         const [staff, sales, expenses] = await Promise.all([
-            sbGet("/staff?order=id"),
-            sbGet("/sales?order=id"),
-            sbGet("/expenses?order=id")
+            sbGet("/staff?order=id"), sbGet("/sales?order=id"), sbGet("/expenses?order=id")
         ]);
-        const tS = sales.reduce((s,i) => s + Number(i.amount), 0);
-        const tE = expenses.reduce((s,i) => s + Number(i.amount), 0);
+        const tS = sales.reduce((s,i)=>s+Number(i.amount),0);
+        const tE = expenses.reduce((s,i)=>s+Number(i.amount),0);
         const g  = id => document.getElementById(id);
         if (g("totalStaff"))    g("totalStaff").textContent    = staff.length;
         if (g("totalSales"))    g("totalSales").textContent    = fmtN(tS);
         if (g("totalExpenses")) g("totalExpenses").textContent = fmtN(tE);
-        if (g("netProfit"))     g("netProfit").textContent     = fmtN(tS - tE);
-
+        if (g("netProfit"))     g("netProfit").textContent     = fmtN(tS-tE);
         const rST = g("recentSalesTable");
         const rs  = [...sales].reverse().slice(0,5);
-        if (rST) rST.innerHTML = rs.length === 0
-            ? `<tr><td colspan="4" class="empty-row">No sales yet</td></tr>`
-            : rs.map(s => `<tr><td>${s.customer}</td><td>${s.service}</td><td><strong>${fmtN(s.amount)}</strong></td><td>${s.added_by||"—"}</td></tr>`).join("");
-
+        if (rST) rST.innerHTML = rs.length===0 ? `<tr><td colspan="4" class="empty-row">No sales yet</td></tr>` : rs.map(s=>`<tr><td>${s.customer}</td><td>${s.service}</td><td><strong>${fmtN(s.amount)}</strong></td><td>${s.added_by||"—"}</td></tr>`).join("");
         const rET = g("recentExpensesTable");
         const re  = [...expenses].reverse().slice(0,5);
-        if (rET) rET.innerHTML = re.length === 0
-            ? `<tr><td colspan="4" class="empty-row">No expenses yet</td></tr>`
-            : re.map(e => `<tr><td>${e.description}</td><td>${e.category}</td><td><strong>${fmtN(e.amount)}</strong></td><td>${e.added_by||"—"}</td></tr>`).join("");
-    } catch(err) {
-        console.error("Overview error:", err);
-    }
+        if (rET) rET.innerHTML = re.length===0 ? `<tr><td colspan="4" class="empty-row">No expenses yet</td></tr>` : re.map(e=>`<tr><td>${e.description}</td><td>${e.category}</td><td><strong>${fmtN(e.amount)}</strong></td><td>${e.added_by||"—"}</td></tr>`).join("");
+    } catch(err) { console.error("Overview error:",err); }
 }
 
 // ========================
 // STAFF
 // ========================
 async function addStaff() {
+    const user   = getCurrentUser();
     const name   = document.getElementById("staffName").value.trim();
     const pos    = document.getElementById("staffPosition").value.trim();
     const phone  = document.getElementById("staffPhone").value.trim();
     const status = document.getElementById("staffStatus").value;
-    if (!name || !pos || !phone) { alert("Please fill all fields."); return; }
+    if (!name||!pos||!phone) { alert("Please fill all fields."); return; }
     try {
-        await sbPost("/staff", { name, position:pos, phone, status, date_added: new Date().toISOString().split("T")[0] });
+        await sbPost("/staff", { name, position:pos, phone, status, date_added:new Date().toISOString().split("T")[0] });
+        await saveNotification("staff","New Staff Added",""+name+" was added as "+pos,"👤", user?user.name:"Admin");
         closeModal("staffModal");
-        document.getElementById("staffName").value     = "";
-        document.getElementById("staffPosition").value = "";
-        document.getElementById("staffPhone").value    = "";
+        document.getElementById("staffName").value=""; document.getElementById("staffPosition").value=""; document.getElementById("staffPhone").value="";
         renderStaff(); renderOverview();
         showToast("✅ Staff added successfully!");
     } catch(err) { alert("Error adding staff. Try again."); }
 }
-
 async function deleteStaff(id) {
+    const user = getCurrentUser();
     if (!confirm("Remove this staff member?")) return;
     try {
-        await sbDelete("/staff?id=eq." + id);
-        renderStaff(); renderOverview();
-        showToast("Staff removed.");
+        await sbDelete("/staff?id=eq."+id);
+        await saveNotification("staff","Staff Removed","A staff member was removed","🗑️",user?user.name:"Admin");
+        renderStaff(); renderOverview(); showToast("Staff removed.");
     } catch(err) { alert("Error removing staff."); }
 }
-
 async function renderStaff() {
     const tbody = document.getElementById("staffTableBody");
     if (!tbody) return;
-    showLoading("staffTableBody", 7);
+    showLoading("staffTableBody",7);
     try {
         const staff = await sbGet("/staff?order=id");
-        if (staff.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="empty-row">No staff added yet.</td></tr>`; return;
-        }
-        tbody.innerHTML = staff.map((s,i) => `
+        if (staff.length===0) { tbody.innerHTML=`<tr><td colspan="7" class="empty-row">No staff added yet.</td></tr>`; return; }
+        tbody.innerHTML = staff.map((s,i)=>`
             <tr>
                 <td>${i+1}</td><td><strong>${s.name}</strong></td><td>${s.position}</td>
                 <td>${s.phone}</td><td>${fmtD(s.date_added)}</td>
                 <td><span class="badge ${s.status==="Active"?"badge-active":"badge-inactive"}">${s.status}</span></td>
                 <td><button class="erp-delete-btn" onclick="deleteStaff(${s.id})">Remove</button></td>
             </tr>`).join("");
-    } catch(err) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-row">Error loading staff.</td></tr>`;
-    }
+    } catch(err) { tbody.innerHTML=`<tr><td colspan="7" class="empty-row">Error loading staff.</td></tr>`; }
 }
 
 // ========================
@@ -440,67 +585,50 @@ async function addSale() {
     const service  = document.getElementById("saleService").value;
     const amount   = document.getElementById("saleAmount").value.trim();
     const date     = document.getElementById("saleDate").value;
-    if (!customer || !service || !amount || !date) { alert("Please fill all fields."); return; }
+    if (!customer||!service||!amount||!date) { alert("Please fill all fields."); return; }
     try {
-        await sbPost("/sales", {
-            customer, service, amount: Number(amount), date,
-            added_by:   user ? user.name : "Unknown",
-            added_role: user ? user.role : "unknown"
-        });
+        await sbPost("/sales", { customer, service, amount:Number(amount), date, added_by:user?user.name:"Unknown", added_role:user?user.role:"unknown" });
+        await saveNotification("sale","New Sale Recorded",`${user?user.name:"Staff"} added a sale for ${customer} — ${fmtN(amount)}`,"💰",user?user.name:"Staff");
         closeModal("salesModal");
-        document.getElementById("saleCustomer").value = "";
-        document.getElementById("saleService").value  = "";
-        document.getElementById("saleAmount").value   = "";
+        document.getElementById("saleCustomer").value=""; document.getElementById("saleService").value=""; document.getElementById("saleAmount").value="";
         renderSales(); renderOverview();
         showToast("✅ Sale recorded successfully!");
     } catch(err) { alert("Error saving sale. Try again."); }
 }
-
 async function deleteSale(id) {
     const user = getCurrentUser();
-    if (user.role !== "admin") { alert("Only Admin can delete."); return; }
+    if (user.role!=="admin") { alert("Only Admin can delete."); return; }
     if (!confirm("Delete this sale?")) return;
     try {
-        await sbDelete("/sales?id=eq." + id);
+        await sbDelete("/sales?id=eq."+id);
+        await saveNotification("sale","Sale Deleted","A sale record was deleted","🗑️",user?user.name:"Admin");
         renderSales(); renderOverview();
     } catch(err) { alert("Error deleting sale."); }
 }
-
 async function renderSales() {
     const tbody = document.getElementById("salesTableBody");
     const user  = getCurrentUser();
     if (!tbody) return;
-    showLoading("salesTableBody", 7);
+    showLoading("salesTableBody",7);
     try {
         const sales = await sbGet("/sales?order=id.desc");
-        const total = sales.reduce((s,i) => s + Number(i.amount), 0);
+        const total = sales.reduce((s,i)=>s+Number(i.amount),0);
         const now   = new Date();
-        const month = sales.filter(s => {
-            const d = new Date(s.date);
-            return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-        }).reduce((s,i) => s + Number(i.amount), 0);
-
-        const g = id => document.getElementById(id);
-        if (g("salesTotal")) g("salesTotal").textContent = fmtN(total);
-        if (g("salesMonth")) g("salesMonth").textContent = fmtN(month);
-        if (g("salesCount")) g("salesCount").textContent = sales.length;
-
-        if (sales.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="empty-row">No sales yet.</td></tr>`; return;
-        }
-        tbody.innerHTML = sales.map((s,i) => `
+        const month = sales.filter(s=>{const d=new Date(s.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce((s,i)=>s+Number(i.amount),0);
+        const g = id=>document.getElementById(id);
+        if(g("salesTotal"))g("salesTotal").textContent=fmtN(total);
+        if(g("salesMonth"))g("salesMonth").textContent=fmtN(month);
+        if(g("salesCount"))g("salesCount").textContent=sales.length;
+        if(sales.length===0){tbody.innerHTML=`<tr><td colspan="7" class="empty-row">No sales yet.</td></tr>`;return;}
+        tbody.innerHTML=sales.map((s,i)=>`
             <tr>
                 <td>${i+1}</td><td>${fmtD(s.date)}</td>
                 <td><strong>${s.customer}</strong></td><td>${s.service}</td>
                 <td><strong style="color:var(--green)">${fmtN(s.amount)}</strong></td>
                 <td><span class="added-by-tag ${s.added_role==="admin"?"by-admin":"by-staff"}">${s.added_by||"Unknown"}</span></td>
-                <td>${user&&user.role==="admin"
-                    ? `<button class="erp-delete-btn" onclick="deleteSale(${s.id})">Delete</button>`
-                    : `—`}</td>
+                <td>${user&&user.role==="admin"?`<button class="erp-delete-btn" onclick="deleteSale(${s.id})">Delete</button>`:`—`}</td>
             </tr>`).join("");
-    } catch(err) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-row">Error loading sales.</td></tr>`;
-    }
+    } catch(err) { tbody.innerHTML=`<tr><td colspan="7" class="empty-row">Error loading sales.</td></tr>`; }
 }
 
 // ========================
@@ -512,67 +640,50 @@ async function addExpense() {
     const category = document.getElementById("expenseCategory").value;
     const amount   = document.getElementById("expenseAmount").value.trim();
     const date     = document.getElementById("expenseDate").value;
-    if (!desc || !category || !amount || !date) { alert("Please fill all fields."); return; }
+    if (!desc||!category||!amount||!date) { alert("Please fill all fields."); return; }
     try {
-        await sbPost("/expenses", {
-            description: desc, category, amount: Number(amount), date,
-            added_by:   user ? user.name : "Unknown",
-            added_role: user ? user.role : "unknown"
-        });
+        await sbPost("/expenses", { description:desc, category, amount:Number(amount), date, added_by:user?user.name:"Unknown", added_role:user?user.role:"unknown" });
+        await saveNotification("expense","New Expense Recorded",`${user?user.name:"Staff"} added: ${desc} — ${fmtN(amount)}`,"💸",user?user.name:"Staff");
         closeModal("expensesModal");
-        document.getElementById("expenseDesc").value     = "";
-        document.getElementById("expenseCategory").value = "";
-        document.getElementById("expenseAmount").value   = "";
+        document.getElementById("expenseDesc").value=""; document.getElementById("expenseCategory").value=""; document.getElementById("expenseAmount").value="";
         renderExpenses(); renderOverview();
         showToast("✅ Expense recorded successfully!");
     } catch(err) { alert("Error saving expense. Try again."); }
 }
-
 async function deleteExpense(id) {
     const user = getCurrentUser();
-    if (user.role !== "admin") { alert("Only Admin can delete."); return; }
+    if (user.role!=="admin") { alert("Only Admin can delete."); return; }
     if (!confirm("Delete this expense?")) return;
     try {
-        await sbDelete("/expenses?id=eq." + id);
+        await sbDelete("/expenses?id=eq."+id);
+        await saveNotification("expense","Expense Deleted","An expense record was deleted","🗑️",user?user.name:"Admin");
         renderExpenses(); renderOverview();
     } catch(err) { alert("Error deleting expense."); }
 }
-
 async function renderExpenses() {
     const tbody = document.getElementById("expensesTableBody");
     const user  = getCurrentUser();
     if (!tbody) return;
-    showLoading("expensesTableBody", 7);
+    showLoading("expensesTableBody",7);
     try {
         const expenses = await sbGet("/expenses?order=id.desc");
-        const total    = expenses.reduce((s,i) => s + Number(i.amount), 0);
+        const total    = expenses.reduce((s,i)=>s+Number(i.amount),0);
         const now      = new Date();
-        const month    = expenses.filter(e => {
-            const d = new Date(e.date);
-            return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-        }).reduce((s,i) => s + Number(i.amount), 0);
-
-        const g = id => document.getElementById(id);
-        if (g("expensesTotal")) g("expensesTotal").textContent = fmtN(total);
-        if (g("expensesMonth")) g("expensesMonth").textContent = fmtN(month);
-        if (g("expensesCount")) g("expensesCount").textContent = expenses.length;
-
-        if (expenses.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="empty-row">No expenses yet.</td></tr>`; return;
-        }
-        tbody.innerHTML = expenses.map((e,i) => `
+        const month    = expenses.filter(e=>{const d=new Date(e.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce((s,i)=>s+Number(i.amount),0);
+        const g=id=>document.getElementById(id);
+        if(g("expensesTotal"))g("expensesTotal").textContent=fmtN(total);
+        if(g("expensesMonth"))g("expensesMonth").textContent=fmtN(month);
+        if(g("expensesCount"))g("expensesCount").textContent=expenses.length;
+        if(expenses.length===0){tbody.innerHTML=`<tr><td colspan="7" class="empty-row">No expenses yet.</td></tr>`;return;}
+        tbody.innerHTML=expenses.map((e,i)=>`
             <tr>
                 <td>${i+1}</td><td>${fmtD(e.date)}</td>
                 <td><strong>${e.description}</strong></td><td>${e.category}</td>
                 <td><strong style="color:var(--orange)">${fmtN(e.amount)}</strong></td>
                 <td><span class="added-by-tag ${e.added_role==="admin"?"by-admin":"by-staff"}">${e.added_by||"Unknown"}</span></td>
-                <td>${user&&user.role==="admin"
-                    ? `<button class="erp-delete-btn" onclick="deleteExpense(${e.id})">Delete</button>`
-                    : `—`}</td>
+                <td>${user&&user.role==="admin"?`<button class="erp-delete-btn" onclick="deleteExpense(${e.id})">Delete</button>`:`—`}</td>
             </tr>`).join("");
-    } catch(err) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-row">Error loading expenses.</td></tr>`;
-    }
+    } catch(err) { tbody.innerHTML=`<tr><td colspan="7" class="empty-row">Error loading expenses.</td></tr>`; }
 }
 
 // ========================
@@ -580,49 +691,39 @@ async function renderExpenses() {
 // ========================
 async function renderReports() {
     try {
-        const [staff, sales, expenses] = await Promise.all([
-            sbGet("/staff?order=id"),
-            sbGet("/sales?order=id"),
-            sbGet("/expenses?order=id")
-        ]);
-        const tS = sales.reduce((s,i) => s + Number(i.amount), 0);
-        const tE = expenses.reduce((s,i) => s + Number(i.amount), 0);
-        const g  = id => document.getElementById(id);
-        if (g("reportStaff"))    g("reportStaff").textContent    = staff.length;
-        if (g("reportSales"))    g("reportSales").textContent    = fmtN(tS);
-        if (g("reportExpenses")) g("reportExpenses").textContent = fmtN(tE);
-        if (g("reportProfit"))   g("reportProfit").textContent   = fmtN(tS - tE);
-
-        function buildReport(elId, list, key) {
-            const el = document.getElementById(elId); if (!el) return;
-            const map = {};
-            list.forEach(i => { const k = i[key]||"Unknown"; map[k] = (map[k]||0) + Number(i.amount); });
-            const entries = Object.entries(map);
-            el.innerHTML = entries.length === 0
-                ? `<p class="empty-row">No data yet</p>`
-                : entries.sort((a,b) => b[1]-a[1]).map(([k,v]) =>
-                    `<div class="report-item"><strong>${k}</strong><span>${fmtN(v)}</span></div>`).join("");
+        const [staff,sales,expenses] = await Promise.all([sbGet("/staff?order=id"),sbGet("/sales?order=id"),sbGet("/expenses?order=id")]);
+        const tS=sales.reduce((s,i)=>s+Number(i.amount),0);
+        const tE=expenses.reduce((s,i)=>s+Number(i.amount),0);
+        const g=id=>document.getElementById(id);
+        if(g("reportStaff"))g("reportStaff").textContent=staff.length;
+        if(g("reportSales"))g("reportSales").textContent=fmtN(tS);
+        if(g("reportExpenses"))g("reportExpenses").textContent=fmtN(tE);
+        if(g("reportProfit"))g("reportProfit").textContent=fmtN(tS-tE);
+        function buildReport(elId,list,key){
+            const el=document.getElementById(elId);if(!el)return;
+            const map={};
+            list.forEach(i=>{const k=i[key]||"Unknown";map[k]=(map[k]||0)+Number(i.amount);});
+            const entries=Object.entries(map);
+            el.innerHTML=entries.length===0?`<p class="empty-row">No data yet</p>`:entries.sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="report-item"><strong>${k}</strong><span>${fmtN(v)}</span></div>`).join("");
         }
-        buildReport("salesByService",     sales,    "service");
-        buildReport("salesByStaff",       sales,    "added_by");
-        buildReport("expensesByCategory", expenses, "category");
-    } catch(err) { console.error("Reports error:", err); }
+        buildReport("salesByService",sales,"service");
+        buildReport("salesByStaff",sales,"added_by");
+        buildReport("expensesByCategory",expenses,"category");
+    } catch(err) { console.error("Reports error:",err); }
 }
 
 // ========================
 // USER MANAGEMENT
 // ========================
 async function renderUsers() {
-    const tbody = document.getElementById("usersTableBody");
+    const tbody=document.getElementById("usersTableBody");
     if (!tbody) return;
-    showLoading("usersTableBody", 6);
+    showLoading("usersTableBody",6);
     try {
-        const users   = await sbGet("/users?order=id");
-        const current = getCurrentUser();
-        if (users.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="empty-row">No users found.</td></tr>`; return;
-        }
-        tbody.innerHTML = users.map((u,i) => `
+        const users=await sbGet("/users?order=id");
+        const current=getCurrentUser();
+        if(users.length===0){tbody.innerHTML=`<tr><td colspan="6" class="empty-row">No users found.</td></tr>`;return;}
+        tbody.innerHTML=users.map((u,i)=>`
             <tr>
                 <td>${i+1}</td><td><strong>${u.name}</strong></td><td>${u.email}</td>
                 <td><span class="badge ${u.role==="admin"?"badge-active":"badge-staff"}">${u.role==="admin"?"Admin":"Staff"}</span></td>
@@ -630,263 +731,209 @@ async function renderUsers() {
                 <td class="action-btns">
                     <button class="erp-edit-btn" onclick="openEditUser(${u.id})">Edit</button>
                     <button class="erp-pw-btn"   onclick="openChangePw(${u.id})">Change PW</button>
-                    ${u.id===current.id
-                        ? `<span style="font-size:11px;color:var(--gray-text)">You</span>`
-                        : `<button class="erp-delete-btn" onclick="deleteUser(${u.id})">Delete</button>`}
+                    ${u.id===current.id?`<span style="font-size:11px;color:var(--gray-text)">You</span>`:`<button class="erp-delete-btn" onclick="deleteUser(${u.id})">Delete</button>`}
                 </td>
             </tr>`).join("");
-    } catch(err) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty-row">Error loading users.</td></tr>`;
-    }
+    } catch(err) { tbody.innerHTML=`<tr><td colspan="6" class="empty-row">Error loading users.</td></tr>`; }
 }
-
 async function saveUser() {
-    const id     = document.getElementById("editUserId").value;
-    const name   = document.getElementById("userName").value.trim();
-    const email  = document.getElementById("userEmail").value.trim().toLowerCase();
-    const pw     = document.getElementById("userPassword").value.trim();
-    const pwC    = document.getElementById("userPasswordConfirm").value.trim();
-    const role   = document.getElementById("userRole").value;
-    const status = document.getElementById("userStatus").value;
-    if (!name || !email) { alert("Name and email are required."); return; }
+    const id=document.getElementById("editUserId").value;
+    const name=document.getElementById("userName").value.trim();
+    const email=document.getElementById("userEmail").value.trim().toLowerCase();
+    const pw=document.getElementById("userPassword").value.trim();
+    const pwC=document.getElementById("userPasswordConfirm").value.trim();
+    const role=document.getElementById("userRole").value;
+    const status=document.getElementById("userStatus").value;
+    if(!name||!email){alert("Name and email are required.");return;}
     try {
-        if (id) {
-            const data = { name, email, role, status };
-            if (pw) {
-                if (pw !== pwC) { alert("Passwords do not match."); return; }
-                if (pw.length < 6) { alert("Password must be at least 6 characters."); return; }
-                data.password = pw;
-            }
-            await sbPatch("/users?id=eq." + Number(id), data);
-            showToast("✅ User updated!");
+        if(id){
+            const data={name,email,role,status};
+            if(pw){if(pw!==pwC){alert("Passwords do not match.");return;}if(pw.length<6){alert("Password must be at least 6 characters.");return;}data.password=pw;}
+            await sbPatch("/users?id=eq."+Number(id),data);showToast("✅ User updated!");
         } else {
-            if (!pw) { alert("Password is required."); return; }
-            if (pw !== pwC) { alert("Passwords do not match."); return; }
-            if (pw.length < 6) { alert("Password must be at least 6 characters."); return; }
-            const existing = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
-            if (existing.length > 0) { alert("This email is already registered."); return; }
-            await sbPost("/users", { name, email, password:pw, role, status });
+            if(!pw){alert("Password is required.");return;}
+            if(pw!==pwC){alert("Passwords do not match.");return;}
+            if(pw.length<6){alert("Password must be at least 6 characters.");return;}
+            const existing=await sbGet("/users?email=eq."+encodeURIComponent(email)+"&limit=1");
+            if(existing.length>0){alert("This email is already registered.");return;}
+            await sbPost("/users",{name,email,password:pw,role,status});
             showToast("✅ User created! They can now login from any device.");
         }
-        closeModal("userModal");
-        clearUserForm();
-        renderUsers();
+        closeModal("userModal"); clearUserForm(); renderUsers();
     } catch(err) { alert("Error saving user. Try again."); }
 }
-
 async function openEditUser(id) {
     try {
-        const users = await sbGet("/users?id=eq." + id + "&limit=1");
-        const u = users[0]; if (!u) return;
-        document.getElementById("userModalTitle").textContent = "Edit User";
-        document.getElementById("editUserId").value           = u.id;
-        document.getElementById("userName").value             = u.name;
-        document.getElementById("userEmail").value            = u.email;
-        document.getElementById("userPassword").value         = "";
-        document.getElementById("userPasswordConfirm").value  = "";
-        document.getElementById("userRole").value             = u.role;
-        document.getElementById("userStatus").value           = u.status;
-        openModal("userModal");
-    } catch(err) { alert("Error loading user."); }
+        const users=await sbGet("/users?id=eq."+id+"&limit=1");
+        const u=users[0];if(!u)return;
+        document.getElementById("userModalTitle").textContent="Edit User";
+        document.getElementById("editUserId").value=u.id;document.getElementById("userName").value=u.name;
+        document.getElementById("userEmail").value=u.email;document.getElementById("userPassword").value="";
+        document.getElementById("userPasswordConfirm").value="";document.getElementById("userRole").value=u.role;
+        document.getElementById("userStatus").value=u.status;openModal("userModal");
+    } catch(err){alert("Error loading user.");}
 }
-
 async function deleteUser(id) {
-    const current = getCurrentUser();
-    if (id === current.id) { alert("You cannot delete your own account."); return; }
-    if (!confirm("Delete this user?")) return;
-    try {
-        await sbDelete("/users?id=eq." + id);
-        showToast("✅ User deleted.");
-        renderUsers();
-    } catch(err) { alert("Error deleting user."); }
+    const current=getCurrentUser();
+    if(id===current.id){alert("You cannot delete your own account.");return;}
+    if(!confirm("Delete this user?"))return;
+    try{await sbDelete("/users?id=eq."+id);showToast("✅ User deleted.");renderUsers();}
+    catch(err){alert("Error deleting user.");}
 }
-
 async function openChangePw(id) {
     try {
-        const users = await sbGet("/users?id=eq." + id + "&limit=1");
-        const u = users[0]; if (!u) return;
-        document.getElementById("pwUserId").value           = id;
-        document.getElementById("pwUserLabel").textContent  = "Changing password for: " + u.name + " (" + u.email + ")";
-        document.getElementById("newPassword").value        = "";
-        document.getElementById("newPasswordConfirm").value = "";
+        const users=await sbGet("/users?id=eq."+id+"&limit=1");const u=users[0];if(!u)return;
+        document.getElementById("pwUserId").value=id;
+        document.getElementById("pwUserLabel").textContent="Changing password for: "+u.name+" ("+u.email+")";
+        document.getElementById("newPassword").value="";document.getElementById("newPasswordConfirm").value="";
         openModal("pwModal");
-    } catch(err) { alert("Error loading user."); }
+    } catch(err){alert("Error loading user.");}
 }
-
 async function changePassword() {
-    const id  = document.getElementById("pwUserId").value;
-    const pw  = document.getElementById("newPassword").value.trim();
-    const pwC = document.getElementById("newPasswordConfirm").value.trim();
-    if (!pw)           { alert("Enter a new password."); return; }
-    if (pw.length < 6) { alert("Minimum 6 characters."); return; }
-    if (pw !== pwC)    { alert("Passwords do not match."); return; }
-    try {
-        await sbPatch("/users?id=eq." + id, { password: pw });
-        closeModal("pwModal");
-        showToast("✅ Password updated!");
-    } catch(err) { alert("Error updating password."); }
+    const id=document.getElementById("pwUserId").value;
+    const pw=document.getElementById("newPassword").value.trim();
+    const pwC=document.getElementById("newPasswordConfirm").value.trim();
+    if(!pw){alert("Enter a new password.");return;}if(pw.length<6){alert("Minimum 6 characters.");return;}if(pw!==pwC){alert("Passwords do not match.");return;}
+    try{await sbPatch("/users?id=eq."+id,{password:pw});closeModal("pwModal");showToast("✅ Password updated!");}
+    catch(err){alert("Error updating password.");}
 }
-
 function clearUserForm() {
-    document.getElementById("userModalTitle").textContent = "Add New User";
-    ["editUserId","userName","userEmail","userPassword","userPasswordConfirm"].forEach(id => {
-        const el = document.getElementById(id); if (el) el.value = "";
-    });
-    const r = document.getElementById("userRole");   if (r) r.value = "staff";
-    const s = document.getElementById("userStatus"); if (s) s.value = "active";
+    document.getElementById("userModalTitle").textContent="Add New User";
+    ["editUserId","userName","userEmail","userPassword","userPasswordConfirm"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+    const r=document.getElementById("userRole");if(r)r.value="staff";
+    const s=document.getElementById("userStatus");if(s)s.value="active";
 }
 
 // ========================
 // MY PROFILE
 // ========================
 function renderMyProfile() {
-    const user = getCurrentUser();
-    if (!user) return;
-    const el = document.getElementById("profileInfo");
-    if (el) el.innerHTML = `
+    const user=getCurrentUser();if(!user)return;
+    const el=document.getElementById("profileInfo");
+    if(el)el.innerHTML=`
         <div class="profile-row"><span>Name</span><strong>${user.name}</strong></div>
         <div class="profile-row"><span>Email</span><strong>${user.email}</strong></div>
-        <div class="profile-row"><span>Role</span><strong>${user.role === "admin" ? "Administrator" : "Staff"}</strong></div>`;
+        <div class="profile-row"><span>Role</span><strong>${user.role==="admin"?"Administrator":"Staff"}</strong></div>`;
 }
-
 async function changeMyPassword() {
-    const current = getCurrentUser();
-    const oldPw   = document.getElementById("myOldPw").value.trim();
-    const newPw   = document.getElementById("myNewPw").value.trim();
-    const confPw  = document.getElementById("myConfirmPw").value.trim();
-    const msgBox  = document.getElementById("myPwMsg");
-
-    function showMsg(html, type) {
-        msgBox.innerHTML      = html;
-        msgBox.style.display  = "block";
-        msgBox.style.background   = type === "success" ? "#d1fae5" : "#fee2e2";
-        msgBox.style.border       = "1px solid " + (type === "success" ? "#6ee7b7" : "#fca5a5");
-        msgBox.style.color        = type === "success" ? "#065f46" : "#991b1b";
-        msgBox.style.borderRadius = "8px";
-        msgBox.style.padding      = "12px 16px";
-        msgBox.style.fontSize     = "14px";
+    const current=getCurrentUser();
+    const oldPw=document.getElementById("myOldPw").value.trim();
+    const newPw=document.getElementById("myNewPw").value.trim();
+    const confPw=document.getElementById("myConfirmPw").value.trim();
+    const msgBox=document.getElementById("myPwMsg");
+    function showMsg(html,type){
+        msgBox.innerHTML=html;msgBox.style.display="block";
+        msgBox.style.background=type==="success"?"#d1fae5":"#fee2e2";
+        msgBox.style.border="1px solid "+(type==="success"?"#6ee7b7":"#fca5a5");
+        msgBox.style.color=type==="success"?"#065f46":"#991b1b";
+        msgBox.style.borderRadius="8px";msgBox.style.padding="12px 16px";msgBox.style.fontSize="14px";
     }
-
-    msgBox.style.display = "none";
+    msgBox.style.display="none";
     try {
-        const users = await sbGet("/users?id=eq." + current.id + "&limit=1");
-        const user  = users[0];
-        if (!user || user.password !== oldPw) { showMsg("⚠️ Current password is incorrect.", "error"); return; }
-        if (!newPw || newPw.length < 6)       { showMsg("⚠️ New password must be at least 6 characters.", "error"); return; }
-        if (newPw !== confPw)                  { showMsg("⚠️ New passwords do not match.", "error"); return; }
-        await sbPatch("/users?id=eq." + current.id, { password: newPw });
-        showMsg("✅ Password changed successfully!", "success");
-        document.getElementById("myOldPw").value    = "";
-        document.getElementById("myNewPw").value    = "";
-        document.getElementById("myConfirmPw").value = "";
-    } catch(err) { showMsg("⚠️ Error updating password. Try again.", "error"); }
+        const users=await sbGet("/users?id=eq."+current.id+"&limit=1");const user=users[0];
+        if(!user||user.password!==oldPw){showMsg("⚠️ Current password is incorrect.","error");return;}
+        if(!newPw||newPw.length<6){showMsg("⚠️ New password must be at least 6 characters.","error");return;}
+        if(newPw!==confPw){showMsg("⚠️ New passwords do not match.","error");return;}
+        await sbPatch("/users?id=eq."+current.id,{password:newPw});
+        showMsg("✅ Password changed successfully!","success");
+        document.getElementById("myOldPw").value="";document.getElementById("myNewPw").value="";document.getElementById("myConfirmPw").value="";
+    } catch(err){showMsg("⚠️ Error updating password. Try again.","error");}
 }
 
 // ========================
 // SERVICES MANAGER
 // ========================
 function renderServicesManager() {
-    const tbody = document.getElementById("servicesTableBody");
-    if (!tbody) return;
-    const services = getServices();
-    tbody.innerHTML = services.map((s,i) => `
+    const tbody=document.getElementById("servicesTableBody");if(!tbody)return;
+    const services=getServices();
+    tbody.innerHTML=services.map((s,i)=>`
         <tr>
             <td>${i+1}</td><td style="font-size:24px">${s.icon}</td>
             <td><strong>${s.title}</strong></td>
             <td style="font-size:13px;color:var(--gray-text);max-width:260px">${s.desc}</td>
-            <td>${s.badge ? `<span class="badge badge-active">${s.badge}</span>` : "—"}</td>
+            <td>${s.badge?`<span class="badge badge-active">${s.badge}</span>`:"—"}</td>
             <td class="action-btns">
                 <button class="erp-edit-btn"   onclick="openEditService(${s.id})">Edit</button>
                 <button class="erp-delete-btn" onclick="deleteService(${s.id})">Remove</button>
             </td>
         </tr>`).join("");
 }
-
 function saveService() {
-    const id    = document.getElementById("editServiceId").value;
-    const icon  = document.getElementById("serviceIcon").value.trim();
-    const title = document.getElementById("serviceTitle").value.trim();
-    const desc  = document.getElementById("serviceDesc").value.trim();
-    const badge = document.getElementById("serviceBadge").value.trim();
-    if (!icon || !title || !desc) { alert("Icon, name and description are required."); return; }
-    let services = getServices();
-    if (id) {
-        const idx = services.findIndex(s => s.id === Number(id));
-        if (idx > -1) services[idx] = { ...services[idx], icon, title, desc, badge };
-    } else {
-        services.push({ id: Date.now(), icon, title, desc, badge });
-    }
-    saveServices(services);
-    closeModal("serviceModal");
-    clearServiceForm();
-    renderServicesManager();
-    showToast("✅ Service saved!");
+    const id=document.getElementById("editServiceId").value;
+    const icon=document.getElementById("serviceIcon").value.trim();
+    const title=document.getElementById("serviceTitle").value.trim();
+    const desc=document.getElementById("serviceDesc").value.trim();
+    const badge=document.getElementById("serviceBadge").value.trim();
+    if(!icon||!title||!desc){alert("Icon, name and description are required.");return;}
+    let services=getServices();
+    if(id){const idx=services.findIndex(s=>s.id===Number(id));if(idx>-1)services[idx]={...services[idx],icon,title,desc,badge};}
+    else{services.push({id:Date.now(),icon,title,desc,badge});}
+    saveServices(services);closeModal("serviceModal");clearServiceForm();renderServicesManager();showToast("✅ Service saved!");
 }
-
 function openEditService(id) {
-    const s = getServices().find(x => x.id === id);
-    if (!s) return;
-    document.getElementById("serviceModalTitle").textContent = "Edit Service";
-    document.getElementById("editServiceId").value           = s.id;
-    document.getElementById("serviceIcon").value             = s.icon;
-    document.getElementById("serviceTitle").value            = s.title;
-    document.getElementById("serviceDesc").value             = s.desc;
-    document.getElementById("serviceBadge").value            = s.badge || "";
-    openModal("serviceModal");
+    const s=getServices().find(x=>x.id===id);if(!s)return;
+    document.getElementById("serviceModalTitle").textContent="Edit Service";
+    document.getElementById("editServiceId").value=s.id;document.getElementById("serviceIcon").value=s.icon;
+    document.getElementById("serviceTitle").value=s.title;document.getElementById("serviceDesc").value=s.desc;
+    document.getElementById("serviceBadge").value=s.badge||"";openModal("serviceModal");
 }
-
 function deleteService(id) {
-    if (!confirm("Remove this service?")) return;
-    saveServices(getServices().filter(s => s.id !== id));
-    renderServicesManager();
+    if(!confirm("Remove this service?"))return;
+    saveServices(getServices().filter(s=>s.id!==id));renderServicesManager();
 }
-
 function clearServiceForm() {
-    document.getElementById("serviceModalTitle").textContent = "Add New Service";
-    ["editServiceId","serviceIcon","serviceTitle","serviceDesc","serviceBadge"].forEach(id => {
-        const el = document.getElementById(id); if (el) el.value = "";
-    });
+    document.getElementById("serviceModalTitle").textContent="Add New Service";
+    ["editServiceId","serviceIcon","serviceTitle","serviceDesc","serviceBadge"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
 }
 
 // ========================
 // INVOICE SECTION
 // ========================
 async function renderInvoiceSection() {
-    if (typeof initInvoiceSection === "function") {
-        initInvoiceSection();
-    }
+    if (typeof initInvoiceSection==="function") initInvoiceSection();
     try {
-        const invoices = await sbGet("/invoices?order=id.desc");
-        const total    = invoices.reduce((s,i) => s + Number(i.total), 0);
-        const paid     = invoices.filter(i => i.status === "Paid").reduce((s,i) => s + Number(i.total), 0);
-        const pending  = invoices.filter(i => i.status !== "Paid").reduce((s,i) => s + Number(i.total), 0);
-        const g = id => document.getElementById(id);
-        if (g("invStatTotal"))   g("invStatTotal").textContent   = invoices.length;
-        if (g("invStatBilled"))  g("invStatBilled").textContent  = fmtN(total);
-        if (g("invStatPaid"))    g("invStatPaid").textContent    = fmtN(paid);
-        if (g("invStatPending")) g("invStatPending").textContent = fmtN(pending);
-    } catch(err) { console.error(err); }
+        const invoices=await sbGet("/invoices?order=id.desc");
+        const total  =invoices.reduce((s,i)=>s+Number(i.total),0);
+        const paid   =invoices.filter(i=>i.status==="Paid").reduce((s,i)=>s+Number(i.total),0);
+        const pending=invoices.filter(i=>i.status!=="Paid").reduce((s,i)=>s+Number(i.total),0);
+        const g=id=>document.getElementById(id);
+        if(g("invStatTotal"))  g("invStatTotal").textContent  =invoices.length;
+        if(g("invStatBilled")) g("invStatBilled").textContent =fmtN(total);
+        if(g("invStatPaid"))   g("invStatPaid").textContent   =fmtN(paid);
+        if(g("invStatPending"))g("invStatPending").textContent=fmtN(pending);
+    } catch(err){console.error(err);}
 }
 
 // ========================
 // DATE + INIT
 // ========================
 function setDate() {
-    const el = document.getElementById("erpDate");
-    if (el) el.textContent = new Date().toLocaleDateString("en-GB", {
-        weekday:"short", day:"2-digit", month:"short", year:"numeric"
-    });
+    const el=document.getElementById("erpDate");
+    if(el)el.textContent=new Date().toLocaleDateString("en-GB",{weekday:"short",day:"2-digit",month:"short",year:"numeric"});
 }
-
-function saveData() {} // kept for compatibility
+function saveData() {}
 
 if (document.getElementById("section-overview")) {
     setDate();
     applyRoleUI();
     renderOverview();
-    const today = new Date().toISOString().split("T")[0];
-    const sd = document.getElementById("saleDate");
-    const ed = document.getElementById("expenseDate");
-    if (sd) sd.value = today;
-    if (ed) ed.value = today;
+    loadUnreadCount();
+    startRealtime();
+    const today=new Date().toISOString().split("T")[0];
+    const sd=document.getElementById("saleDate");const ed=document.getElementById("expenseDate");
+    if(sd)sd.value=today;if(ed)ed.value=today;
+    // Refresh data every 30 seconds as fallback
+    setInterval(() => {
+        const activeSection=document.querySelector(".erp-section.active");
+        if(activeSection){
+            const id=activeSection.id;
+            if(id==="section-sales")    renderSales();
+            if(id==="section-expenses") renderExpenses();
+            if(id==="section-staff")    renderStaff();
+            if(id==="section-overview") renderOverview();
+            if(id==="section-reports")  renderReports();
+        }
+        renderOverview();
+        loadUnreadCount();
+    }, 30000);
 }
