@@ -4,23 +4,23 @@
 // ============================================
 
 const SB_URL2  = "https://winlgtflhwiaraniwpts.supabase.co";
-const SB_KEY2  = "sb_publishable_YFngUdJcVv7uXby3US4Nbg_7OQCs3ok";
+const SB_KEY2  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpbmxndGZsaHdpYXJhbml3cHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxODUzMjUsImV4cCI6MjA5NDc2MTMyNX0.Co0PPWjMtNeIIa8GSqkulgytzhwbm33p718HsPMECKU";
 const SB_REST2 = SB_URL2 + "/rest/v1";
 
 async function invGet(ep) {
-    const r = await fetch(SB_REST2 + ep, { headers:{ "apikey":SB_KEY2,"Authorization":"Bearer "+SB_KEY2,"Content-Type":"application/json" }});
+    const r = await fetch(SB_REST2 + ep, { headers:{ "apikey":SB_KEY2, "Authorization":"Bearer "+SB_KEY2, "Content-Type":"application/json" }});
     const t = await r.text(); return t ? JSON.parse(t) : [];
 }
 async function invPost(ep, data) {
-    const r = await fetch(SB_REST2 + ep, { method:"POST", headers:{ "apikey":SB_KEY2,"Authorization":"Bearer "+SB_KEY2,"Content-Type":"application/json","Prefer":"return=representation" }, body:JSON.stringify(data)});
+    const r = await fetch(SB_REST2 + ep, { method:"POST", headers:{ "apikey":SB_KEY2, "Authorization":"Bearer "+SB_KEY2, "Content-Type":"application/json", "Prefer":"return=representation" }, body:JSON.stringify(data)});
     const t = await r.text(); return t ? JSON.parse(t) : [];
 }
 async function invPatch(ep, data) {
-    const r = await fetch(SB_REST2 + ep, { method:"PATCH", headers:{ "apikey":SB_KEY2,"Authorization":"Bearer "+SB_KEY2,"Content-Type":"application/json","Prefer":"return=representation" }, body:JSON.stringify(data)});
+    const r = await fetch(SB_REST2 + ep, { method:"PATCH", headers:{ "apikey":SB_KEY2, "Authorization":"Bearer "+SB_KEY2, "Content-Type":"application/json", "Prefer":"return=representation" }, body:JSON.stringify(data)});
     const t = await r.text(); return t ? JSON.parse(t) : [];
 }
 async function invDelete(ep) {
-    await fetch(SB_REST2 + ep, { method:"DELETE", headers:{ "apikey":SB_KEY2,"Authorization":"Bearer "+SB_KEY2 }});
+    await fetch(SB_REST2 + ep, { method:"DELETE", headers:{ "apikey":SB_KEY2, "Authorization":"Bearer "+SB_KEY2 }});
 }
 
 async function getNextInvoiceNumber() {
@@ -71,9 +71,9 @@ function calcGrandTotal() {
     const tax     = total * (taxRate / 100);
     const grand   = total + tax;
     const g = id => document.getElementById(id);
-    if (g("invSubtotal"))  g("invSubtotal").textContent  = "₦" + total.toLocaleString("en-NG",{minimumFractionDigits:2});
-    if (g("invTaxAmt"))    g("invTaxAmt").textContent    = "₦" + tax.toLocaleString("en-NG",{minimumFractionDigits:2});
-    if (g("invGrandTotal"))g("invGrandTotal").textContent = "₦" + grand.toLocaleString("en-NG",{minimumFractionDigits:2});
+    if (g("invSubtotal"))   g("invSubtotal").textContent   = "₦" + total.toLocaleString("en-NG",{minimumFractionDigits:2});
+    if (g("invTaxAmt"))     g("invTaxAmt").textContent     = "₦" + tax.toLocaleString("en-NG",{minimumFractionDigits:2});
+    if (g("invGrandTotal")) g("invGrandTotal").textContent = "₦" + grand.toLocaleString("en-NG",{minimumFractionDigits:2});
 }
 
 async function saveInvoice() {
@@ -102,10 +102,19 @@ async function saveInvoice() {
 
     try {
         await invPost("/invoices", {
-            number, client_name:clientName, client_email:clientEmail,
-            client_phone:clientPhone, date, due_date:dueDate || null,
-            subtotal, tax_rate:taxRate, tax, total,
-            items: JSON.stringify(items), notes, status:"Pending"
+            number,
+            client_name:  clientName,
+            client_email: clientEmail,
+            client_phone: clientPhone,
+            date,
+            due_date:     dueDate || null,
+            subtotal,
+            tax_rate:     taxRate,
+            tax,
+            total,
+            items:        JSON.stringify(items),
+            notes,
+            status:       "Pending"
         });
         closeModal("invoiceCreateModal");
         resetInvoiceForm();
@@ -252,10 +261,15 @@ function buildInvoiceHTML(inv, forPrint=false) {
             </div>
         </div>
         <table>
-            <thead><tr><th style="width:50%">Description</th><th style="text-align:center;width:10%">Qty</th><th style="text-align:right;width:20%">Unit Price</th><th style="text-align:right;width:20%">Total</th></tr></thead>
+            <thead><tr>
+                <th style="width:50%">Description</th>
+                <th style="text-align:center;width:10%">Qty</th>
+                <th style="text-align:right;width:20%">Unit Price</th>
+                <th style="text-align:right;width:20%">Total</th>
+            </tr></thead>
             <tbody>${rows}</tbody>
         </table>
-        <div class="totals-wrap${forPrint?" totals-wrap":""}">
+        <div class="totals-wrap">
             <table>
                 <tr><td>Subtotal</td><td style="text-align:right">₦${Number(inv.subtotal).toLocaleString("en-NG",{minimumFractionDigits:2})}</td></tr>
                 ${inv.tax_rate > 0 ? `<tr><td>Tax (${inv.tax_rate}%)</td><td style="text-align:right">₦${Number(inv.tax).toLocaleString("en-NG",{minimumFractionDigits:2})}</td></tr>` : ""}
