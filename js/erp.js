@@ -470,8 +470,9 @@ function viewInvoice(inv) {
         <div>
           <img src="https://yaseertech.vercel.app/images/logo.png" style="height:60px;object-fit:contain" onerror="this.style.display='none'"/>
           <h2 style="color:#0A2540;margin:5px 0">YaseerTech</h2>
-          <p style="margin:2px 0;font-size:13px">Wuse 2, Abuja, Nigeria</p>
-          <p style="margin:2px 0;font-size:13px">+234 703 XXX XXXX</p>
+          <p style="margin:2px 0;font-size:13px">Suite TF05, Aminasia Trade Centre</p>
+          <p style="margin:2px 0;font-size:13px">Aminu Kano Crescent, Wuse 2, Abuja</p>
+          <p style="margin:2px 0;font-size:13px">+234 703 105 2232</p>
           <p style="margin:2px 0;font-size:13px">infoyaseertech@gmail.com</p>
         </div>
         <div style="text-align:right">
