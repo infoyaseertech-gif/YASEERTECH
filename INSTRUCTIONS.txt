@@ -1,0 +1,87 @@
+# YASEERTECH ERP — DEPLOYMENT INSTRUCTIONS
+# Follow these steps IN ORDER. Do not skip any.
+
+=====================================================
+STEP 1 — RUN SQL IN SUPABASE
+=====================================================
+1. Go to supabase.com → your yaseertech project
+2. Click SQL Editor on the left sidebar
+3. Click New Query
+4. Open the file: SUPABASE_SETUP.sql
+5. Copy ALL the content and paste it into Supabase
+6. Click Run (green button)
+7. You should see "Success. No rows returned"
+
+If you get an error about a table already existing — that is fine, continue.
+
+=====================================================
+STEP 2 — REPLACE FILES IN VS CODE
+=====================================================
+Replace these files in your YASEERTECH project folder.
+For each file: Open in VS Code → CTRL+A → Delete → Paste → CTRL+S
+
+  File to replace              | Source file
+  -----------------------------|------------------
+  login.html                   | login.html
+  dashboard.html               | dashboard.html
+  css/erp.css                  | css/erp.css
+  js/erp.js                    | js/erp.js
+
+=====================================================
+STEP 3 — DELETE OLD FILES (important)
+=====================================================
+Delete these files from your project — they are no longer needed:
+  - js/firebase.js
+  - js/invoice.js  (invoice code is now inside erp.js)
+
+If you have any of these, delete them:
+  - css/about-additions.css
+  - css/contact-additions.css
+  - css/services-additions.css
+  - css/image-additions.css
+
+=====================================================
+STEP 4 — PUSH TO GITHUB
+=====================================================
+Open Git Bash in your YASEERTECH folder and run:
+
+  git add .
+  git commit -m "Complete ERP rebuild - Supabase cloud"
+  git push origin main
+
+Wait for Vercel to show "Ready" (about 1 minute).
+
+=====================================================
+STEP 5 — TEST LOGIN
+=====================================================
+Go to: https://yaseertech.vercel.app/login.html
+
+Login with:
+  Email:    infoyaseertech@gmail.com
+  Password: adminyaseertech
+
+If login fails, go to Supabase → Table Editor → users table
+and confirm your row exists with:
+  email: infoyaseertech@gmail.com
+  password: adminyaseertech
+  role: admin
+  status: active
+
+=====================================================
+WHAT IS NOW COMPLETE
+=====================================================
+✅ Login works on ALL devices (phone, tablet, computer)
+✅ Invoices & Sales are merged — one invoice = one sale
+✅ Expenses synced to cloud
+✅ Staff synced to cloud
+✅ Reports with 4 charts
+✅ Export PDF and Excel for invoices and expenses
+✅ User Management — Admin creates accounts with permissions
+✅ Permission system — tick exactly what each staff sees
+✅ Notifications bell when staff add data
+✅ My Profile — change own password
+✅ Admin can change anyone's password
+✅ No localStorage. No Firebase. Supabase only.
+✅ Professional invoice print/PDF with your logo
+✅ Invoice numbering: INV-001, INV-002 etc.
+✅ Mobile responsive sidebar

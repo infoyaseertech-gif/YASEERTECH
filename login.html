@@ -1,286 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP Login | YaseerTech</title>
-    <link rel="stylesheet" href="css/erp.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YaseerTech ERP — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0A2540 0%, #1a3a5c 50%, #0A2540 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo img {
+      height: 64px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+    .login-logo h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0A2540;
+    }
+    .login-logo p {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    h2 {
+      font-size: 20px;
+      color: #0A2540;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus { border-color: #2563eb; }
+    .btn {
+      width: 100%;
+      padding: 13px;
+      background: #f97316;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      font-family: 'Inter', sans-serif;
+      margin-top: 8px;
+    }
+    .btn:hover { background: #ea6c0a; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+    .forgot-link {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .forgot-link a {
+      color: #2563eb;
+      font-size: 13px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .forgot-link a:hover { text-decoration: underline; }
+    .msg {
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .msg.error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; display: block; }
+    .msg.success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; display: block; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .back-link {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .back-link a {
+      color: #64748b;
+      font-size: 13px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .back-link a:hover { color: #0A2540; }
+    .reset-code-display {
+      background: #f0fdf4;
+      border: 2px solid #10b981;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .reset-code-display p { font-size: 13px; color: #374151; margin-bottom: 8px; }
+    .reset-code-display strong { font-size: 28px; letter-spacing: 6px; color: #10b981; }
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
-<body class="login-page">
+<body>
+<div class="login-card">
+  <div class="login-logo">
+    <img src="images/logo.png" alt="YaseerTech" onerror="this.style.display='none'"/>
+    <h1>YaseerTech</h1>
+    <p>Business Management System</p>
+  </div>
 
-<div class="login-wrapper">
-    <div class="login-left">
-        <div class="login-left-content">
-            <img src="images/logo.png" alt="YaseerTech" style="height:56px;width:auto;object-fit:contain;margin-bottom:28px;filter:brightness(0) invert(1);">
-            <h1>Business Management System</h1>
-            <p>Manage your staff, track sales, monitor expenses, and grow your business — all in one place.</p>
-            <div class="login-features">
-                <div class="lf-item"><span class="lf-icon">👥</span><span>Staff Management</span></div>
-                <div class="lf-item"><span class="lf-icon">💰</span><span>Sales Tracking</span></div>
-                <div class="lf-item"><span class="lf-icon">📊</span><span>Expense Recording</span></div>
-                <div class="lf-item"><span class="lf-icon">📈</span><span>Business Reports</span></div>
-                <div class="lf-item"><span class="lf-icon">🔐</span><span>User Management</span></div>
-                <div class="lf-item"><span class="lf-icon">⚙️</span><span>Services Manager</span></div>
-            </div>
-        </div>
+  <!-- LOGIN PANEL -->
+  <div class="panel active" id="panelLogin">
+    <h2>Sign In</h2>
+    <div class="msg" id="loginMsg"></div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email"/>
+      </div>
     </div>
-
-    <div class="login-right">
-        <div class="login-box">
-
-            <!-- LOGIN VIEW -->
-            <div id="loginView">
-                <div class="login-header">
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to your YaseerTech ERP</p>
-                </div>
-                <form id="loginForm">
-                    <div class="login-form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="login-form-group">
-                        <label>Password</label>
-                        <div class="password-input-wrap">
-                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                            <span class="toggle-password" onclick="togglePw('loginPassword')">👁</span>
-                        </div>
-                    </div>
-                    <div class="login-options">
-                        <label class="remember-me"><input type="checkbox" id="rememberMe"> Remember me</label>
-                        <a href="#" class="forgot-link" onclick="showForgot()">Forgot password?</a>
-                    </div>
-                    <button type="submit" id="loginBtn" class="login-btn">Sign In to Dashboard</button>
-                    <div id="loginError" class="login-error" style="display:none;">
-                        ⚠️ Incorrect email or password. Please try again.
-                    </div>
-                </form>
-                <p class="login-note">Contact your administrator if you need access.</p>
-            </div>
-
-            <!-- FORGOT PASSWORD VIEW -->
-            <div id="forgotView" style="display:none;">
-                <a href="#" class="forgot-back" onclick="showLogin()">← Back to Login</a>
-                <div class="login-header" style="margin-top:16px;">
-                    <h2>Reset Password</h2>
-                    <p>Enter your email to receive a reset code.</p>
-                </div>
-                <div id="forgotStep1">
-                    <div class="login-form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="forgotEmail" placeholder="Enter your registered email">
-                    </div>
-                    <button onclick="sendResetCode()" class="login-btn">Send Reset Code</button>
-                    <div id="forgotMsg" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;"></div>
-                </div>
-                <div id="forgotStep2" style="display:none;">
-                    <p style="font-size:13px;color:#6B7280;margin-bottom:16px;">Enter the code shown and your new password.</p>
-                    <div class="login-form-group">
-                        <label>Reset Code</label>
-                        <input type="text" id="resetCode" placeholder="6-digit code" maxlength="6" style="letter-spacing:6px;text-align:center;font-size:22px;font-weight:700;">
-                    </div>
-                    <div class="login-form-group">
-                        <label>New Password</label>
-                        <div class="password-input-wrap">
-                            <input type="password" id="resetNewPw" placeholder="New password">
-                            <span class="toggle-password" onclick="togglePw('resetNewPw')">👁</span>
-                        </div>
-                    </div>
-                    <div class="login-form-group">
-                        <label>Confirm Password</label>
-                        <input type="password" id="resetConfirmPw" placeholder="Confirm password">
-                    </div>
-                    <button onclick="confirmReset()" class="login-btn">Update Password</button>
-                    <div id="resetMsg" style="display:none;margin-top:12px;padding:12px 16px;border-radius:8px;font-size:14px;"></div>
-                </div>
-            </div>
-
-        </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPwd" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
     </div>
+    <button class="btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <div class="forgot-link">
+      <a onclick="showPanel('panelForgot')">Forgot your password?</a>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD PANEL -->
+  <div class="panel" id="panelForgot">
+    <h2>Reset Password</h2>
+    <div class="msg" id="forgotMsg"></div>
+    <div id="forgotStep1">
+      <div class="form-group">
+        <label>Your Email Address</label>
+        <div class="input-wrap">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="forgotEmail" placeholder="your@email.com"/>
+        </div>
+      </div>
+      <button class="btn" onclick="sendResetCode()">Send Reset Code</button>
+    </div>
+    <div id="forgotStep2" style="display:none">
+      <div class="reset-code-display" id="codeDisplay">
+        <p>Your reset code (write it down):</p>
+        <strong id="codeShow"></strong>
+      </div>
+      <div class="form-group">
+        <label>Enter Reset Code</label>
+        <div class="input-wrap">
+          <i class="fas fa-key"></i>
+          <input type="text" id="resetCode" placeholder="6-digit code" maxlength="6"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="resetNewPwd" placeholder="New password (min 6 chars)"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="resetConfirmPwd" placeholder="Confirm new password"/>
+        </div>
+      </div>
+      <button class="btn" onclick="doReset()">Reset Password</button>
+    </div>
+    <div class="back-link">
+      <a onclick="showPanel('panelLogin')">← Back to Login</a>
+    </div>
+  </div>
+
 </div>
 
 <script>
-// ============================================
-// SUPABASE CONFIG — embedded directly in login
-// ============================================
-const SB_URL  = "https://winlgtflhwiaraniwpts.supabase.co";
-const SB_KEY  = "sb_publishable_YFngUdJcVv7uXby3US4Nbg_7OQCs3ok";
-const SB_REST = SB_URL + "/rest/v1";
+  const SUPABASE_URL = "https://winlgtflhwiaraniwpts.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_YFngUdJcVv7uXby3US4Nbg_7OQCs3ok";
+  const API = SUPABASE_URL + "/rest/v1";
+  let generatedCode = null;
+  let resetUserId = null;
 
-async function sbGet(endpoint) {
-    const res = await fetch(SB_REST + endpoint, {
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY,
-            "Content-Type": "application/json"
-        }
+  async function sb(path, opts = {}) {
+    const res = await fetch(API + path, {
+      ...opts,
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Prefer": "return=representation",
+        ...(opts.headers || {})
+      }
     });
     const text = await res.text();
+    if (!res.ok) throw new Error(text);
     return text ? JSON.parse(text) : [];
-}
+  }
 
-async function sbPatch(endpoint, data) {
-    const res = await fetch(SB_REST + endpoint, {
-        method: "PATCH",
-        headers: {
-            "apikey": SB_KEY,
-            "Authorization": "Bearer " + SB_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
-        },
-        body: JSON.stringify(data)
-    });
-    const text = await res.text();
-    return text ? JSON.parse(text) : [];
-}
+  function showPanel(id) {
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    clearMsgs();
+  }
 
-// Reset codes stored in memory
-const resetCodes = {};
+  function clearMsgs() {
+    document.querySelectorAll(".msg").forEach(m => { m.className = "msg"; m.textContent = ""; });
+  }
 
-// Toggle password visibility
-function togglePw(id) {
+  function showMsg(id, text, type) {
     const el = document.getElementById(id);
-    if (el) el.type = el.type === "password" ? "text" : "password";
-}
+    el.textContent = text;
+    el.className = "msg " + type;
+  }
 
-// Show/hide views
-function showForgot() {
-    document.getElementById("loginView").style.display  = "none";
-    document.getElementById("forgotView").style.display = "block";
-}
-function showLogin() {
-    document.getElementById("forgotView").style.display = "none";
-    document.getElementById("loginView").style.display  = "block";
-}
+  async function doLogin() {
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const pwd = document.getElementById("loginPwd").value;
+    const btn = document.getElementById("loginBtn");
 
-// Show message helper
-function showMsg(elId, html, type) {
-    const el = document.getElementById(elId);
-    if (!el) return;
-    el.innerHTML = html;
-    el.style.display    = "block";
-    el.style.background = type === "success" ? "#d1fae5" : "#fee2e2";
-    el.style.border     = "1px solid " + (type === "success" ? "#6ee7b7" : "#fca5a5");
-    el.style.color      = type === "success" ? "#065f46" : "#991b1b";
-    el.style.borderRadius = "8px";
-    el.style.padding    = "12px 16px";
-    el.style.lineHeight = "1.6";
-}
+    if (!email || !pwd) { showMsg("loginMsg", "Please enter email and password", "error"); return; }
 
-// LOGIN
-document.getElementById("loginForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const email  = document.getElementById("loginEmail").value.trim().toLowerCase();
-    const pw     = document.getElementById("loginPassword").value.trim();
-    const errBox = document.getElementById("loginError");
-    const btn    = document.getElementById("loginBtn");
-
-    errBox.style.display = "none";
-    btn.textContent      = "Signing in...";
-    btn.disabled         = true;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Signing in...';
+    clearMsgs();
 
     try {
-        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
-        const user  = users[0];
-
-        if (user && user.password === pw && user.status === "active") {
-            localStorage.setItem("yt_logged_in", "true");
-            localStorage.setItem("yt_current_user", JSON.stringify({
-                id: user.id, name: user.name, email: user.email, role: user.role
-            }));
-            window.location.href = "dashboard.html";
-        } else if (user && user.status !== "active") {
-            errBox.textContent   = "⚠️ Your account is inactive. Contact your administrator.";
-            errBox.style.display = "block";
-        } else {
-            errBox.style.display = "block";
-        }
-    } catch(err) {
-        errBox.textContent   = "⚠️ Connection error. Check your internet and try again.";
-        errBox.style.display = "block";
-        console.error("Login error:", err);
-    } finally {
-        btn.textContent = "Sign In to Dashboard";
-        btn.disabled    = false;
+      const users = await sb("/users?email=eq." + encodeURIComponent(email) + "&password=eq." + encodeURIComponent(pwd) + "&status=eq.active&limit=1");
+      if (!users.length) {
+        showMsg("loginMsg", "Incorrect email or password. Please try again.", "error");
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+        return;
+      }
+      const user = users[0];
+      const perms = user.permissions ? (typeof user.permissions === "string" ? JSON.parse(user.permissions) : user.permissions) : [];
+      sessionStorage.setItem("yt_session", JSON.stringify({
+        id: user.id, name: user.name, email: user.email,
+        role: user.role, permissions: perms
+      }));
+      window.location.href = "dashboard.html";
+    } catch (e) {
+      showMsg("loginMsg", "Connection error. Please check your internet and try again.", "error");
+      btn.disabled = false;
+      btn.textContent = "Sign In";
     }
-});
+  }
 
-// FORGOT PASSWORD - Step 1
-async function sendResetCode() {
+  async function sendResetCode() {
     const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
-    if (!email) { showMsg("forgotMsg", "⚠️ Please enter your email.", "error"); return; }
+    if (!email) { showMsg("forgotMsg", "Please enter your email address", "error"); return; }
 
     try {
-        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
-        if (!users[0]) {
-            showMsg("forgotMsg", "⚠️ No account found with that email.", "error"); return;
-        }
+      const users = await sb("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
+      if (!users.length) { showMsg("forgotMsg", "No account found with that email address", "error"); return; }
 
-        const code    = Math.floor(100000 + Math.random() * 900000).toString();
-        const expires = Date.now() + 15 * 60 * 1000;
-        resetCodes[email] = { code, expires };
+      resetUserId = users[0].id;
+      generatedCode = String(Math.floor(100000 + Math.random() * 900000));
 
-        showMsg("forgotMsg",
-            "✅ Your reset code is:<br><div style='text-align:center;margin:12px 0;'><span style='font-size:32px;font-weight:800;letter-spacing:8px;color:#0A2540;font-family:Poppins,sans-serif;'>" + code + "</span></div><small>Write this down. Valid for 15 minutes.</small>",
-            "success"
-        );
-
-        document.getElementById("forgotStep2").setAttribute("data-email", email);
-        setTimeout(function() {
-            document.getElementById("forgotStep1").style.display = "none";
-            document.getElementById("forgotStep2").style.display = "block";
-        }, 1500);
-
-    } catch(err) {
-        showMsg("forgotMsg", "⚠️ Connection error. Please try again.", "error");
+      document.getElementById("forgotStep1").style.display = "none";
+      document.getElementById("forgotStep2").style.display = "block";
+      document.getElementById("codeDisplay").style.display = "block";
+      document.getElementById("codeShow").textContent = generatedCode;
+      showMsg("forgotMsg", "Code generated. Write it down, then enter it below.", "success");
+    } catch (e) {
+      showMsg("forgotMsg", "Error: " + e.message, "error");
     }
-}
+  }
 
-// FORGOT PASSWORD - Step 2
-async function confirmReset() {
-    const email   = document.getElementById("forgotStep2").getAttribute("data-email");
-    const entered = document.getElementById("resetCode").value.trim();
-    const newPw   = document.getElementById("resetNewPw").value.trim();
-    const confPw  = document.getElementById("resetConfirmPw").value.trim();
+  async function doReset() {
+    const code = document.getElementById("resetCode").value.trim();
+    const newPwd = document.getElementById("resetNewPwd").value;
+    const confirmPwd = document.getElementById("resetConfirmPwd").value;
 
-    const stored = resetCodes[email];
-    if (!stored || Date.now() > stored.expires) {
-        showMsg("resetMsg", "⚠️ Code expired. Please start again.", "error"); return;
-    }
-    if (entered !== stored.code) {
-        showMsg("resetMsg", "⚠️ Incorrect code. Try again.", "error"); return;
-    }
-    if (!newPw || newPw.length < 6) {
-        showMsg("resetMsg", "⚠️ Password must be at least 6 characters.", "error"); return;
-    }
-    if (newPw !== confPw) {
-        showMsg("resetMsg", "⚠️ Passwords do not match.", "error"); return;
-    }
+    if (!code || !newPwd || !confirmPwd) { showMsg("forgotMsg", "All fields are required", "error"); return; }
+    if (code !== generatedCode) { showMsg("forgotMsg", "Incorrect reset code", "error"); return; }
+    if (newPwd !== confirmPwd) { showMsg("forgotMsg", "Passwords do not match", "error"); return; }
+    if (newPwd.length < 6) { showMsg("forgotMsg", "Password must be at least 6 characters", "error"); return; }
 
     try {
-        const users = await sbGet("/users?email=eq." + encodeURIComponent(email) + "&limit=1");
-        if (users[0]) {
-            await sbPatch("/users?id=eq." + users[0].id, { password: newPw });
-        }
-        delete resetCodes[email];
-        showMsg("resetMsg", "✅ Password updated! Taking you to login...", "success");
-        setTimeout(function() {
-            document.getElementById("forgotStep1").style.display = "block";
-            document.getElementById("forgotStep2").style.display = "none";
-            document.getElementById("forgotEmail").value  = "";
-            document.getElementById("resetCode").value    = "";
-            document.getElementById("resetNewPw").value   = "";
-            document.getElementById("resetConfirmPw").value = "";
-            showLogin();
-        }, 2000);
-    } catch(err) {
-        showMsg("resetMsg", "⚠️ Error updating password. Try again.", "error");
+      await sb("/users?id=eq." + resetUserId, { method: "PATCH", body: JSON.stringify({ password: newPwd }) });
+      showMsg("forgotMsg", "✅ Password reset successfully! You can now login.", "success");
+      document.getElementById("codeDisplay").style.display = "none";
+      setTimeout(() => showPanel("panelLogin"), 2500);
+    } catch (e) {
+      showMsg("forgotMsg", "Error resetting password: " + e.message, "error");
     }
-}
+  }
 </script>
-
-<script src="js/pwa.js"></script>
 </body>
 </html>
