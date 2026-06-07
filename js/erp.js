@@ -132,26 +132,69 @@ async function loadOverview(user) {
     const totalExpenses = expenses.reduce((s, e) => s + (e.amount || 0), 0);
     const netProfit = totalRevenue - totalExpenses;
 
-    document.getElementById("overviewStats").innerHTML = `
-      ${statCard("Total Revenue", "₦" + fmt(totalRevenue), "fas fa-naira-sign", "green")}
-      ${statCard("Pending", "₦" + fmt(pendingRevenue), "fas fa-clock", "orange")}
-      ${statCard("Total Expenses", "₦" + fmt(totalExpenses), "fas fa-receipt", "red")}
-      ${statCard("Net Profit", "₦" + fmt(netProfit), "fas fa-chart-line", netProfit >= 0 ? "blue" : "red")}`;
+    document.getElementById("overviewStats").innerHTML =
+      statCard("Total Revenue", "\u20a6" + fmt(totalRevenue), "fas fa-naira-sign", "green") +
+      statCard("Pending", "\u20a6" + fmt(pendingRevenue), "fas fa-clock", "orange") +
+      statCard("Total Expenses", "\u20a6" + fmt(totalExpenses), "fas fa-receipt", "red") +
+      statCard("Net Profit", "\u20a6" + fmt(netProfit), "fas fa-chart-line", netProfit >= 0 ? "blue" : "red");
 
     renderRevenueChart(invoices, expenses);
 
-    const recentHtml = invoices.slice(0, 5).map(inv => `
-      <div class="recent-row">
-        <span>${inv.number || "—"}</span>
-        <span>${inv.client_name || "—"}</span>
-        <span>₦${fmt(inv.total)}</span>
-        <span class="badge ${inv.status === 'Paid' ? 'badge-green' : 'badge-orange'}">${inv.status}</span>
-      </div>`).join("") || "<p class='empty-msg'>No invoices yet</p>";
+    // PER-SERVICE BREAKDOWN
+    const serviceColors = ["#2563eb","#f97316","#10b981","#8b5cf6","#ef4444","#06b6d4","#f59e0b","#ec4899","#14b8a6","#6366f1"];
+    const serviceMap = {};
+    invoices.forEach(inv => {
+      const svc = (inv.service || "Unspecified").trim();
+      if (!serviceMap[svc]) serviceMap[svc] = { paid: 0, pending: 0, count: 0 };
+      if (inv.status === "Paid") serviceMap[svc].paid += (inv.total || 0);
+      else serviceMap[svc].pending += (inv.total || 0);
+      serviceMap[svc].count++;
+    });
+    const services = Object.entries(serviceMap).sort((a, b) => (b[1].paid + b[1].pending) - (a[1].paid + a[1].pending));
+    const maxTotal = services.length ? Math.max(...services.map(([, v]) => v.paid + v.pending)) : 1;
+
+    const serviceHtml = services.length ? services.map(([name, val], i) => {
+      const total = val.paid + val.pending;
+      const paidPct = maxTotal > 0 ? (val.paid / maxTotal * 100).toFixed(1) : 0;
+      const pendingPct = maxTotal > 0 ? (val.pending / maxTotal * 100).toFixed(1) : 0;
+      const color = serviceColors[i % serviceColors.length];
+      const paidPctOfTotal = total > 0 ? ((val.paid / total) * 100).toFixed(0) : 0;
+      return "<div class=\"service-breakdown-row\">" +
+        "<div class=\"svc-header\">" +
+        "<div class=\"svc-dot\" style=\"background:" + color + "\"></div>" +
+        "<span class=\"svc-name\">" + name + "</span>" +
+        "<span class=\"svc-count\">" + val.count + " invoice" + (val.count !== 1 ? "s" : "") + "</span>" +
+        "<span class=\"svc-total\">\u20a6" + fmt(total) + "</span>" +
+        "</div>" +
+        "<div class=\"svc-bar-wrap\">" +
+        "<div class=\"svc-bar-track\">" +
+        "<div class=\"svc-bar-paid\" style=\"width:" + paidPct + "%;background:" + color + "\"></div>" +
+        "<div class=\"svc-bar-pending\" style=\"width:" + pendingPct + "%;background:" + color + "33\"></div>" +
+        "</div>" +
+        "<div class=\"svc-bar-labels\">" +
+        "<span style=\"color:#10b981\"><i class=\"fas fa-check-circle\"></i> Paid: \u20a6" + fmt(val.paid) + " (" + paidPctOfTotal + "%)</span>" +
+        "<span style=\"color:#f97316\"><i class=\"fas fa-clock\"></i> Pending: \u20a6" + fmt(val.pending) + "</span>" +
+        "</div></div></div>";
+    }).join("") : "<p class=\"empty-msg\">No invoices yet \u2014 create your first invoice to see service performance here</p>";
+
+    document.getElementById("serviceBreakdown").innerHTML = serviceHtml;
+
+    // RECENT INVOICES
+    const recentHtml = invoices.slice(0, 5).map(inv =>
+      "<div class=\"recent-row\">" +
+      "<span>" + (inv.number || "\u2014") + "</span>" +
+      "<span>" + (inv.client_name || "\u2014") + "</span>" +
+      "<span>" + (inv.service || "\u2014") + "</span>" +
+      "<span>\u20a6" + fmt(inv.total) + "</span>" +
+      "<span class=\"badge " + (inv.status === "Paid" ? "badge-green" : "badge-orange") + "\">" + inv.status + "</span>" +
+      "</div>"
+    ).join("") || "<p class=\'empty-msg\'>No invoices yet</p>";
     document.getElementById("recentInvoices").innerHTML = recentHtml;
 
     await loadNotifications();
   } catch (e) { showToast("Error loading overview: " + e.message, "error"); }
 }
+
 
 function statCard(label, value, icon, color) {
   return `<div class="stat-card stat-${color}">
