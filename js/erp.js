@@ -513,12 +513,11 @@ function viewInvoice(inv) {
         <div>
           <img src="https://yaseertech.vercel.app/images/logo.png" style="height:60px;object-fit:contain" onerror="this.style.display='none'"/>
           <h2 style="color:#0A2540;margin:5px 0">YaseerTech</h2>
-          <p style="margin:2px 0;font-size:13px">Office: Suite TF05, Aminasia Trade Centre</p>
-          <p style="margin:2px 0;font-size:13px">Aminu Kano Crescent, Wuse 2, Abuja</p>
+          <p style="margin:2px 0;font-size:13px;font-weight:bold">BN 9757879</p>
           <p style="margin:2px 0;font-size:13px">+234 703 105 2232</p>
           <p style="margin:2px 0;font-size:13px">infoyaseertech@gmail.com</p>
-          <p style="margin:2px 0;font-size:13px">CAC Reg. No: BN 9757879</p>
-          <p style="margin:2px 0;font-size:13px">Registered Address: 37, Monrovia Street, Unguwan Rimi Kaduna, Kaduna North, Kaduna State</p>
+          <p style="margin:2px 0;font-size:13px"><strong>Office Address:</strong> Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
+          <p style="margin:2px 0;font-size:13px"><strong>Registered Address:</strong> 37, Monrovia Street, Unguwan Rimi Kaduna, Kaduna North, Kaduna State</p>
         </div>
         <div style="text-align:right">
           <h1 style="color:#f97316;font-size:28px;margin:0">INVOICE</h1>

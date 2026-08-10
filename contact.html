@@ -217,22 +217,17 @@
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="container nav-container">
-    <a href="index.html" class="nav-logo">
-      <img src="images/logo.png" alt="YaseerTech Logo"/>
-      <span>YaseerTech</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
-    </ul>
-    <a href="login.html" class="nav-cta">Client Login</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo-link"><img src="images/logo.png" alt="YaseerTech" class="nav-logo-img"></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="login.html" class="nav-erp-btn">ERP Login</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -406,62 +401,22 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <img src="images/logo.png" alt="YaseerTech"/>
-        <p>Driving Business Growth Through Digital Excellence.</p>
-        <div class="social-links">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://wa.me/2347031052232" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="YaseerTech" class="footer-logo">
+                <p>Driving Business Growth Through Digital Excellence.</p>
+                <p class="footer-addr">📍 Office: Suite TF05, Aminasia Trade Centre,<br>Aminu Kano Crescent, Wuse 2, Abuja</p>
+                <p class="footer-addr">🏛️ Registered: 37, Monrovia Street, Unguwan Rimi Kaduna,<br>Kaduna North, Kaduna State</p>
+                <a href="tel:+2347031052232" class="footer-phone">📞 +234 703 105 2232</a>
+            </div>
+            <div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="about.html">About Us</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+            <div class="footer-col"><h4>Services</h4><a href="services.html">ICT Training</a><a href="services.html">Social Media Ads</a><a href="services.html">Website Design</a><a href="services.html">Branding</a><a href="services.html">Digital Marketing</a></div>
+            <div class="footer-col"><h4>Get In Touch</h4><a href="https://wa.me/2347031052232" target="_blank" class="footer-wa-btn">💬 Chat on WhatsApp</a><a href="mailto:infoyaseertech@gmail.com" class="footer-msg-btn">✉️ Send an Email</a><p class="footer-hours">Mon – Sat: 8AM – 6PM</p></div>
         </div>
-      </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="services.html">Web Design</a></li>
-          <li><a href="services.html">Digital Marketing</a></li>
-          <li><a href="services.html">Brand Identity</a></li>
-          <li><a href="services.html">Business Consulting</a></li>
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h4>Contact</h4>
-        <p><i class="fas fa-map-marker-alt"></i> Office: Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
-        <p><i class="fas fa-phone"></i> +234 703 105 2232</p>
-        <p><i class="fas fa-envelope"></i> infoyaseertech@gmail.com</p>
-      </div>
+        <div class="footer-bottom"><p>© 2026 YaseerTech. All Rights Reserved.</p><p>Driving Business Growth Through Digital Excellence</p><p>CAC Reg. No: BN 9757879</p></div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 YaseerTech. All rights reserved.</p>
-      <p>CAC Reg. No: BN 9757879</p>
-      <p>Registered Address: 37, Monrovia Street, Unguwan Rimi Kaduna, Kaduna North, Kaduna State</p>
-    </div>
-  </div>
 </footer>
-
-<!-- WhatsApp Floating Button -->
-<div class="whatsapp-float">
-  <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
-  <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech%2C%20I%20visited%20your%20website%20and%20I%20would%20like%20to%20know%20more%20about%20your%20services."
-     target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L0 24l6.335-1.51A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.214-3.732.89.936-3.63-.235-.374A9.818 9.818 0 1112 21.818z"/>
-    </svg>
-  </a>
-</div>
 
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
