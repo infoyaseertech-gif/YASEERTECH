@@ -197,6 +197,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .m-cta h3{font-size:1.2rem;margin-bottom:6px;color:#fff;letter-spacing:0;text-transform:none}
 .m-cta p{margin-bottom:16px;color:var(--text)}
 
+.m-quote{margin:0;padding:18px 20px;border-left:3px solid var(--orange);background:rgba(37,99,235,.1);border-radius:0 12px 12px 0}
+.m-quote p{font-size:1.05rem;color:#fff;font-style:italic}
+.m-quote footer{margin-top:10px;font-size:13px;color:var(--muted)}
+
 /* video click-to-load */
 .vid-btn{position:absolute;inset:0;width:100%;border:0;padding:0;background:#000 center/cover no-repeat;display:grid;place-items:center}
 .vid-btn::after{content:'';position:absolute;inset:0;background:rgba(7,20,38,.35);transition:background .2s}

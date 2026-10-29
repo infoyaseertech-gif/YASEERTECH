@@ -197,6 +197,7 @@
           (live ? '<a class="btn btn-primary" href="' + esc(live) + '" target="_blank" rel="noopener noreferrer">' + ICON.ext + 'Visit live site</a>' : '') +
           (gh ? '<a class="btn btn-outline" href="' + esc(gh) + '" target="_blank" rel="noopener noreferrer">' + ICON.code + 'View source code</a>' : '') +
         '</div>' +
+        section('Built for', paraOf(p.client)) +
         section('My role', paraOf(p.role)) +
         section('Objectives', listOf(p.objectives)) +
         section('The challenge', listOf(p.challenges)) +
@@ -207,9 +208,11 @@
           return '<button type="button" data-lb="' + i + '" aria-label="Open screenshot ' + (i + 1) + ' of ' + galleryImgs.length + ': ' + esc(g.alt || p.title) + '"><img src="' + esc(g.src) + '" alt="' + esc(g.alt || p.title + ' screenshot ' + (i + 1)) + '" loading="lazy" decoding="async"></button>';
         }).join('') + '</div>' : '') +
         section('Results', listOf(results)) +
+        (p.testimonial && p.testimonial.quote ? section('Client feedback', '<blockquote class="m-quote"><p>“' + esc(p.testimonial.quote) + '”</p>' + (p.testimonial.name ? '<footer>' + esc(p.testimonial.name) + (p.testimonial.role ? ', ' + esc(p.testimonial.role) : '') + '</footer>' : '') + '</blockquote>') : '') +
         section('What’s next', listOf(p.futureImprovements)) +
         '<div class="m-cta"><h3>Need something similar?</h3><p>Let’s build a solution that fits your business.</p>' +
-          '<a class="btn btn-primary" href="https://yaseertech.vercel.app/contact.html">Hire YaseerTech</a></div>' +
+          '<div class="m-actions" style="justify-content:center"><a class="btn btn-primary" href="https://yaseertech.vercel.app/contact.html">Hire YaseerTech</a>' +
+          '<a class="btn btn-wa" target="_blank" rel="noopener noreferrer" href="https://wa.me/2347031052232?text=' + encodeURIComponent('Hello YaseerTech, I saw your ' + p.title + ' project and would like something similar.') + '">WhatsApp about a similar project</a></div></div>' +
       '</div>';
   }
 

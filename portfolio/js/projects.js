@@ -65,63 +65,96 @@ window.YT_PROJECTS = [
   {
     id: 2,
     slug: "ajigs-connect",
-    title: "AJIGS Connect",
+    title: "AJIGS CONNECT",
     category: "Business Systems",
-    status: "Source available",
+    status: "Live", // address taken from the project's own files - confirm it loads
     featured: true,
     visibility: "public",
     shortDescription:
-      "Website and management system built for a cleaning company.",
+      "Company website and staff management system for a Nigerian business offering construction, building materials, automobiles, engineering and cleaning.",
     fullDescription:
-      "AJIGS Connect combines a public-facing company website with a management system for running a cleaning business.",
+      "A public website that presents five service lines, shows completed work in a photo gallery and takes quote requests, paired with a private staff portal for running jobs, clients, invoices and expenses.",
+    client: "AJIGS CONNECT, Nigeria",
     coverImage: "",
-    altText: "AJIGS Connect cleaning company website and management system",
+    altText: "AJIGS CONNECT website and management system",
     galleryImages: [],
     videoUrl: "",
-    liveUrl: "",
+    liveUrl: "https://ajigs-connect.vercel.app",
     githubUrl: "https://github.com/infoyaseertech-gif/ajigs-connect",
-    technologies: ["HTML"]
+    technologies: ["HTML", "CSS", "JavaScript", "Supabase", "PWA", "Vercel"],
+    role: "Design and development",
+    keyFeatures: [
+      "Service pages for construction, building materials, automobiles, engineering and cleaning",
+      "Project gallery, with photos added by staff from the dashboard",
+      "Quote and contact page with a one-tap WhatsApp enquiry for each service",
+      "Staff login with permissions, so each person only sees what they should",
+      "Dashboard for clients, jobs and job status, invoices with print preview, expenses and staff",
+      "Reports such as revenue by service and expenses by category",
+      "Installable on a phone like an app"
+    ]
   },
 
   {
     id: 3,
     slug: "ihsan-footwears-app",
-    title: "IHSAN Footwears App",
+    title: "IHSAN Footwears & Poultry App",
     category: "Business Systems",
     status: "Source available",
     featured: false,
     visibility: "public",
     shortDescription:
-      "Accounting, inventory and sales management system for IHSAN Footwears and General Enterprises.",
+      "A phone app that runs a footwear business and a poultry farm: stock, sales, expenses, flocks, eggs, feed and health records.",
     fullDescription:
-      "A business management app that brings accounting, inventory and sales records together for a footwear and general-merchandise business.",
+      "One PIN-protected, installable app with two modes, one for IHSAN Footwears & General Enterprises and one for its poultry operation, so the owner can keep every record in one place instead of notebooks.",
+    client: "IHSAN Footwears & General Enterprises",
     coverImage: "",
-    altText: "IHSAN Footwears accounting, inventory and sales management app",
+    altText: "IHSAN Footwears and Poultry management app",
     galleryImages: [],
     videoUrl: "",
     liveUrl: "",
     githubUrl: "https://github.com/infoyaseertech-gif/ihsan-footwears-app",
-    technologies: ["HTML"]
+    technologies: ["HTML", "CSS", "JavaScript", "Supabase", "PWA"],
+    role: "Design and development",
+    keyFeatures: [
+      "Footwear mode: stock, sales with printable receipts, expenses and reports",
+      "Poultry mode: flock records, daily egg collection, feed and health records",
+      "Health log covering the number of birds affected and vet details",
+      "PIN sign-in to keep business records private",
+      "Records saved to the cloud so they are not tied to one phone",
+      "Installable on a phone like an app"
+    ]
   },
 
   {
     id: 4,
     slug: "kabomo-collections",
-    title: "Kabomo Collections",
-    category: "E-commerce",
+    title: "Kabomo Collections POS",
+    category: "Business Systems",
     status: "Source available",
     featured: false,
     visibility: "public",
-    shortDescription: "Website and mobile app for Kabomo Collections.",
+    shortDescription:
+      "Point-of-sale and stock app for a fashion retail brand: catalogue, sales, receipts, expenses, customer debts and profit reports.",
     fullDescription:
-      "A website with a companion mobile app for the Kabomo Collections brand.",
+      "An installable app that lets a fashion retailer manage its whole shop from a phone. It tracks stock and margins, records sales and purchases, shares receipts and shows how the business is performing. Brand tagline: \u201CWear Love, Wear Luxury\u201D.",
+    client: "Kabomo Collections",
     coverImage: "",
-    altText: "Kabomo Collections website and mobile app",
+    altText: "Kabomo Collections point-of-sale and stock app",
     galleryImages: [],
     videoUrl: "",
     liveUrl: "",
     githubUrl: "https://github.com/infoyaseertech-gif/kabomocollections",
-    technologies: ["HTML"]
+    technologies: ["HTML", "CSS", "JavaScript", "Supabase", "PWA", "Vercel"],
+    role: "Design and development",
+    keyFeatures: [
+      "Item catalogue with photos, cost price, selling price and profit margin",
+      "Low-stock alerts",
+      "Record sales and purchases, with receipts that can be sent on WhatsApp",
+      "Expense tracking and customer debt records",
+      "Business report with a 7-day sales chart, top-selling items and net profit",
+      "Account sign-in with an optional fingerprint login",
+      "Installable on a phone like an app"
+    ]
   },
 
   /* ------------------------------------------------------------------------
