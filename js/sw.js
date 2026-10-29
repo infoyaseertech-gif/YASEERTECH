@@ -4,7 +4,7 @@
 //   to force ALL devices (phone, PWA, Firefox) to refresh
 // ============================================================
 
-const CACHE_VERSION = "yaseertech-v6";
+const CACHE_VERSION = "yaseertech-v7";
 const CACHE_FILES = [
   "/",
   "/index.html",

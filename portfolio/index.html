@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | YaseerTech</title>
+    <meta name="description" content="Selected websites, web applications and business systems built by YaseerTech. Explore live sites, source code and project details.">
+    <link rel="canonical" href="https://yaseertech.vercel.app/portfolio/">
+    <meta name="theme-color" content="#071426">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portfolio | YaseerTech">
+    <meta property="og:description" content="Selected work. Real solutions. Websites, web apps and business systems by YaseerTech.">
+    <meta property="og:url" content="https://yaseertech.vercel.app/portfolio/">
+    <meta property="og:image" content="https://yaseertech.vercel.app/images/logo.png">
+    <link rel="icon" type="image/png" href="images/icon-192.png">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/portfolio.css">
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip-link" href="#projects">Skip to projects</a>
+
+<!-- ======================== NAVBAR ======================== -->
+<header class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="https://yaseertech.vercel.app/index.html" class="nav-logo-link" aria-label="YaseerTech home">
+            <img src="images/logo.png" alt="YaseerTech" class="nav-logo-img" width="150" height="44">
+        </a>
+        <nav aria-label="Main">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="https://yaseertech.vercel.app/index.html">Home</a></li>
+                <li><a href="https://yaseertech.vercel.app/about.html">About</a></li>
+                <li><a href="https://yaseertech.vercel.app/services.html">Services</a></li>
+                <li><a href="./" class="active" aria-current="page">Portfolio</a></li>
+                <li><a href="https://yaseertech.vercel.app/contact.html">Contact</a></li>
+                <li><a href="https://yaseertech.vercel.app/contact.html" class="nav-cta">Hire Me</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main>
+<!-- ======================== HERO ======================== -->
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"><span class="hero-orb hero-orb-a"></span><span class="hero-orb hero-orb-b"></span></div>
+    <div class="container hero-inner">
+        <p class="eyebrow hero-anim" style="--d:0">Portfolio</p>
+        <h1 id="hero-title">
+            <span class="line hero-anim" style="--d:1">Selected Work.</span>
+            <span class="line hero-anim accent" style="--d:2">Real Solutions.</span>
+        </h1>
+        <p class="hero-lead hero-anim" style="--d:3">
+            Explore websites, web applications, and digital solutions designed to help businesses work smarter, grow faster, and deliver better experiences.
+        </p>
+        <div class="hero-btns hero-anim" style="--d:4">
+            <a href="#projects" class="btn btn-primary">Explore Projects</a>
+            <a href="https://yaseertech.vercel.app/contact.html" class="btn btn-ghost">Start a Project</a>
+        </div>
+        <dl class="hero-stats hero-anim" id="heroStats" style="--d:5" hidden></dl>
+    </div>
+</section>
+
+<!-- ======================== PROJECTS ======================== -->
+<section class="projects" id="projects" aria-labelledby="projects-title">
+    <div class="container">
+        <div class="section-head reveal">
+            <p class="eyebrow">Our work</p>
+            <h2 id="projects-title">Projects</h2>
+            <p class="section-sub">Every project below links to what is genuinely available: a live site, source code, or both.</p>
+        </div>
+
+        <div class="toolbar reveal" role="search">
+            <div class="search">
+                <label for="search" class="sr-only">Search projects by name or description</label>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.9 12.1l4.3 4.3-1.4 1.4-4.3-4.3A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
+                <input id="search" type="search" placeholder="Search projects…" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="filters" id="filters" role="group" aria-label="Filter projects by category"></div>
+        </div>
+
+        <div class="result-bar">
+            <p class="result-count" id="resultCount" role="status" aria-live="polite"></p>
+            <button type="button" class="reset" id="resetBtn" hidden>Reset filters</button>
+        </div>
+
+        <ul class="grid" id="grid" aria-label="Projects"></ul>
+
+        <div class="empty" id="empty" hidden>
+            <h3>No projects match your search</h3>
+            <p>Try a different word, or clear the filters to see everything.</p>
+            <button type="button" class="btn btn-primary" id="emptyReset">Show all projects</button>
+        </div>
+
+        <noscript>
+            <p class="noscript">Projects need JavaScript to display. You can browse the source code on
+            <a href="https://github.com/infoyaseertech-gif">GitHub</a>.</p>
+        </noscript>
+    </div>
+</section>
+
+<!-- ======================== CTA ======================== -->
+<section class="cta" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="cta-box reveal">
+            <h2 id="cta-title">Have a project in mind?</h2>
+            <p>Let’s build something that moves your business forward.</p>
+            <div class="cta-btns">
+                <a href="https://yaseertech.vercel.app/contact.html" class="btn btn-primary">Contact Us</a>
+                <a href="mailto:infoyaseertech@gmail.com" class="btn btn-ghost">infoyaseertech@gmail.com</a>
+                <a href="https://wa.me/2347031052232?text=Hello%20YaseerTech%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="btn btn-wa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+
+<!-- ======================== FOOTER ======================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="YaseerTech" class="footer-logo" width="150" height="44">
+                <p>Driving Business Growth Through Digital Excellence.</p>
+                <p class="footer-addr">Suite TF05, Aminasia Trade Centre, Aminu Kano Crescent, Wuse 2, Abuja</p>
+                <a href="tel:+2347031052232" class="footer-phone">+234 703 105 2232</a>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="https://yaseertech.vercel.app/index.html">Home</a>
+                <a href="https://yaseertech.vercel.app/about.html">About Us</a>
+                <a href="https://yaseertech.vercel.app/services.html">Services</a>
+                <a href="./">Portfolio</a>
+                <a href="https://yaseertech.vercel.app/contact.html">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h4>Elsewhere</h4>
+                <a href="https://github.com/infoyaseertech-gif" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:infoyaseertech@gmail.com">Email us</a>
+                <p class="footer-hours">Mon – Sat: 8AM – 6PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 YaseerTech. All Rights Reserved.</p>
+            <p>CAC Reg. No: BN 9757879</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ======================== PROJECT DETAIL MODAL ======================== -->
+<div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+        <button type="button" class="icon-btn modal-close" data-close aria-label="Close project details">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>
+        </button>
+        <div class="modal-scroll" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ======================== LIGHTBOX ======================== -->
+<div class="lightbox" id="lightbox" hidden>
+    <div class="lightbox-backdrop" data-lb-close></div>
+    <div class="lightbox-panel" role="dialog" aria-modal="true" aria-label="Screenshot viewer" tabindex="-1">
+        <button type="button" class="icon-btn lb-close" data-lb-close aria-label="Close screenshot viewer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>
+        </button>
+        <button type="button" class="icon-btn lb-nav lb-prev" id="lbPrev" aria-label="Previous screenshot">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.6 5.6 1.4 1.4-5 5 5 5-1.4 1.4-6.4-6.4z"/></svg>
+        </button>
+        <figure class="lb-figure">
+            <img id="lbImg" alt="" decoding="async">
+            <figcaption id="lbCap"></figcaption>
+        </figure>
+        <button type="button" class="icon-btn lb-nav lb-next" id="lbNext" aria-label="Next screenshot">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.4 5.6-1.4 1.4 5 5-5 5 1.4 1.4 6.4-6.4z"/></svg>
+        </button>
+    </div>
+</div>
+
+<script src="js/projects.js"></script>
+<script src="js/portfolio.js"></script>
+</body>
+</html>
