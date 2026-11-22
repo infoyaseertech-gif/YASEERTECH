@@ -157,52 +157,132 @@ window.YT_PROJECTS = [
     ]
   },
 
-  /* ------------------------------------------------------------------------
-     MORE PROJECTS — Maleektech, Bluejay and XO Fashion are public but still need links, screenshots and details; Business Cloud stays hidden.
-     Change  visibility: "hidden"  to  "public"  once the details are true.
-     ------------------------------------------------------------------------ */
   {
-    id: 101,
-    slug: "maleektech-gadgets",
-    title: "Maleektech Gadgets",
-    category: "Websites",
-    visibility: "public",
-    shortDescription: "Website for Maleektech Gadgets, a gadgets business.",
-    fullDescription: "A website for Maleektech Gadgets that presents the business and its gadgets online.",
-    client: "Maleektech Gadgets",
-    altText: "Maleektech Gadgets website",
-    liveUrl: "", // TODO: add the live address, e.g. "https://....vercel.app"
-    githubUrl: "", // add only if the repository is public
-    technologies: []
-  },
-  {
-    id: 102,
-    slug: "bluejay-structures",
-    title: "Bluejay Structures",
-    category: "Websites",
-    visibility: "public",
-    shortDescription: "Website for Bluejay Structures, a construction business.",
-    fullDescription: "A website for Bluejay Structures that presents the construction business and its work online.",
-    client: "Bluejay Structures",
-    altText: "Bluejay Structures website",
-    liveUrl: "", // TODO: add the live address
-    githubUrl: "",
-    technologies: []
-  },
-  {
-    id: 104,
+    id: 5,
     slug: "xo-fashion",
-    title: "XO Fashion",
-    category: "Websites",
+    title: "X and O (XNO Fashion)",
+    category: "E-commerce",
+    status: "Live",
+    featured: true,
     visibility: "public",
-    shortDescription: "Website for XO Fashion, a fashion business.",
-    fullDescription: "A website for XO Fashion that presents the fashion business and its collection online.",
-    client: "XO Fashion",
-    altText: "XO Fashion website",
-    liveUrl: "", // TODO: add the live address
-    githubUrl: "",
-    technologies: []
+    shortDescription:
+      "Online shop for a Kaduna modest-wear brand: jilbabs and hijabs with live stock by colour and size, ordering by bank transfer or WhatsApp, customer reviews and an owner dashboard.",
+    fullDescription:
+      "A branded storefront for X and O, a Kaduna-based modest-wear brand that delivers across Nigeria. Customers browse jilbabs, hijabs and prayer hijabs, pick a colour and size, and order. Behind the shop sits a private dashboard where the owner manages products, stock, orders, customers, reviews and profit.",
+    client: "X and O (XNO Fashion), Kaduna, Nigeria",
+    altText: "X and O modest-wear online shop",
+    galleryImages: [],
+    videoUrl: "",
+    liveUrl: "https://xo-fashion.vercel.app",
+    githubUrl: "https://github.com/infoyaseertech-gif/xo-fashion",
+    technologies: ["HTML", "CSS", "JavaScript", "Supabase", "Paystack", "Vercel"],
+    role: "Design and development",
+    objectives: [
+      "Let a modest-wear brand sell nationwide from one simple website",
+      "Give the owner control of products, stock and orders without a developer"
+    ],
+    challenges: [
+      "Two customers should not be able to buy the last piece of the same colour and size",
+      "Prices and orders must be trustworthy even though the site is public"
+    ],
+    solutions: [
+      "Stock is held when an order is placed and returned automatically if it is not paid in time",
+      "Prices are calculated in the database, and customers cannot read other people\u2019s orders"
+    ],
+    keyFeatures: [
+      "Shop for jilbabs, hijabs and prayer hijabs, with a photo and video gallery for each colour",
+      "Live stock by colour and size",
+      "Delivery fee shown by state, with clear return terms",
+      "Order by bank transfer or WhatsApp; Paystack card payment is built in",
+      "Cart that stays on the customer\u2019s own device",
+      "Reviews from buyers who have received their order",
+      "Owner dashboard: overview, products with photo and video upload, orders, customers, stock, reviews, profit and expenses, and CSV reports",
+      "Privacy and terms pages written for Nigerian customers",
+      "Automated tests covering stock, order holds, permissions and reviews"
+    ],
+    futureImprovements: [
+      "Switch on card payments after a full Paystack test",
+      "Custom domain for the shop"
+    ]
   },
+
+  {
+    id: 6,
+    slug: "bluejay-structures",
+    title: "Bluejay Structures Ltd",
+    category: "Websites",
+    status: "Live",
+    featured: true,
+    visibility: "public",
+    shortDescription:
+      "Corporate website for a Nigerian building, vehicle supply and procurement company: services, credentials, team and a proposal request form.",
+    fullDescription:
+      "A professional multi-page website for Bluejay Structures Ltd that explains five service lines in one place, shows the company\u2019s registrations and certifications for procurement officers, introduces its professionals and makes it easy to request a proposal. It also links to a client and staff login.",
+    client: "Bluejay Structures Ltd, Nigeria",
+    altText: "Bluejay Structures Ltd company website",
+    galleryImages: [],
+    videoUrl: "",
+    liveUrl: "https://bluejaystructuresltd.com",
+    githubUrl: "",
+    technologies: ["HTML", "CSS", "JavaScript", "Vercel"],
+    role: "Design and development",
+    objectives: [
+      "Present a multi-sector company clearly to corporate and government buyers",
+      "Turn visitors into proposal requests"
+    ],
+    solutions: [
+      "One page per topic: About, Services, Vehicles, Certifications, Team and Contact",
+      "Credentials and registrations placed up front so buyers can check them quickly",
+      "Prominent \u201CRequest a proposal\u201D and contact calls to action, plus WhatsApp"
+    ],
+    keyFeatures: [
+      "Five service lines: building and construction, real estate and property management, automobile sales and hiring, food and beverages, and general contracts",
+      "Vehicle categories page covering pick-ups, SUVs, buses, trucks, saloon and specialised vehicles",
+      "Certifications and key-professionals pages",
+      "Enquiry and proposal request form and WhatsApp contact",
+      "Client / ERP login link",
+      "Fast, mobile-friendly pages with search-friendly titles and descriptions",
+      "Runs on the company\u2019s own domain"
+    ]
+  },
+
+  {
+    id: 7,
+    slug: "maleektech-gadgets",
+    title: "Maleektech Gadgets Business System",
+    category: "Business Systems",
+    status: "Live",
+    featured: false,
+    visibility: "public",
+    shortDescription:
+      "Stock, sales and profit system for a mobile gadgets and accessories business: inventory, point of sale, expenses, reports and staff accounts.",
+    fullDescription:
+      "A private web app that lets a gadgets retailer run the whole shop from one screen. Staff record sales at the counter, the owner watches stock and expenses, and printable invoices and profit-and-loss reports replace notebooks. Accounts are created by the owner only, and each staff member sees only what they have been given access to.",
+    client: "Maleektech, Nigeria",
+    altText: "Maleektech Gadgets business system",
+    galleryImages: [],
+    videoUrl: "",
+    liveUrl: "https://maleektech-gadgets-store.vercel.app",
+    githubUrl: "",
+    technologies: ["HTML", "CSS", "JavaScript", "Supabase", "Chart.js", "Vercel"],
+    role: "Design and development",
+    objectives: [
+      "Replace paper records with one reliable view of stock, sales and expenses",
+      "Let the owner see profit and low stock without calculating by hand"
+    ],
+    keyFeatures: [
+      "Dashboard comparing sales and expenses by day, week, month or year",
+      "Inventory with product IDs, categories, search and low-stock alerts",
+      "Point of sale: cash, transfer or POS card, customer details and unpaid invoices for pay-before-delivery",
+      "Printable invoices and receipts with the business\u2019s own details",
+      "Expense tracking with categories you can add to",
+      "Reports: profit and loss, best and slowest sellers, expense breakdown and stock value, exported as CSV or PDF",
+      "Notifications for new products, low or out-of-stock items, sales and payments",
+      "Owner-created staff accounts with per-person access",
+      "Amounts in naira"
+    ]
+  },
+
   {
     id: 103,
     slug: "yaseertech-business-cloud",
