@@ -158,18 +158,20 @@ window.YT_PROJECTS = [
   },
 
   /* ------------------------------------------------------------------------
-     DRAFTS — kept hidden until you confirm each one is real and ready.
+     MORE PROJECTS — Maleektech, Bluejay and XO Fashion are public but still need links, screenshots and details; Business Cloud stays hidden.
      Change  visibility: "hidden"  to  "public"  once the details are true.
      ------------------------------------------------------------------------ */
   {
     id: 101,
     slug: "maleektech-gadgets",
     title: "Maleektech Gadgets",
-    category: "E-commerce",
-    status: "Live",
-    visibility: "hidden",
-    shortDescription: "Gadgets business website.",
-    liveUrl: "", // add the real address
+    category: "Websites",
+    visibility: "public",
+    shortDescription: "Website for Maleektech Gadgets, a gadgets business.",
+    fullDescription: "A website for Maleektech Gadgets that presents the business and its gadgets online.",
+    client: "Maleektech Gadgets",
+    altText: "Maleektech Gadgets website",
+    liveUrl: "", // TODO: add the live address, e.g. "https://....vercel.app"
     githubUrl: "", // add only if the repository is public
     technologies: []
   },
@@ -178,10 +180,26 @@ window.YT_PROJECTS = [
     slug: "bluejay-structures",
     title: "Bluejay Structures",
     category: "Websites",
-    status: "Live",
-    visibility: "hidden",
-    shortDescription: "Construction business website.",
-    liveUrl: "",
+    visibility: "public",
+    shortDescription: "Website for Bluejay Structures, a construction business.",
+    fullDescription: "A website for Bluejay Structures that presents the construction business and its work online.",
+    client: "Bluejay Structures",
+    altText: "Bluejay Structures website",
+    liveUrl: "", // TODO: add the live address
+    githubUrl: "",
+    technologies: []
+  },
+  {
+    id: 104,
+    slug: "xo-fashion",
+    title: "XO Fashion",
+    category: "Websites",
+    visibility: "public",
+    shortDescription: "Website for XO Fashion, a fashion business.",
+    fullDescription: "A website for XO Fashion that presents the fashion business and its collection online.",
+    client: "XO Fashion",
+    altText: "XO Fashion website",
+    liveUrl: "", // TODO: add the live address
     githubUrl: "",
     technologies: []
   },
