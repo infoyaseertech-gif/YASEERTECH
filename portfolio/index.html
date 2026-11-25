@@ -6,7 +6,7 @@
     <title>Portfolio | YaseerTech</title>
     <meta name="description" content="Selected websites, web applications and business systems built by YaseerTech. Explore live sites, source code and project details.">
     <link rel="canonical" href="https://yaseertech.vercel.app/portfolio/">
-    <meta name="theme-color" content="#071426">
+    <meta name="theme-color" content="#FFFFFF">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Portfolio | YaseerTech">
     <meta property="og:description" content="Selected work. Real solutions. Websites, web apps and business systems by YaseerTech.">
@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/portfolio.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Muhammad Yasir Jafar","jobTitle":"Web Developer","url":"https://yaseertech.vercel.app/portfolio/","worksFor":{"@type":"Organization","name":"YaseerTech","url":"https://yaseertech.vercel.app/"},"sameAs":["https://github.com/infoyaseertech-gif"]}</script>
     <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -46,23 +47,92 @@
 </header>
 
 <main>
-<!-- ======================== HERO ======================== -->
-<section class="hero" aria-labelledby="hero-title">
-    <div class="hero-bg" aria-hidden="true"><span class="hero-orb hero-orb-a"></span><span class="hero-orb hero-orb-b"></span></div>
-    <div class="container hero-inner">
-        <p class="eyebrow hero-anim" style="--d:0">Portfolio</p>
-        <h1 id="hero-title">
-            <span class="line hero-anim" style="--d:1">Selected Work.</span>
-            <span class="line hero-anim accent" style="--d:2">Real Solutions.</span>
-        </h1>
-        <p class="hero-lead hero-anim" style="--d:3">
-            Explore websites, web applications, and digital solutions designed to help businesses work smarter, grow faster, and deliver better experiences.
-        </p>
-        <div class="hero-btns hero-anim" style="--d:4">
-            <a href="#projects" class="btn btn-primary">Explore Projects</a>
-            <a href="https://yaseertech.vercel.app/contact.html" class="btn btn-ghost">Start a Project</a>
+<!-- ======================== ABOUT ======================== -->
+<section class="about" id="about" aria-labelledby="about-title">
+    <div class="container about-grid">
+        <div class="about-media reveal">
+            <figure class="about-photo">
+                <img src="images/about/yasir-portrait.webp" alt="Portrait of Muhammad Yasir Jafar, web developer and founder of YaseerTech" width="720" height="965" decoding="async" fetchpriority="high">
+            </figure>
+            <div class="about-badge" aria-hidden="true"><span></span><b>Muhammad Yasir Jafar</b><small>Founder, YaseerTech</small></div>
         </div>
-        <dl class="hero-stats hero-anim" id="heroStats" style="--d:5" hidden></dl>
+
+        <div class="about-body">
+            <div class="reveal">
+                <p class="eyebrow">About me</p>
+                <h1 id="about-title">Muhammad Yasir Jafar</h1>
+                <p class="about-role">Web developer &middot; Founder of YaseerTech</p>
+                <p class="about-lead">I build websites and business systems that help Nigerian businesses look credible, work faster and stay organised.</p>
+                <p>I&rsquo;m a web developer and the founder of YaseerTech. I take a project all the way from the first conversation to a live, working product: I design it, build it, set up the database and put it online, then stay close to improve it as your business grows.</p>
+            </div>
+
+            <div class="about-story reveal">
+                <figure class="about-inline-photo">
+                    <img src="images/about/yasir-at-work.webp" alt="Muhammad Yasir Jafar working on a laptop at his desk" width="540" height="701" loading="lazy" decoding="async">
+                </figure>
+                <p>The work in this portfolio is real. For <strong>AJIGS CONNECT</strong> I built a company website with a staff system behind it for jobs, clients, invoices and expenses. For <strong>Kabomo Collections</strong> and <strong>IHSAN Footwears &amp; Poultry</strong> I built apps that owners run from their phones, replacing notebooks with stock, sales, receipts and reports they can trust.</p>
+                <p>For <strong>X and O</strong>, a Kaduna modest-wear brand, I built an online shop where stock is held the moment an order is placed, so two customers never buy the same last piece, plus a dashboard that shows the owner orders, stock and profit.</p>
+                <p>And for companies that need to be taken seriously, including <strong>Bluejay Structures</strong>, <strong>Maleektech Services</strong>, <strong>Marafa Multi-Services</strong> and <strong>Dan Musa Group</strong>, I build clear, professional websites that explain what the business does, show its credentials and make it easy to ask for a quote. Where a team needs a system, I add staff logins so each person sees only what their job allows.</p>
+            </div>
+
+            <div class="about-flow reveal">
+                <p>What I care about most is solving the real problem. Before I write any code I ask how you sell, who needs to see what, and where your time is going. Then I build only what helps, explain it in plain language, and you deal with me directly, with no layers in between.</p>
+                <p>My background in meteorology and climatology, from my degree at FUT Minna, my placement at the Nigerian Meteorological Agency and my master&rsquo;s studies, gave me a careful, data-minded way of working. I bring that habit into every system I build.</p>
+                <p class="about-close">If your business needs a website, an online shop or a system to run it, let&rsquo;s talk about it.</p>
+            </div>
+
+            <div class="about-block reveal">
+                <h2 class="about-h">Solutions I provide</h2>
+                <ul class="solutions">
+                    <li><b>Business websites</b><span>Clear, fast pages that build trust and bring in enquiries.</span></li>
+                    <li><b>Online shops</b><span>Catalogue, live stock, orders and an owner dashboard.</span></li>
+                    <li><b>Business systems</b><span>Stock, sales, invoices, expenses and reports in one place.</span></li>
+                    <li><b>Staff portals</b><span>Logins with access set per person.</span></li>
+                    <li><b>Installable phone apps</b><span>Web apps that work like a phone app, with no app store.</span></li>
+                </ul>
+            </div>
+
+            <div class="about-block reveal">
+                <h2 class="about-h">What I work with</h2>
+                <ul class="chips">
+                    <li>HTML5</li><li>CSS3</li><li>JavaScript (ES6+)</li><li>Responsive design</li>
+                    <li>Node.js</li><li>Express</li><li>REST APIs</li>
+                    <li>Supabase (PostgreSQL)</li><li>Row-Level Security</li><li>SQL migrations</li>
+                    <li>React / React Native</li><li>Progressive Web Apps</li>
+                    <li>Git &amp; GitHub</li><li>Vercel</li>
+                </ul>
+            </div>
+
+            <div class="about-cols">
+                <div class="about-block reveal">
+                    <h2 class="about-h">Experience</h2>
+                    <ul class="timeline">
+                        <li><b>Web Developer, independent</b><span>2025 &ndash; present</span><p>Designing, building and deploying websites, web apps and business systems for small businesses.</p></li>
+                        <li><b>Technical Director / Computer Operator</b><span>Lawal Caf&eacute; and Business Centre, Kaduna &middot; 2021 &ndash; present</span><p>Day-to-day computer operations and technical troubleshooting.</p></li>
+                        <li><b>Weather observation and forecasting</b><span>Nigerian Meteorological Agency (NIMET), Kaduna</span><p>NYSC and SIWES placements, including data logging and analysis.</p></li>
+                    </ul>
+                </div>
+                <div class="about-block reveal">
+                    <h2 class="about-h">Education</h2>
+                    <ul class="timeline">
+                        <li><b>M.Sc. Geography (Climatology)</b><span>Nigerian Defence Academy, Kaduna &middot; in view</span></li>
+                        <li><b>B.Tech Geography (Meteorology)</b><span>Federal University of Technology, Minna &middot; 2016 &ndash; 2023</span></li>
+                        <li><b>National Diploma, Welding and Fabrication Technology</b><span>Hassan Usman Katsina Polytechnic &middot; 2014 &ndash; 2016</span></li>
+                    </ul>
+                    <h2 class="about-h about-sub">Leadership</h2>
+                    <ul class="timeline">
+                        <li><b>President, National Association of Katsina State Students</b><span>FUT Minna Chapter &middot; 2019 &ndash; 2022</span></li>
+                        <li><b>Deputy Senate President, NAKATSS National Body Parliament</b><span>2019 &ndash; 2021</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="about-btns reveal">
+                <a href="https://yaseertech.vercel.app/contact.html" class="btn btn-primary">Work with me</a>
+                <a href="https://wa.me/2347031052232?text=Hello%20Yasir%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk%20about%20a%20project." class="btn btn-wa" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a>
+                <a href="#projects" class="btn btn-ghost">See my projects</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -70,9 +140,10 @@
 <section class="projects" id="projects" aria-labelledby="projects-title">
     <div class="container">
         <div class="section-head reveal">
-            <p class="eyebrow">Our work</p>
-            <h2 id="projects-title">Projects</h2>
-            <p class="section-sub">Every project below links to what is genuinely available: a live site, source code, or both.</p>
+            <p class="eyebrow">Portfolio</p>
+            <h2 id="projects-title">Selected Work. Real Solutions.</h2>
+            <p class="section-sub">Websites, web applications and business systems built to help businesses work smarter and grow faster. Every project links to what is genuinely available: a live site, source code, or both.</p>
+            <dl class="hero-stats" id="heroStats" hidden></dl>
         </div>
 
         <div class="toolbar reveal" role="search">
